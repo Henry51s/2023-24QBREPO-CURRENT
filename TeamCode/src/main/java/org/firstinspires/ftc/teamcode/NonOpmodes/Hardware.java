@@ -6,6 +6,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.*;
 
 import java.util.List;
 
@@ -13,7 +14,6 @@ import java.util.List;
 public class Hardware{
     /*
     TO DO:
-    -Edit MecanumDrive class
     -Odo Pod Config Names
 
     */
@@ -25,13 +25,7 @@ public class Hardware{
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
 
-    //Motor wires are labelled
-    String MOTOR_0 = "motor0"; //Front Left
-    String MOTOR_1 = "motor1"; //Front Right
-    String MOTOR_2 = "motor2"; //Back Left
-    String MOTOR_3 = "motor3"; //Back Right
 
-    String WEBCAM = "webcam";
     //---------------------------
 
 

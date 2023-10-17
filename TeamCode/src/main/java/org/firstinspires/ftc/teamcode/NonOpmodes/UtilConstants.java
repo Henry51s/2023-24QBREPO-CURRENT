@@ -7,8 +7,14 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Config
 public class UtilConstants {
 
-    //TO-DO: List config names of motors, servos, camera
 
+
+    //Config Names-----------------
+    public static String MOTOR_0 = "motor0"; //Front Left
+    public static String MOTOR_1 = "motor1"; //Front Right
+    public static String MOTOR_2 = "motor2"; //Back Left
+    public static String MOTOR_3 = "motor3"; //Back Right
+    public static String WEBCAM = "webcam";
     //Vision Constants-------------
 
     //Webcam Resolution
