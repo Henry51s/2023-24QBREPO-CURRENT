@@ -10,10 +10,30 @@ public class UtilConstants {
 
 
     //Config Names-----------------
+    //Control Hub Motors 0-3 = 0-3, Expansion Hub Motors 0-3 = 4-7
     public static String MOTOR_0 = "motor0"; //Front Left
     public static String MOTOR_1 = "motor1"; //Front Right
     public static String MOTOR_2 = "motor2"; //Back Left
     public static String MOTOR_3 = "motor3"; //Back Right
+    public static String MOTOR_4 = "motor4";
+    public static String MOTOR_5 = "motor5";
+    public static String MOTOR_6 = "motor6";
+    public static String MOTOR_7 = "motor7";
+
+    //Control Hub Servos 0-5 = 0-5, Expansion Hub Servos 0-5 = 6-11
+    public static String SERVO_0 = "servo0"; //Linear Servo Left (Positional)
+    public static String SERVO_1 = "servo1";//Intake Left (Continuous)
+    public static String SERVO_2 = "servo2";//Differential Left (Positional)
+    public static String SERVO_3 = "servo3";
+    public static String SERVO_4 = "servo4";//V4B Left (Positional)
+    public static String SERVO_5 = "servo5";
+    public static String SERVO_6 = "servo6";//Linear Servo Right (Positional)
+    public static String SERVO_7 = "servo7";//Intake Right (Continuous)
+    public static String SERVO_8 = "servo8";//Differential Right (Positional)
+    public static String SERVO_9 = "servo9";
+    public static String SERVO_10 = "servo10";
+    public static String SERVO_11 = "servo11";
+
     public static String WEBCAM = "webcam";
     //Vision Constants-------------
 
@@ -43,6 +63,10 @@ public class UtilConstants {
     public static int w = 800;
     public static int h = 448;
     //-----------------------------
+    public static double armPickup = 1;
+    public static int scoreMax = 1450;
+    public static double armDropoff = 0.1;
+    public static double driveMultiplier = 1;
 
 
 

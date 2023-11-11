@@ -53,7 +53,7 @@ public class PIDMotor {
     public void enableRunToPosition(){
         double currentPos = motor.getCurrentPosition();
         if (currentPos != this.targetPosition){
-            motor.setPower(output());
+            setPower(output());
         }
     }
 
