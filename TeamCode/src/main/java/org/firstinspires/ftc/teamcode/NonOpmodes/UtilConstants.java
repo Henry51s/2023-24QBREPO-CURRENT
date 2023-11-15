@@ -30,9 +30,9 @@ public class UtilConstants {
     public static String SERVO_6 = "servo6";//Linear Servo Right (Positional)
     public static String SERVO_7 = "servo7";//Intake Right (Continuous)
     public static String SERVO_8 = "servo8";//Differential Right (Positional)
-    public static String SERVO_9 = "servo9";
-    public static String SERVO_10 = "servo10";
-    public static String SERVO_11 = "servo11";
+    public static String SERVO_9 = "servo9";//claw 1 or 2
+    public static String SERVO_10 = "servo10";//V4B Right (Positional)
+    public static String SERVO_11 = "servo11";//Claw 1 or 2
 
     public static String WEBCAM = "webcam";
     //Vision Constants-------------
@@ -63,10 +63,18 @@ public class UtilConstants {
     public static int w = 800;
     public static int h = 448;
     //-----------------------------
-    public static double armPickup = 1;
     public static int scoreMax = 1450;
-    public static double armDropoff = 0.1;
+    public static double primArmPickup = 0.386;
+    public static double primArmDropoff = 0.0;
+    public static double secArmDropoff = 1.0;
+    /*public static int scoreMedium = ;
+    public static int scoreLow = ;
     public static double driveMultiplier = 1;
+    public static double armPickup = ;//"V4B"
+    public static double armDropoff = ;
+    public static double secArmPickup = ;//Differential mechanism without the twisties
+    public static double secArmDropoff = ;*/
+
 
 
 

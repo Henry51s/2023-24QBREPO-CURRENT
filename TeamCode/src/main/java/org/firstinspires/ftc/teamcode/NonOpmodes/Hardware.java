@@ -27,8 +27,10 @@ public class Hardware{
 
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, slide;
-    public Servo arm,claw,linearLeft, linearRight;
-    public CRServo intakeLeft, intakeRight;
+    public Servo linearLeft, linearRight,
+    secArmL, secArmR, primArmL, primArmR, claw1, claw2
+    ;
+    public CRServo intL, intR;
 
 
     //---------------------------
@@ -40,17 +42,22 @@ public class Hardware{
         backLeft = hardwareMap.get(DcMotor.class, MOTOR_2);
         backRight = hardwareMap.get(DcMotor.class, MOTOR_3);
 
+        //For intake side forward, reverse frontRight and backRight
+        //For Outtake side forward, reverse
+
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
 
     }
     public void initIntake(HardwareMap hardwareMap){
         //Insert code to init intake motor + anything else
-        intakeLeft = hardwareMap.get(CRServo.class, SERVO_1);
-        intakeRight = hardwareMap.get(CRServo.class, SERVO_7);
+        intL = hardwareMap.get(CRServo.class, SERVO_1);
+        intR = hardwareMap.get(CRServo.class, SERVO_7);
         linearLeft = hardwareMap.get(Servo.class, SERVO_0);
         linearRight = hardwareMap.get(Servo.class, SERVO_6);
-        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        intR.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void initPickup(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
@@ -60,6 +67,20 @@ public class Hardware{
         slide.setTargetPosition(0);
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setPower(0.6);
+
+        secArmL = hardwareMap.get(Servo.class, SERVO_2);
+        secArmR = hardwareMap.get(Servo.class, SERVO_8);
+        secArmL.setDirection(Servo.Direction.REVERSE);
+
+
+        primArmL = hardwareMap.get(Servo.class, SERVO_4);
+        primArmR = hardwareMap.get(Servo.class, SERVO_10);
+        primArmL.setDirection(Servo.Direction.REVERSE);
+
+        claw1 = hardwareMap.get(Servo.class, SERVO_9);
+        claw1.setDirection(Servo.Direction.REVERSE);
+        claw2 = hardwareMap.get(Servo.class, SERVO_11);
+        //DONT FORGET TO REVERSE DIRECTIONS
     }
     public void initSensors(HardwareMap hardwareMap){
         //Insert code to init sensors
