@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,14 +13,13 @@ public class OdoTest extends OpMode {
     @Override
     public void init() {
         hardware.initDrive(hardwareMap);
-        parallel = hardware.frontRight;
-        perp = hardware.backLeft;
+        parallel = hardware.frontLeft;
+        perp = hardware.backRight;
     }
 
     @Override
     public void loop() {
         telemetry.addData("Parallel: ", parallel.getCurrentPosition());
         telemetry.addData("Perp: ", perp.getCurrentPosition());
-        parallel.setPower(0.1);
     }
 }

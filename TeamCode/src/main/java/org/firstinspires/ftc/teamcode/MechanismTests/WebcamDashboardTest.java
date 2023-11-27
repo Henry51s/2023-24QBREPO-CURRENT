@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.MechanismTests;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.dashboardStreamFps;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.xResolution;
