@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 
 
 
@@ -9,7 +9,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.*;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
+
+import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
 
 import java.util.List;
 
@@ -26,9 +28,9 @@ public class Hardware{
     //---------------------------
 
     //Robot Hardware-------------
-    public DcMotor frontLeft, frontRight, backLeft, backRight, slide;
-    public Servo linearLeft, linearRight,
-    secArmL, secArmR, primArmL, primArmR, claw1, claw2
+    public DcMotor frontLeft, frontRight, backLeft, backRight;
+    public PIDMotor lift;
+    public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2
     ;
     public CRServo intL, intR;
 
@@ -59,28 +61,29 @@ public class Hardware{
         linearRight = hardwareMap.get(Servo.class, SERVO_6);
         intR.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public void initPickup(HardwareMap hardwareMap){
+    public void initDeposit(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
-        slide = hardwareMap.get(DcMotor.class, MOTOR_6);
+
+        /*slide = hardwareMap.get(DcMotor.class, MOTOR_6);
         slide.setDirection(DcMotorSimple.Direction.REVERSE);
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slide.setTargetPosition(0);
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setPower(0.6);
+        */
+        lift = new PIDMotor(hardwareMap, MOTOR_6);
 
-        secArmL = hardwareMap.get(Servo.class, SERVO_2);
-        secArmR = hardwareMap.get(Servo.class, SERVO_8);
-        secArmL.setDirection(Servo.Direction.REVERSE);
+        diffL = hardwareMap.get(Servo.class, SERVO_2);
+        diffR = hardwareMap.get(Servo.class, SERVO_8);
+        diffL.setDirection(Servo.Direction.REVERSE);
 
-
-        primArmL = hardwareMap.get(Servo.class, SERVO_4);
-        primArmR = hardwareMap.get(Servo.class, SERVO_10);
-        primArmL.setDirection(Servo.Direction.REVERSE);
+        v4bL = hardwareMap.get(Servo.class, SERVO_4);
+        v4bR = hardwareMap.get(Servo.class, SERVO_10);
+        v4bL.setDirection(Servo.Direction.REVERSE);
 
         claw1 = hardwareMap.get(Servo.class, SERVO_9);
         claw1.setDirection(Servo.Direction.REVERSE);
         claw2 = hardwareMap.get(Servo.class, SERVO_11);
-        //DONT FORGET TO REVERSE DIRECTIONS
     }
     public void initSensors(HardwareMap hardwareMap){
         //Insert code to init sensors
@@ -98,7 +101,7 @@ public class Hardware{
         //Run all init methods
         initDrive(hardwareMap);
         initIntake(hardwareMap);
-        initPickup(hardwareMap);
+        initDeposit(hardwareMap);
     }
 }
 

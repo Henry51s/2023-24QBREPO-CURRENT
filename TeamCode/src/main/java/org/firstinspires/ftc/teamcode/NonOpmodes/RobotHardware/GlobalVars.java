@@ -1,13 +1,29 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 
 import com.acmerobotics.dashboard.config.Config;
 
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
-public class UtilConstants {
+public class GlobalVars {
 
 
+
+    public static int LIFT_RETRACTED = 0;
+    public static int LIFT_LOW = 0;
+    public static int LIFT_MED = 0;
+    public static int LIFT_HIGH = 0;
+
+    public static double V4B_INIT = 0;
+    public static double V4B_PICKUP = 0;
+    public static double V4B_DEPOSIT = 0;
+
+    public static double DIFF_INIT = 0;
+    public static double DIFF_PICKUP = 0;
+    public static double DIFF_DEPOSIT = 0;
+
+    public static double CLAW_OPEN = 0;
+    public static double CLAW_CLOSE = 0;
 
     //Config Names-----------------
     //Control Hub Motors 0-3 = 0-3, Expansion Hub Motors 0-3 = 4-7
@@ -63,17 +79,8 @@ public class UtilConstants {
     public static int w = 800;
     public static int h = 448;
     //-----------------------------
-    public static int scoreMax = 1450;
-    public static double primArmPickup = 0.386;
-    public static double primArmDropoff = 0.0;
-    public static double secArmDropoff = 1.0;
-    /*public static int scoreMedium = ;
-    public static int scoreLow = ;
-    public static double driveMultiplier = 1;
-    public static double armPickup = ;//"V4B"
-    public static double armDropoff = ;
-    public static double secArmPickup = ;//Differential mechanism without the twisties
-    public static double secArmDropoff = ;*/
+
+
 
 
 
