@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="OdoTest")
 public class OdoTest extends OpMode {

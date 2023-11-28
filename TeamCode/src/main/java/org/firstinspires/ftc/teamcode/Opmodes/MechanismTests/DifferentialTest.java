@@ -1,13 +1,10 @@
-package org.firstinspires.ftc.teamcode.MechanismTests;
-
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.SERVO_2;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.SERVO_8;
+package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="DifferentialTest")
 public class DifferentialTest extends OpMode {
@@ -17,9 +14,9 @@ public class DifferentialTest extends OpMode {
 
     @Override
     public void init() {
-        hardware.initPickup(hardwareMap);
-        secArmL = hardware.secArmL;
-        secArmR = hardware.secArmR;
+        hardware.initDeposit(hardwareMap);
+        secArmL = hardware.diffL;
+        secArmR = hardware.diffR;
 
     }
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.Pipelines;
+package org.firstinspires.ftc.teamcode.NonOpmodes.Webcam;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -10,7 +10,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.*;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
 
 import java.util.ArrayList;
 import java.util.List;

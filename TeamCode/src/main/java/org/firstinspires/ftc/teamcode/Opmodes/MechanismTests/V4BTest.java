@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="v4btest")
 public class V4BTest extends OpMode {
@@ -13,9 +13,9 @@ public class V4BTest extends OpMode {
     double pos = 0;
     @Override
     public void init() {
-        hardware.initPickup(hardwareMap);
-        primArmL = hardware.primArmL;
-        primArmR = hardware.primArmR;
+        hardware.initDeposit(hardwareMap);
+        primArmL = hardware.v4bL;
+        primArmR = hardware.v4bR;
 
     }
 

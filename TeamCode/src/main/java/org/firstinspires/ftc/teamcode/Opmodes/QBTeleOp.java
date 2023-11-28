@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.DepositSubsystem;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 //Welcome to Hell
 @TeleOp(name="QBTeleOp")
 public class QBTeleOp extends OpMode {

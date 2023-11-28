@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.primArmDropoff;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.primArmPickup;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.primArmDropoff;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.primArmPickup;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="DropoffTest")
 public class DropoffTest extends OpMode {
@@ -16,11 +16,11 @@ public class DropoffTest extends OpMode {
     double secArmPos = 1;
     @Override
     public void init() {
-        hardware.initPickup(hardwareMap);
-        primArmL = hardware.primArmL;
-        primArmR = hardware.primArmR;
-        secArmL = hardware.secArmL;
-        secArmR = hardware.secArmR;
+        hardware.initDeposit(hardwareMap);
+        primArmL = hardware.v4bL;
+        primArmR = hardware.v4bR;
+        secArmL = hardware.diffL;
+        secArmR = hardware.diffR;
 
         primArmL.setPosition(primArmDropoff);
         primArmR.setPosition(primArmDropoff);

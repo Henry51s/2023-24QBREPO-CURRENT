@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,10 +9,10 @@ public class PIDMotor {
 
     private DcMotor motor;
 
-    private double kP;
-    private double kI;
-    private double kD;
-    private double kF;
+    private double kP = 0;
+    private double kI = 0;
+    private double kD = 0;
+    private double kF = 0;
 
     public double targetPosition = 0; //    Default/starting position
 
@@ -50,7 +50,7 @@ public class PIDMotor {
         return output;
     }
 
-    public void enableRunToPosition(){
+    public void runToPos(){
         double currentPos = motor.getCurrentPosition();
         if (currentPos != this.targetPosition){
             setPower(output());

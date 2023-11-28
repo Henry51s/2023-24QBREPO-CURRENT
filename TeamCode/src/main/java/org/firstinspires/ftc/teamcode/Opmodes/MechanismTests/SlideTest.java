@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.UtilConstants.scoreMax;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.scoreMax;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="SlideTest")
 public class SlideTest extends OpMode {
@@ -15,7 +14,7 @@ public class SlideTest extends OpMode {
     Hardware hardware = new Hardware();
     @Override
     public void init() {
-        hardware.initPickup(hardwareMap);
+        hardware.initDeposit(hardwareMap);
         slide = hardware.slide;
     }
 
