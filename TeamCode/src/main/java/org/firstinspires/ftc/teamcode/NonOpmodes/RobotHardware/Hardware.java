@@ -33,10 +33,9 @@ public class Hardware{
     public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2
     ;
     public CRServo intL, intR;
-
-
     //---------------------------
-
+    private DepositSubsystem depositSubsystem;
+    private IntakeSubsystem intakeSubsystem;
 
     public void initDrive(HardwareMap hardwareMap){
         frontLeft = hardwareMap.get(DcMotor.class, MOTOR_0);
@@ -102,6 +101,10 @@ public class Hardware{
         initDrive(hardwareMap);
         initIntake(hardwareMap);
         initDeposit(hardwareMap);
+    }
+    public void loopRobot(){
+        depositSubsystem.loop();
+        intakeSubsystem.loop();
     }
 }
 
