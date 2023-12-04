@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFF_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_PICKUP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFR_PICKUP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 public class DifferentialTest extends OpMode {
     Servo diffL, diffR, v4bL, v4bR;
     Hardware hardware = new Hardware();
-    double posL = 0.5;
-    double posR = 0.5;
+    double posL = 0.2;
+    double posR = 0.2;
     boolean pickup = false;
     boolean deposit = true;
     enum TuneStates{
@@ -97,7 +97,7 @@ public class DifferentialTest extends OpMode {
                 }
 
                 if (pickup) {
-                    diffL.setPosition(DIFF_PICKUP);
+                    diffL.setPosition(DIFFL_PICKUP);
                     diffR.setPosition(DIFFR_PICKUP);
                     v4bL.setPosition(V4B_PICKUP);
                     v4bR.setPosition(V4B_PICKUP);

@@ -24,7 +24,7 @@ public class ClawTest extends OpMode {
     @Override
     public void loop() {
 
-        telemetry.addData("Claw 1 pos: ", claw1.getPosition());
+        telemetry.addData("Claw pos: ", claw1.getPosition());
 
         if(gamepad1.b){
             pos += 0.001;
@@ -39,6 +39,7 @@ public class ClawTest extends OpMode {
             pos = 0;
         }
         claw1.setPosition(pos);
+        claw2.setPosition(pos);
 
 
         }

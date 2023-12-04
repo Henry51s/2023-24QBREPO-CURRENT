@@ -18,15 +18,15 @@ public class GlobalVars {
     public static double V4B_PICKUP = 0.847;
     public static double V4B_DEPOSIT = 0.4139;
 
-    public static double DIFF_INIT = 0;
-    public static double DIFF_PICKUP = 0;
-    public static double DIFFL_DEPOSIT = 0;
+    public static double DIFFL_INIT = 0;
+    public static double DIFFL_PICKUP = 0;
+    public static double DIFFL_DEPOSIT = 0.865;
     public static double DIFFR_INIT = 0;
     public static double DIFFR_PICKUP = 0;
-    public static double DIFFR_DEPOSIT = 0;
+    public static double DIFFR_DEPOSIT = 0.643;
 
-    public static double CLAW_OPEN = 0;
-    public static double CLAW_CLOSE = 0;
+    public static double CLAW_RELEASE = 0.698;
+    public static double CLAW_LATCH = 0.659;
 
     //Config Names-----------------
     //Control Hub Motors 0-3 = 0-3, Expansion Hub Motors 0-3 = 4-7
