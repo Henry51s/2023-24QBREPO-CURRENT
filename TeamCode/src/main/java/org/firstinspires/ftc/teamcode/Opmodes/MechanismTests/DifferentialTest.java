@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFF_PICKUP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFR_PICKUP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
@@ -38,6 +38,8 @@ public class DifferentialTest extends OpMode {
 
         diffL.setPosition(posL);
         diffR.setPosition(posR);
+        v4bL.setPosition(V4B_DEPOSIT);
+        v4bR.setPosition(V4B_DEPOSIT);
 
     }
 
@@ -67,6 +69,14 @@ public class DifferentialTest extends OpMode {
                 if(gamepad1.y){
                     posR -= 0.001;
                 }
+                if(gamepad1.dpad_up){
+                    posL += 0.001;
+                    posR += 0.001;
+                }
+                if(gamepad1.dpad_down){
+                    posL -= 0.001;
+                    posR -= 0.001;
+                }
 
                 diffL.setPosition(posL);
                 diffR.setPosition(posR);
@@ -87,7 +97,7 @@ public class DifferentialTest extends OpMode {
                 }
 
                 if (pickup) {
-                    diffL.setPosition(DIFFL_PICKUP);
+                    diffL.setPosition(DIFF_PICKUP);
                     diffR.setPosition(DIFFR_PICKUP);
                     v4bL.setPosition(V4B_PICKUP);
                     v4bR.setPosition(V4B_PICKUP);

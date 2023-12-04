@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -105,6 +106,19 @@ public class Hardware{
     public void loopRobot(){
         depositSubsystem.loop();
         intakeSubsystem.loop();
+    }
+
+    public void loopDrive(Gamepad gamepad){
+        double y = gamepad.left_stick_y; // Remember, Y stick is reversed!
+        double x = -gamepad.left_stick_x;
+        double rx = -gamepad.right_stick_x;
+
+        double ry = -gamepad.right_stick_y;
+
+        frontLeft.setPower(y + x + rx);
+        backLeft.setPower(y - x + rx);
+        frontRight.setPower(y - x - rx);
+        backRight.setPower(y + x - rx);
     }
 }
 

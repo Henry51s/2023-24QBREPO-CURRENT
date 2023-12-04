@@ -16,10 +16,10 @@ public class GlobalVars {
 
     public static double V4B_INIT = 0;//Prob make this the same as V4B_DEPOSIT
     public static double V4B_PICKUP = 0.847;
-    public static double V4B_DEPOSIT = 0.369;
+    public static double V4B_DEPOSIT = 0.4139;
 
-    public static double DIFFL_INIT = 0;
-    public static double DIFFL_PICKUP = 0;
+    public static double DIFF_INIT = 0;
+    public static double DIFF_PICKUP = 0;
     public static double DIFFL_DEPOSIT = 0;
     public static double DIFFR_INIT = 0;
     public static double DIFFR_PICKUP = 0;
