@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.ObjectDetectionPipeline;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.RegularVisionPipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -21,6 +22,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class WebcamDashboardTest extends OpMode {
     OpenCvCamera webcam;
     ObjectDetectionPipeline pipeline = new ObjectDetectionPipeline();
+    RegularVisionPipeline regPipeline = new RegularVisionPipeline();
 
     FtcDashboard dashboard;
     TelemetryPacket packet = new TelemetryPacket();
@@ -35,7 +37,7 @@ public class WebcamDashboardTest extends OpMode {
             @Override
             public void onOpened() {
                 try {
-                    webcam.setPipeline(pipeline);
+                    webcam.setPipeline(regPipeline);
                 }
                 catch(Exception exception){
                     telemetry.addLine("Error!");

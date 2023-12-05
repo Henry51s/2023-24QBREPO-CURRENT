@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CLAW_LATCH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CLAW_RELEASE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.LIFT_HIGH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.LIFT_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.LIFT_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.LIFT_RETRACTED;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
@@ -83,10 +87,12 @@ public class DepositSubsystem extends SubsystemBase {
 
                 break;
             case PICKUP:
-
+                v4bL.setPosition(V4B_PICKUP);
+                v4bR.setPosition(V4B_PICKUP);
                 break;
             case DEPOSIT:
-
+                v4bL.setPosition(V4B_DEPOSIT);
+                v4bR.setPosition(V4B_DEPOSIT);
                 break;
         }
     }
@@ -108,19 +114,18 @@ public class DepositSubsystem extends SubsystemBase {
         clawState = state;
         switch(state){
             case OPEN:
-
+                claw1.setPosition(CLAW_RELEASE);
+                claw2.setPosition(CLAW_RELEASE);
                 break;
             case CLOSE:
-
+                claw1.setPosition(CLAW_LATCH);
+                claw2.setPosition(CLAW_LATCH);
                 break;
         }
     }
     public void loop(){
         //Add PID Code
         lift.runToPos(); //Enables PID
-    }
-    public void read(){
-        //Read Encoder/Servo Position???
     }
 
 

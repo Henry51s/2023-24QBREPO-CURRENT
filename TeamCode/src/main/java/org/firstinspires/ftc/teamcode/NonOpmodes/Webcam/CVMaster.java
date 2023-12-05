@@ -14,6 +14,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 public class CVMaster {
     OpenCvCamera camera;
     ObjectDetectionPipeline pipeline = new ObjectDetectionPipeline();
+    RegularVisionPipeline regPipeline = new RegularVisionPipeline();
 
     public void initCamera(HardwareMap hardwareMap, String configName){
         int cameraMonitorId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId","id",hardwareMap.appContext.getPackageName());

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.Webcam;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.sun.tools.javac.file.Locations;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -28,9 +29,12 @@ public class ObjectDetectionPipeline extends OpenCvPipeline {
             (0, Height) ----- (Width, Height)
     */
 
-
-
-
+    public enum LocationsOfInterest{
+        LEFT,
+        MIDDLE,
+        RIGHT
+    }
+    LocationsOfInterest locations;
 
     Mat ycbcrImage = new Mat();
     Mat mask = new Mat();
@@ -99,6 +103,8 @@ public class ObjectDetectionPipeline extends OpenCvPipeline {
     public double getY(){
         return yOffset;
     }
+
+    //If x is between 0 - 1/3, 1/3 - 2/3, 2/3 - 3/3, return the respective location of interest!!!!
 
 
 }

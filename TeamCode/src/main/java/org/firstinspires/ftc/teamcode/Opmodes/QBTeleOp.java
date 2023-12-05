@@ -30,56 +30,9 @@ public class QBTeleOp extends OpMode {
     @Override
     public void init() {
 
-        hardware.initDrive(hardwareMap);
-        frontLeft = hardware.frontLeft;
-        frontRight = hardware.frontRight;
-        backLeft = hardware.backLeft;
-        backRight = hardware.backRight;
-
-        hardware.initIntake(hardwareMap);
-        intL = hardware.intL;
-        intR = hardware.intR;
-        linearL = hardware.linearLeft;
-        linearR = hardware.linearRight;
-        linearL.setPosition(1);
-        linearR.setPosition(1);
     }
 
     @Override
     public void loop() {
-        hardware.loopDrive(gamepad1);
-        if(gamepad2.a){
-            intL.setPower(0.75);
-            intR.setPower(0.75);
-
-        }
-        else if(gamepad2.b){
-            intL.setPower(-0.75);
-            intR.setPower(-0.75);
-        }
-        else{
-            intL.setPower(0);
-            intR.setPower(0);
-        }
-
-
-        /*linearL.setPosition(-gamepad2.left_stick_y);
-        linearR.setPosition(-gamepad2.left_stick_y);*/
-        if(gamepad2.y){
-            pos += 0.001;
-        }
-        if(gamepad2.x){
-            pos -= 0.001;
-        }
-        if(pos <= 0){
-            pos = 0;
-        }
-        if(pos >= 1){
-            pos = 1;
-        }
-        telemetry.addData("Pos: ", pos);
-        linearL.setPosition(pos);
-        linearR.setPosition(pos);
-
 
     }}

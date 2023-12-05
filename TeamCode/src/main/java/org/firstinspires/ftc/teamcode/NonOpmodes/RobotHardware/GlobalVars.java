@@ -14,7 +14,7 @@ public class GlobalVars {
     public static int LIFT_MED = 0;
     public static int LIFT_HIGH = 0;
 
-    public static double V4B_INIT = 0;//Prob make this the same as V4B_DEPOSIT
+    public static double V4B_INIT = 0.533;
     public static double V4B_PICKUP = 0.847;
     public static double V4B_DEPOSIT = 0.4139;
 
