@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_PICKUP;
@@ -10,6 +10,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
@@ -19,6 +20,7 @@ public class DifferentialTest extends OpMode {
     Hardware hardware = new Hardware();
     double posL = 0.2;
     double posR = 0.2;
+    int timeBuffer = 5000;//5000ms
     boolean pickup = false;
     boolean deposit = true;
     enum TuneStates{
@@ -26,6 +28,9 @@ public class DifferentialTest extends OpMode {
         RUN_TO_POSITION
     }
     TuneStates tuneStates = TuneStates.FINE_TUNE;
+
+    ElapsedTime time = new ElapsedTime();
+
 
     @Override
     public void init() {
@@ -40,6 +45,9 @@ public class DifferentialTest extends OpMode {
         diffR.setPosition(posR);
         v4bL.setPosition(V4B_DEPOSIT);
         v4bR.setPosition(V4B_DEPOSIT);
+
+        time.reset();
+
 
     }
 
@@ -78,6 +86,7 @@ public class DifferentialTest extends OpMode {
                     posR -= 0.001;
                 }
 
+
                 diffL.setPosition(posL);
                 diffR.setPosition(posR);
 
@@ -97,11 +106,20 @@ public class DifferentialTest extends OpMode {
                 }
 
                 if (pickup) {
+                    final double nowTime = time.milliseconds();
+
                     diffL.setPosition(DIFFL_PICKUP);
                     diffR.setPosition(DIFFR_PICKUP);
-                    v4bL.setPosition(V4B_PICKUP);
-                    v4bR.setPosition(V4B_PICKUP);
 
+                    if(time.milliseconds() < nowTime + timeBuffer ) {
+                        v4bL.setPosition(V4B_PICKUP - 0.1);
+                        v4bR.setPosition(V4B_PICKUP - 0.1);
+                    }
+                    if(time.milliseconds() > nowTime + timeBuffer)
+                    {
+                        v4bL.setPosition(V4B_PICKUP);
+                        v4bR.setPosition(V4B_PICKUP);
+                    }
                 }
                 if(deposit){
                     diffL.setPosition(DIFFL_DEPOSIT);
@@ -124,6 +142,8 @@ public class DifferentialTest extends OpMode {
         telemetry.addData("State: ", tuneStates);
         telemetry.addData("Pickup? ", pickup);
         telemetry.addData("Deposit? ", deposit);
+        telemetry.addData("time: ", time.milliseconds());
+
 
     }
 }

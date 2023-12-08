@@ -6,7 +6,6 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.DepositSubsystem;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 public class Claw {
@@ -23,6 +22,7 @@ public class Claw {
         claw1 = hardware.claw1;
         claw2 = hardware.claw2;
     }
+
     public void setClawState(ClawState state){
         clawState = state;
         switch(state){

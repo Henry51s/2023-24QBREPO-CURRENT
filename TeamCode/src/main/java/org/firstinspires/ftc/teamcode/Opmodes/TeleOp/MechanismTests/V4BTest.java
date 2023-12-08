@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;

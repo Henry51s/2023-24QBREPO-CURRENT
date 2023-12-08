@@ -105,6 +105,7 @@ public class ObjectDetectionPipeline extends OpenCvPipeline {
     }
 
     //If x is between 0 - 1/3, 1/3 - 2/3, 2/3 - 3/3, return the respective location of interest!!!!
+    //Make a loop detection method here
 
 
 }

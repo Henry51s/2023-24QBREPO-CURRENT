@@ -1,22 +1,19 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.AutoTrajectories;
-import org.firstinspires.ftc.teamcode.NonOpmodes.Commands.DepositCommands.ClawCommand;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Diff;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.DepositSubsystem;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@Autonomous(name="BlueTopLeft")
-public class BlueTopleft extends LinearOpMode {
+@Autonomous(name="BlueLeft")
+public class BlueLeft extends LinearOpMode {
 
     Hardware hardware = new Hardware();
     Claw claw;
@@ -25,7 +22,7 @@ public class BlueTopleft extends LinearOpMode {
     Lift lift;
 
     AutoTrajectories autoTrajectories;
-    Trajectory test;
+    Trajectory toScore;
 
 
     @Override
@@ -44,19 +41,23 @@ public class BlueTopleft extends LinearOpMode {
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
         autoTrajectories = new AutoTrajectories(hardwareMap);
-        autoTrajectories.BlueTopleft();
-        test = autoTrajectories.test;
+        autoTrajectories.BlueLeft();
+        toScore = autoTrajectories.toScore;
 
         waitForStart();
         if(isStopRequested()){
             return;
         }
 
-        drive.followTrajectory(test);
-        telemetry.addData("Pose", drive.getPoseEstimate());
+        drive.followTrajectory(toScore);
+        fourBar.setV4bState(FourBar.V4bState.DEPOSIT);
+        claw.setClawState(Claw.ClawState.OPEN);
 
 
 
+        while(opModeIsActive()){
+            telemetry.addData("Pose", drive.getPoseEstimate());
+        }
 
 
     }

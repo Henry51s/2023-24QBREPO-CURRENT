@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.DepositSubsystem;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
 

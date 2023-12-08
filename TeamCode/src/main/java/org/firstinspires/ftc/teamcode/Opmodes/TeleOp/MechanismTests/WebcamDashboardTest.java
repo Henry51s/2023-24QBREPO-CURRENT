@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.cameraOrientation;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.dashboardStreamFps;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.xResolution;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.yResolution;
@@ -42,7 +43,7 @@ public class WebcamDashboardTest extends OpMode {
                 catch(Exception exception){
                     telemetry.addLine("Error!");
                 }
-                webcam.startStreaming(xResolution, yResolution, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(xResolution, yResolution, cameraOrientation);
             }
 
             @Override

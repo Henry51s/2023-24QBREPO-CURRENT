@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmodes.MechanismTests;
+package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_5;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_6;

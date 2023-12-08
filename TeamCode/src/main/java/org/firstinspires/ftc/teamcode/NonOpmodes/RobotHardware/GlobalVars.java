@@ -9,24 +9,28 @@ public class GlobalVars {
 
 
 
+    public static double INTAKE_MAX_POWER = 0.65;
+
     public static int LIFT_RETRACTED = 0;
     public static int LIFT_LOW = 0;
     public static int LIFT_MED = 0;
     public static int LIFT_HIGH = 0;
 
+
+
     public static double V4B_INIT = 0.533;
-    public static double V4B_PICKUP = 0.847;
+    public static double V4B_PICKUP = 0.811;
     public static double V4B_DEPOSIT = 0.4139;
 
     public static double DIFFL_INIT = 0;
-    public static double DIFFL_PICKUP = 0;
-    public static double DIFFL_DEPOSIT = 0.865;
+    public static double DIFFL_PICKUP = 0.268;
+    public static double DIFFL_DEPOSIT = 0.892;
     public static double DIFFR_INIT = 0;
-    public static double DIFFR_PICKUP = 0;
-    public static double DIFFR_DEPOSIT = 0.643;
+    public static double DIFFR_PICKUP = 0.03599;
+    public static double DIFFR_DEPOSIT = 0.667;
 
-    public static double CLAW_RELEASE = 0.698;
-    public static double CLAW_LATCH = 0.659;
+    public static double CLAW_RELEASE = 0.46099;
+    public static double CLAW_LATCH = 0.5;
 
     //Config Names-----------------
     //Control Hub Motors 0-3 = 0-3, Expansion Hub Motors 0-3 = 4-7
@@ -63,7 +67,7 @@ public class GlobalVars {
     public static final int dashboardStreamFps = 5;
 
     //Camera Orientation
-    public static final OpenCvCameraRotation cameraOrientation = OpenCvCameraRotation.UPRIGHT;
+    public static final OpenCvCameraRotation cameraOrientation = OpenCvCameraRotation.UPSIDE_DOWN;
 
 
     //Lower bound yCbCr values for desired color
