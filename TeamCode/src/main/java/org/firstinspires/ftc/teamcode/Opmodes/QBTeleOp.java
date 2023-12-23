@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.DepositSubsystem;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
-//Welcome to Hell
+//Welcome to HellASDF
 @TeleOp(name="QBTeleOp")
 public class QBTeleOp extends OpMode {
     /*
