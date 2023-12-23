@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
-//Welcome to Hell
+//Welcome to Hellsdfg
 @TeleOp(name="QBTeleOp")
 public class QBTeleOp extends OpMode {
     Hardware hw = new Hardware();
