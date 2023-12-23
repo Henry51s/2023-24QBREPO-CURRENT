@@ -5,18 +5,14 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.LIFT_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.LIFT_RETRACTED;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.PIDMotor;
 public class Lift {
-    PIDMotor lift;
+    DcMotor lift;
     Hardware hardware = new Hardware();
-
-    double p = 0;
-    double i = 0;
-    double d = 0;
-
     public enum LiftState{
         RETRACTED,
         LOW,
@@ -27,13 +23,6 @@ public class Lift {
     public Lift(HardwareMap hw){
         hardware.initDeposit(hw);
         lift = hardware.lift;
-        lift.setCoefficients(p,i,d,0);
-    }
-
-    public void setCoefficients(double p, double i, double d){
-        this.p = p;
-        this.i = i;
-        this.d = d;
     }
 
     public void setLiftState(LiftState state){

@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
+import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.POWER;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
 
@@ -36,8 +37,9 @@ public class Hardware{
     //---------------------------
 
     //Robot Hardware-------------
-    public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
-    public PIDMotor lift;
+    public DcMotor frontLeft, frontRight, backLeft, backRight, intake, extendoL, extendoR;
+    //public PIDMotor lift;
+    public DcMotor lift;
     public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2
     ;
 
@@ -62,6 +64,8 @@ public class Hardware{
         linearLeft = hardwareMap.get(Servo.class, SERVO_0);
         linearRight = hardwareMap.get(Servo.class, SERVO_6);
         intake = hardwareMap.get(DcMotor.class, MOTOR_5);//WHICH MOTOR IS INTAKE???
+        extendoL = hardwareMap.get(DcMotor.class, MOTOR_4);
+
     }
     public void initDeposit(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
@@ -73,8 +77,13 @@ public class Hardware{
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setPower(0.6);
         */
-        lift = new PIDMotor(hardwareMap, MOTOR_6);
-
+        //lift = new PIDMotor(hardwareMap, MOTOR_6);
+        lift = hardwareMap.get(DcMotor.class, MOTOR_6);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setTargetPosition(LIFT_RETRACTED);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(POWER);
 
         diffL = hardwareMap.get(Servo.class, SERVO_2);
         diffR = hardwareMap.get(Servo.class, SERVO_8);

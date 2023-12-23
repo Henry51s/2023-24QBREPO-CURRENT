@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@TeleOp(name="v4btest")
+@TeleOp(name="v4btest",group="Tests")
 public class V4BTest extends OpMode {
     Servo v4bLeft, v4bRight;
     Hardware hardware = new Hardware();

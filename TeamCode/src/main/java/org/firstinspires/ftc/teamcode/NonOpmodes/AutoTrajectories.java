@@ -17,6 +17,7 @@ public class AutoTrajectories {
     public Pose2d preScore;
     public Pose2d score;
     public Trajectory toScore;
+    public Trajectory back;
 
     public AutoTrajectories(HardwareMap hw){
         drive = new SampleMecanumDrive(hw);
@@ -25,6 +26,17 @@ public class AutoTrajectories {
     public void BlueLeft(){
         toScore = drive.trajectoryBuilder(startPose)
                 .splineToConstantHeading(new Vector2d(45,-27), Math.toRadians(0))
+                .build();
+        back = drive.trajectoryBuilder(new Pose2d(0,0,0))
+                .back(1)
+                .build();
+    }
+    public void RedRight(){
+        toScore = drive.trajectoryBuilder(startPose)
+                .splineToConstantHeading(new Vector2d(45,27), Math.toRadians(0))
+                .build();
+        back = drive.trajectoryBuilder(new Pose2d(0,0,0))
+                .back(3)
                 .build();
     }
 }

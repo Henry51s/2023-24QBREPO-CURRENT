@@ -60,6 +60,10 @@ public class FourBar {
             v4bL.setPosition(V4B_PICKUP);
             v4bR.setPosition(V4B_PICKUP);
         }
+        /*if(time.milliseconds() > timeBuffer && v4bState == V4bState.DEPOSIT){
+            v4bL.setPosition(V4B_DEPOSIT);
+            v4bR.setPosition(V4B_DEPOSIT);
+        }*/
 
         }
     }

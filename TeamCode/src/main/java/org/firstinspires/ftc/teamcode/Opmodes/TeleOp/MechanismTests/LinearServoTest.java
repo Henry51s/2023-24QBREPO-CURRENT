@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@TeleOp(name="LinearServoTest")
+@TeleOp(name="LinearServoTest",group="Tests")
 public class LinearServoTest extends OpMode {
     Servo linearLeft, linearRight;
     Hardware hardware = new Hardware();

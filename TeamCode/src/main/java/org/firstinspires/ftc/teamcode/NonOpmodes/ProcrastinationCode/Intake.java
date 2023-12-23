@@ -46,7 +46,7 @@ public class Intake {
         if(gamepad.right_bumper){
             setIntakeState(IntakeState.REVERSED);
         }
-        else if (!gamepad.right_bumper && !gamepad.left_bumper){
+        if (!gamepad.right_bumper && !gamepad.left_bumper){
             setIntakeState(IntakeState.STOP);
         }
     }

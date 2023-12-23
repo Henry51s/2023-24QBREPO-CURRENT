@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Diff;
@@ -19,6 +20,7 @@ public class QBTeleOp extends OpMode {
     FourBar fourBar;
     Lift lift;
     Intake intake;
+
     @Override
     public void init() {
         hw.initRobot(hardwareMap);
@@ -28,9 +30,9 @@ public class QBTeleOp extends OpMode {
         lift = new Lift(hardwareMap);
         intake = new Intake(hardwareMap);
 
-        claw.setClawState(Claw.ClawState.OPEN);
+        claw.setClawState(Claw.ClawState.CLOSE);
         diff.setDiffState(Diff.DiffState.DEPOSIT);
-        fourBar.setV4bState(FourBar.V4bState.DEPOSIT);
+        fourBar.setV4bState(FourBar.V4bState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
     }
 
@@ -61,9 +63,19 @@ public class QBTeleOp extends OpMode {
         if(gamepad2.a){
             diff.setDiffState(Diff.DiffState.DEPOSIT);
         }
+
         if(gamepad2.y){
-            diff.setDiffState(Diff.DiffState.PICKUP);
             fourBar.setV4bState(FourBar.V4bState.PICKUP);
+            diff.setDiffState(Diff.DiffState.PICKUP);
+        }
+        if(gamepad2.dpad_left){
+            lift.setLiftState(Lift.LiftState.LOW);
+        }
+        if(gamepad2.dpad_up){
+            lift.setLiftState(Lift.LiftState.MED);
+        }
+        if(gamepad2.dpad_down){
+            lift.setLiftState(Lift.LiftState.RETRACTED);
         }
         telemetry.addData("fourBar time: ", fourBar.getTime());
         telemetry.addData("Before buffer: ", fourBar.beforeBuffer);

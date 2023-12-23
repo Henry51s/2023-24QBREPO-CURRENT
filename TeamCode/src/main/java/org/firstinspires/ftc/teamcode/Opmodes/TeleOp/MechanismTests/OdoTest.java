@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@TeleOp(name="OdoTest")
+@TeleOp(name="OdoTest",group="Tests")
 public class OdoTest extends OpMode {
     DcMotor parallel, perp;
     Hardware hardware = new Hardware();

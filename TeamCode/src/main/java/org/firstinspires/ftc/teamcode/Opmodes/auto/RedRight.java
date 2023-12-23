@@ -13,20 +13,18 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@Autonomous(name="BlueLeft")
-public class BlueLeft extends LinearOpMode {
+@Autonomous(name="RedRight")
+public class RedRight extends LinearOpMode {
 
     Hardware hardware = new Hardware();
     Claw claw;
     Diff diff;
     FourBar fourBar;
     Lift lift;
-    Trajectory back;
 
     AutoTrajectories autoTrajectories;
     Trajectory toScore;
     ElapsedTime time = new ElapsedTime();
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -44,9 +42,9 @@ public class BlueLeft extends LinearOpMode {
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
         autoTrajectories = new AutoTrajectories(hardwareMap);
-        autoTrajectories.BlueLeft();
+        autoTrajectories.RedRight();
         toScore = autoTrajectories.toScore;
-        back = autoTrajectories.back;
+
 
         waitForStart();
         if(isStopRequested()){
@@ -60,18 +58,11 @@ public class BlueLeft extends LinearOpMode {
         time.reset();
 
 
-
-
         while(opModeIsActive()){
             telemetry.addData("Pose", drive.getPoseEstimate());
             if(time.milliseconds() > 7000){
                 fourBar.setV4bState(FourBar.V4bState.INIT);
             }
-
         }
-
-
     }
-
-
 }

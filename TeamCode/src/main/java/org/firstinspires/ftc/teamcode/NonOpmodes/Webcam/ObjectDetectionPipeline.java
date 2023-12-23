@@ -34,7 +34,7 @@ public class ObjectDetectionPipeline extends OpenCvPipeline {
         MIDDLE,
         RIGHT
     }
-    LocationsOfInterest locations;
+    LocationsOfInterest locations = LocationsOfInterest.MIDDLE;
 
     Mat ycbcrImage = new Mat();
     Mat mask = new Mat();
@@ -89,6 +89,7 @@ public class ObjectDetectionPipeline extends OpenCvPipeline {
             xOffset = boundingBox.x;
             yOffset = boundingBox.y;
 
+
             roi.release();
             ycbcrImage.release();
             contours.clear();
@@ -102,6 +103,9 @@ public class ObjectDetectionPipeline extends OpenCvPipeline {
     }
     public double getY(){
         return yOffset;
+    }
+    public LocationsOfInterest getLocation(){
+        return locations;
     }
 
     //If x is between 0 - 1/3, 1/3 - 2/3, 2/3 - 3/3, return the respective location of interest!!!!

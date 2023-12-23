@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@TeleOp(name="DifferentialTest")
+@TeleOp(name="DifferentialTest",group="Tests")
 public class DifferentialTest extends OpMode {
     Servo diffL, diffR, v4bL, v4bR;
     Hardware hardware = new Hardware();

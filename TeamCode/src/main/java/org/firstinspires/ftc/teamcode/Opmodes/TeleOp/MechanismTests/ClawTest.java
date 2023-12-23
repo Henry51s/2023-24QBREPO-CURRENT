@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@TeleOp(name="ClawTest")
+@TeleOp(name="ClawTest", group="Tests")
 public class ClawTest extends OpMode {
     Servo claw1, claw2;
     Hardware hardware = new Hardware();

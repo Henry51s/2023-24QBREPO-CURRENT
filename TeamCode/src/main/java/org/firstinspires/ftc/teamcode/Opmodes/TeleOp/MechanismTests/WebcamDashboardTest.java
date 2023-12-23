@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
-@TeleOp(name="WebcamDashboardTest")
+@TeleOp(name="WebcamDashboardTest",group="Tests")
 public class WebcamDashboardTest extends OpMode {
     OpenCvCamera webcam;
     ObjectDetectionPipeline pipeline = new ObjectDetectionPipeline();
@@ -38,7 +38,7 @@ public class WebcamDashboardTest extends OpMode {
             @Override
             public void onOpened() {
                 try {
-                    webcam.setPipeline(regPipeline);
+                    webcam.setPipeline(pipeline);
                 }
                 catch(Exception exception){
                     telemetry.addLine("Error!");
