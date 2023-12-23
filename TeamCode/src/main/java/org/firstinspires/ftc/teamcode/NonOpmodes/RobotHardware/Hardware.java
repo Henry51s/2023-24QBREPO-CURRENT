@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
+import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.POWER;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
 
@@ -23,21 +24,26 @@ public class Hardware{
     -Odo Pod Config Names
 
     */
+    public enum DriveState{
+        NORMAL, //Outtake = forward
+        REVERSED //Intake = forward
+    }
+    DriveState driveState = DriveState.NORMAL;
+
+    double flipMultiplier = 1;
 
     //Webcam---------------------
     public CVMaster webcam = new CVMaster();
     //---------------------------
 
     //Robot Hardware-------------
-    public DcMotor frontLeft, frontRight, backLeft, backRight;
-    public PIDMotor lift;
+    public DcMotor frontLeft, frontRight, backLeft, backRight, intake, extendoL, extendoR;
+    //public PIDMotor lift;
+    public DcMotor lift;
     public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2
     ;
-    public CRServo intL, intR;
-    //---------------------------
-    private DepositSubsystem depositSubsystem;
-    private IntakeSubsystem intakeSubsystem;
 
+    //---------------------------
     public void initDrive(HardwareMap hardwareMap){
         frontLeft = hardwareMap.get(DcMotor.class, MOTOR_0);
         frontRight = hardwareMap.get(DcMotor.class, MOTOR_1);
@@ -55,11 +61,11 @@ public class Hardware{
     }
     public void initIntake(HardwareMap hardwareMap){
         //Insert code to init intake motor + anything else
-        intL = hardwareMap.get(CRServo.class, SERVO_1);
-        intR = hardwareMap.get(CRServo.class, SERVO_7);
         linearLeft = hardwareMap.get(Servo.class, SERVO_0);
         linearRight = hardwareMap.get(Servo.class, SERVO_6);
-        intR.setDirection(DcMotorSimple.Direction.REVERSE);
+        intake = hardwareMap.get(DcMotor.class, MOTOR_5);//WHICH MOTOR IS INTAKE???
+        extendoL = hardwareMap.get(DcMotor.class, MOTOR_4);
+
     }
     public void initDeposit(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
@@ -71,7 +77,13 @@ public class Hardware{
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setPower(0.6);
         */
-        lift = new PIDMotor(hardwareMap, MOTOR_6);
+        //lift = new PIDMotor(hardwareMap, MOTOR_6);
+        lift = hardwareMap.get(DcMotor.class, MOTOR_6);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setTargetPosition(LIFT_RETRACTED);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(POWER);
 
         diffL = hardwareMap.get(Servo.class, SERVO_2);
         diffR = hardwareMap.get(Servo.class, SERVO_8);
@@ -99,26 +111,41 @@ public class Hardware{
     }
     public void initRobot(HardwareMap hardwareMap){
         //Run all init methods
+        webcam.initCamera(hardwareMap, WEBCAM);
         initDrive(hardwareMap);
         initIntake(hardwareMap);
         initDeposit(hardwareMap);
     }
-    public void loopRobot(){
-        depositSubsystem.loop();
-        intakeSubsystem.loop();
-    }
-
     public void loopDrive(Gamepad gamepad){
-        double y = gamepad.left_stick_y; // Remember, Y stick is reversed!
-        double x = -gamepad.left_stick_x;
-        double rx = -gamepad.right_stick_x;
 
-        double ry = -gamepad.right_stick_y;
+        double y = -gamepad.left_stick_y * flipMultiplier; // Remember, Y stick is reversed!
+        double x = gamepad.left_stick_x * flipMultiplier;
+        double rx = -gamepad.right_stick_x*0.5;
 
         frontLeft.setPower(y + x + rx);
         backLeft.setPower(y - x + rx);
         frontRight.setPower(y - x - rx);
         backRight.setPower(y + x - rx);
+
+        switch(driveState){
+            case NORMAL:
+                if(gamepad.left_stick_button){
+                    flipMultiplier = 1;
+                }
+                if(gamepad.right_stick_button){
+                    driveState = DriveState.REVERSED;
+                }
+                break;
+            case REVERSED:
+                if(gamepad.right_stick_button){
+                    flipMultiplier = -1;
+                }
+                if(gamepad.left_stick_button){
+                    driveState = DriveState.NORMAL;
+                }
+                break;
+
+        }
     }
 }
 
