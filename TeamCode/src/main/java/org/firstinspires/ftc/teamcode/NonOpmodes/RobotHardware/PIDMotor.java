@@ -15,9 +15,7 @@ public class PIDMotor {
     private double kD = 0;
     private double kF = 0;
 
-    private double liftFactor = 0.30;
-
-    public double targetPosition = 0; //    Default/starting position
+    private double targetPosition = 0; //    Default/starting position
 
 
 
@@ -25,7 +23,7 @@ public class PIDMotor {
     PIDFController pidf = new PIDFController(kP, kI, kD, kF);
 
     public PIDMotor(HardwareMap hardwareMap, String configName){
-        this.motor = hardwareMap.get(DcMotorEx.class, configName);
+        motor = hardwareMap.get(DcMotorEx.class, configName);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -40,18 +38,15 @@ public class PIDMotor {
         pidf.setPIDF(kP, kI, kD, kF);
     }
 
-    public void setDirection(DcMotorSimple.Direction direction){
+    private void setDirection(DcMotorSimple.Direction direction){
         motor.setDirection(direction);
     }
 
-    public double getCurrentPosition(){
+    private double getCurrentPosition(){
         return motor.getCurrentPosition();
     }
 
-    /*public void setPower(double power){
-        motor.setPower(power);
-    }*/
-    public void setVelocity(double velocity){
+    private void setVelocity(double velocity){
     motor.setVelocity(velocity);
     }
 

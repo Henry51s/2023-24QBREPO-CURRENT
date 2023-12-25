@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -37,11 +38,10 @@ public class Hardware{
     //---------------------------
 
     //Robot Hardware-------------
-    public DcMotor frontLeft, frontRight, backLeft, backRight, intake, extendoL, extendoR;
-    //public PIDMotor lift;
-    public DcMotor lift;
-    public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2
-    ;
+    public DcMotor frontLeft, frontRight, backLeft, backRight, intake, lift;
+
+    public DcMotorEx extendoL, extendoR;
+    public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2;
 
     //---------------------------
     public void initDrive(HardwareMap hardwareMap){
@@ -64,7 +64,8 @@ public class Hardware{
         linearLeft = hardwareMap.get(Servo.class, SERVO_0);
         linearRight = hardwareMap.get(Servo.class, SERVO_6);
         intake = hardwareMap.get(DcMotor.class, MOTOR_5);//WHICH MOTOR IS INTAKE???
-        extendoL = hardwareMap.get(DcMotor.class, MOTOR_4);
+        extendoL = hardwareMap.get(DcMotorEx.class, );
+        extendoR = hardwareMap.get(DcMotorEx.class, );
 
     }
     public void initDeposit(HardwareMap hardwareMap){

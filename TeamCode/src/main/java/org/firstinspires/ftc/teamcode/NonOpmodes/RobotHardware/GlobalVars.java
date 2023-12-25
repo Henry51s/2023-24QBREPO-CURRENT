@@ -10,11 +10,19 @@ public class GlobalVars {
 
 
     public static double INTAKE_MAX_POWER = 0.65;
-    public static double EXTENDO_MAX_POWER = 0.5;
+
+
+    public static double p = 0;
+
+    public static double i = 0;
+    public static double d = 0;
+    public static double TOLERANCE = 0;
     public static int EXTENDO_RETRACTED = 0;
-    public static int EXTENDO_LOW = 0;
+    public static int EXTENDO_SHORT = 0;
     public static int EXTENDO_MED = 0;
     public static int EXTENDO_FAR = 0;
+
+
 
     public static int LIFT_RETRACTED = 5;
     public static int LIFT_LOW = 500;
