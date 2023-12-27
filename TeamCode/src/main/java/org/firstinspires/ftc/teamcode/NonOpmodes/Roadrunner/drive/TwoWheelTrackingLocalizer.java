@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_0;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_3;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_0;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_3;
 
 import androidx.annotation.NonNull;
 
@@ -65,8 +65,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
 
         this.drive = drive;
 
-        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, MOTOR_0));
-        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, MOTOR_3));
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, CHMOTOR_0));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, CHMOTOR_3));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         parallelEncoder.setDirection(Encoder.Direction.REVERSE);

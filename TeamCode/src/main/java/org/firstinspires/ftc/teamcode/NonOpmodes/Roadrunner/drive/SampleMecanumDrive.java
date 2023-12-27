@@ -49,10 +49,10 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveCo
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveConstants.kV;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_0;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_1;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_2;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.MOTOR_3;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_0;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_1;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_2;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_3;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
@@ -104,10 +104,10 @@ public class SampleMecanumDrive extends MecanumDrive {
                 DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, MOTOR_3);
-        leftRear = hardwareMap.get(DcMotorEx.class, MOTOR_1);
-        rightRear = hardwareMap.get(DcMotorEx.class, MOTOR_0);
-        rightFront = hardwareMap.get(DcMotorEx.class, MOTOR_2);
+        leftFront = hardwareMap.get(DcMotorEx.class, CHMOTOR_3);
+        leftRear = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
+        rightRear = hardwareMap.get(DcMotorEx.class, CHMOTOR_0);
+        rightFront = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 

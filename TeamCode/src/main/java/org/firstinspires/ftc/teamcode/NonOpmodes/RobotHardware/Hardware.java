@@ -20,11 +20,6 @@ import java.util.List;
 
 
 public class Hardware{
-    /*
-    TO DO:
-    -Odo Pod Config Names
-
-    */
     public enum DriveState{
         NORMAL, //Outtake = forward
         REVERSED //Intake = forward
@@ -41,14 +36,14 @@ public class Hardware{
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake, lift;
 
     public DcMotorEx extendoL, extendoR;
-    public Servo linearLeft, linearRight, diffL, diffR, v4bL, v4bR, claw1, claw2;
+    public Servo diffL, diffR, v4bL, v4bR, claw, intakeArm;
 
     //---------------------------
     public void initDrive(HardwareMap hardwareMap){
-        frontLeft = hardwareMap.get(DcMotor.class, MOTOR_0);
-        frontRight = hardwareMap.get(DcMotor.class, MOTOR_1);
-        backLeft = hardwareMap.get(DcMotor.class, MOTOR_2);
-        backRight = hardwareMap.get(DcMotor.class, MOTOR_3);
+        frontLeft = hardwareMap.get(DcMotor.class, CHMOTOR_0);
+        frontRight = hardwareMap.get(DcMotor.class, EXMOTOR_2);
+        backLeft = hardwareMap.get(DcMotor.class, CHMOTOR_3);
+        backRight = hardwareMap.get(DcMotor.class, EXMOTOR_3);
 
         //For intake side forward, reverse frontRight and backRight
         //For Outtake side forward, reverse
@@ -61,42 +56,31 @@ public class Hardware{
     }
     public void initIntake(HardwareMap hardwareMap){
         //Insert code to init intake motor + anything else
-        linearLeft = hardwareMap.get(Servo.class, SERVO_0);
-        linearRight = hardwareMap.get(Servo.class, SERVO_6);
-        intake = hardwareMap.get(DcMotor.class, MOTOR_5);//WHICH MOTOR IS INTAKE???
-        extendoL = hardwareMap.get(DcMotorEx.class, );
-        extendoR = hardwareMap.get(DcMotorEx.class, );
+        //intakeArm = hardwareMap.get(Servo.class, );
+        intake = hardwareMap.get(DcMotor.class, EXMOTOR_1);//WHICH MOTOR IS INTAKE???
+        extendoL = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
+        extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
+        extendoR = hardwareMap.get(DcMotorEx.class, EXMOTOR_0);
 
     }
     public void initDeposit(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
-
-        /*slide = hardwareMap.get(DcMotor.class, MOTOR_6);
-        slide.setDirection(DcMotorSimple.Direction.REVERSE);
-        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slide.setTargetPosition(0);
-        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slide.setPower(0.6);
-        */
-        //lift = new PIDMotor(hardwareMap, MOTOR_6);
-        lift = hardwareMap.get(DcMotor.class, MOTOR_6);
+        lift = hardwareMap.get(DcMotor.class, CHMOTOR_2);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setTargetPosition(LIFT_RETRACTED);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(POWER);
 
-        diffL = hardwareMap.get(Servo.class, SERVO_2);
-        diffR = hardwareMap.get(Servo.class, SERVO_8);
+        //diffL = hardwareMap.get(Servo.class, );
+        //diffR = hardwareMap.get(Servo.class, );
         diffL.setDirection(Servo.Direction.REVERSE);
 
-        v4bL = hardwareMap.get(Servo.class, SERVO_4);
-        v4bR = hardwareMap.get(Servo.class, SERVO_10);
+        //v4bL = hardwareMap.get(Servo.class, );
+        //v4bR = hardwareMap.get(Servo.class, );
         v4bL.setDirection(Servo.Direction.REVERSE);
 
-        claw1 = hardwareMap.get(Servo.class, SERVO_9);
-        claw1.setDirection(Servo.Direction.REVERSE);
-        claw2 = hardwareMap.get(Servo.class, SERVO_11);
+        //claw = hardwareMap.get(Servo.class, );
     }
     public void initSensors(HardwareMap hardwareMap){
         //Insert code to init sensors

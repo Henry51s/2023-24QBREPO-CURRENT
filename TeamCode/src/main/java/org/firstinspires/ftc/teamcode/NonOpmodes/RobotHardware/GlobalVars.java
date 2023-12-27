@@ -23,6 +23,11 @@ public class GlobalVars {
     public static int EXTENDO_FAR = 0;
 
 
+    public static int INTAKE_ARM_GROUND = 0;
+    public static int INTAKE_ARM_SECOND = 0;
+    public static int INTAKE_ARM_THIRD = 0;
+    public static int INTAKE_ARM_FOURTH = 0;
+    public static int INTAKE_ARM_FIFTH = 0;
 
     public static int LIFT_RETRACTED = 5;
     public static int LIFT_LOW = 500;
@@ -46,15 +51,15 @@ public class GlobalVars {
     public static double CLAW_LATCH = 0.5;
 
     //Config Names-----------------
-    //Control Hub Motors 0-3 = 0-3, Expansion Hub Motors 0-3 = 4-7
-    public static String MOTOR_0 = "motor0"; //Front Left
-    public static String MOTOR_1 = "motor1"; //Front Right
-    public static String MOTOR_2 = "motor2"; //Back Left
-    public static String MOTOR_3 = "motor3"; //Back Right
-    public static String MOTOR_4 = "motor4";
-    public static String MOTOR_5 = "motor5";
-    public static String MOTOR_6 = "motor6";
-    public static String MOTOR_7 = "motor7";
+
+    public static String CHMOTOR_0 = "motor0"; //Front Left
+    public static String CHMOTOR_1 = "motor1"; //Front Right
+    public static String CHMOTOR_2 = "motor2"; //Back Left
+    public static String CHMOTOR_3 = "motor3"; //Back Right
+    public static String EXMOTOR_0 = "motor4";
+    public static String EXMOTOR_1 = "motor5";
+    public static String EXMOTOR_2 = "motor6";
+    public static String EXMOTOR_3 = "motor7";
 
     //Control Hub Servos 0-5 = 0-5, Expansion Hub Servos 0-5 = 6-11
     public static String SERVO_0 = "servo0"; //Linear Servo Left (Positional)

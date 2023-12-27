@@ -23,8 +23,8 @@ public class ClawTest extends OpMode {
     @Override
     public void init() {
         hardware.initDeposit(hardwareMap);
-        claw1 = hardware.claw1;
-        claw2 = hardware.claw2;
+        //claw1 = hardware.claw1;
+        //claw2 = hardware.claw2;
 
         claw1.setPosition(pos);
         claw2.setPosition(pos);
