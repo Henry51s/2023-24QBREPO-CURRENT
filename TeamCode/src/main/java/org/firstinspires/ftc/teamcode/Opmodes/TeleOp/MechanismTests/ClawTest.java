@@ -5,14 +5,13 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="ClawTest", group="Tests")
 public class ClawTest extends OpMode {
-    Servo claw1, claw2;
+    Servo claw;
     Hardware hardware = new Hardware();
     double pos = 0.5;
     enum ClawStates{
@@ -23,11 +22,8 @@ public class ClawTest extends OpMode {
     @Override
     public void init() {
         hardware.initDeposit(hardwareMap);
-        //claw1 = hardware.claw1;
-        //claw2 = hardware.claw2;
-
-        claw1.setPosition(pos);
-        claw2.setPosition(pos);
+        claw = hardware.claw;
+        claw.setPosition(pos);
     }
 
     @Override
@@ -46,20 +42,19 @@ public class ClawTest extends OpMode {
                 else if(pos <= 0){
                     pos = 0;
                 }
-                claw1.setPosition(pos);
-                claw2.setPosition(pos);
+                claw.setPosition(pos);
                 if(gamepad1.left_stick_button){
                     clawStates = ClawStates.OPERATIONAL;
                 }
                 break;
             case OPERATIONAL:
                 if(gamepad1.a){
-                    claw1.setPosition(CLAW_RELEASE);
-                    claw2.setPosition(CLAW_RELEASE);
+                    claw.setPosition(CLAW_RELEASE);
+
                 }
                 if(gamepad1.b){
-                    claw1.setPosition(CLAW_LATCH);
-                    claw2.setPosition(CLAW_LATCH);
+                    claw.setPosition(CLAW_LATCH);
+
                 }
                 if(gamepad1.right_stick_button){
                     clawStates = ClawStates.FINE_TUNE;
@@ -67,7 +62,7 @@ public class ClawTest extends OpMode {
                 break;
         }
 
-        telemetry.addData("Claw pos: ", claw1.getPosition());
+        telemetry.addData("Claw pos: ", claw.getPosition());
         telemetry.addData("Mode: ", clawStates);
 
 

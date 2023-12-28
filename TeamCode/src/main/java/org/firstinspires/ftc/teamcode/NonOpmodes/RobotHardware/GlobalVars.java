@@ -62,19 +62,18 @@ public class GlobalVars {
     public static String EXMOTOR_3 = "motor7";
 
     //Control Hub Servos 0-5 = 0-5, Expansion Hub Servos 0-5 = 6-11
-    public static String SERVO_0 = "servo0"; //Linear Servo Left (Positional)
-    public static String SERVO_1 = "servo1";//Intake Left (Continuous)
-    public static String SERVO_2 = "servo2";//Differential Left (Positional)
-    public static String SERVO_3 = "servo3";
-    public static String SERVO_4 = "servo4";//V4B Left (Positional)
-    public static String SERVO_5 = "servo5";
-    public static String SERVO_6 = "servo6";//Linear Servo Right (Positional)
-    public static String SERVO_7 = "servo7";//Intake Right (Continuous)
-    public static String SERVO_8 = "servo8";//Differential Right (Positional)
-    public static String SERVO_9 = "servo9";//claw 1 or 2
-    public static String SERVO_10 = "servo10";//V4B Right (Positional)
-    public static String SERVO_11 = "servo11";//Claw 1 or 2
-
+    public static String CHSERVO_0 = "servo0"; //Linear Servo Left (Positional)
+    public static String CHSERVO_1 = "servo1";//Intake Left (Continuous)
+    public static String CHSERVO_2 = "servo2";//Differential Left (Positional)
+    public static String CHSERVO_3 = "servo3";
+    public static String CHSERVO_4 = "servo4";//V4B Left (Positional)
+    public static String CHSERVO_5 = "servo5";
+    public static String EXSERVO_0 = "servo6";//Linear Servo Right (Positional)
+    public static String EXSERVO_1 = "servo7";//Intake Right (Continuous)
+    public static String EXSERVO_2 = "servo8";//Differential Right (Positional)
+    public static String EXSERVO_3 = "servo9";//claw 1 or 2
+    public static String EXSERVO_4 = "servo10";//V4B Right (Positional)
+    public static String EXSERVO_5 = "servo11";//Claw 1 or 2
     public static String WEBCAM = "webcam";
     //Vision Constants-------------
 

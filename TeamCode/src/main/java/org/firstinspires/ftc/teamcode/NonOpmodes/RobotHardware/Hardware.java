@@ -61,6 +61,7 @@ public class Hardware{
         extendoL = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
         extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
         extendoR = hardwareMap.get(DcMotorEx.class, EXMOTOR_0);
+        intakeArm = hardwareMap.get(Servo.class, EXSERVO_5);
 
     }
     public void initDeposit(HardwareMap hardwareMap){
@@ -72,15 +73,15 @@ public class Hardware{
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(POWER);
 
-        //diffL = hardwareMap.get(Servo.class, );
-        //diffR = hardwareMap.get(Servo.class, );
+        diffL = hardwareMap.get(Servo.class, EXSERVO_2);
+        diffR = hardwareMap.get(Servo.class, EXSERVO_3);
         diffL.setDirection(Servo.Direction.REVERSE);
 
-        //v4bL = hardwareMap.get(Servo.class, );
-        //v4bR = hardwareMap.get(Servo.class, );
+        v4bL = hardwareMap.get(Servo.class, EXSERVO_0);
+        v4bR = hardwareMap.get(Servo.class, EXSERVO_1);
         v4bL.setDirection(Servo.Direction.REVERSE);
 
-        //claw = hardwareMap.get(Servo.class, );
+        claw = hardwareMap.get(Servo.class, EXSERVO_4);
     }
     public void initSensors(HardwareMap hardwareMap){
         //Insert code to init sensors
