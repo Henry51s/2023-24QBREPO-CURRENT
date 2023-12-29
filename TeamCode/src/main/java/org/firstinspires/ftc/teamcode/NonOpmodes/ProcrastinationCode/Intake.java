@@ -15,8 +15,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 public class Intake {
-    DcMotor intake;
-    Servo intakeArm;
+    public DcMotor intake;
+    public Servo intakeArm;
     Hardware hardware = new Hardware();
 
     public enum IntakeState{
@@ -85,6 +85,9 @@ public class Intake {
         if (!gamepad.right_bumper && !gamepad.left_bumper){
             setIntakeState(IntakeState.STOP);
         }
+    }
+    public void setArmPosition(double position){
+        intakeArm.setPosition(position);
     }
     public IntakeState getIntakeState(){
         return intakeState;

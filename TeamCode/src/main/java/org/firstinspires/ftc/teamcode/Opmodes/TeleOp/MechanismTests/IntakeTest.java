@@ -11,23 +11,43 @@ public class IntakeTest extends OpMode {
     Intake intake;
 
     enum TuningMode{
-        INTAKE,
-        INTAKE_ARM
+        FINE_TUNE,
+        OPERATIONAL
     }
-    TuningMode tuningMode = TuningMode.INTAKE;
+    double pos = 0.5;
+    TuningMode tuningMode = TuningMode.FINE_TUNE;
     @Override
     public void init() {
         intake = new Intake(hardwareMap);
+        intake.intakeArm.setPosition(pos);
     }
 
     @Override
     public void loop() {
+        intake.loopIntake(gamepad1);
         switch(tuningMode){
-            case INTAKE:
-                intake.loopIntake(gamepad1);
-                
+            case FINE_TUNE:
+
+                if(gamepad1.dpad_up){
+                    pos += 0.001;
+                }
+                if(gamepad1.dpad_down){
+                    pos -= 0.001;
+                }
+                if(pos >= 1){
+                    pos = 1;
+                }
+                if(pos <= 0){
+                    pos = 0;
+                }
+                intake.setArmPosition(pos);
+
+                if(gamepad1.left_stick_button)
+                    tuningMode = TuningMode.OPERATIONAL;
                 break;
-            /*case INTAKE_ARM:
+            case OPERATIONAL:
+                if(gamepad1.start)
+                    intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
                 if(gamepad1.a)
                     intake.setIntakeArmState(Intake.IntakeArmState.SECOND);
                 if(gamepad1.b)
@@ -36,14 +56,14 @@ public class IntakeTest extends OpMode {
                     intake.setIntakeArmState(Intake.IntakeArmState.FOURTH);
                 if(gamepad1.y)
                     intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
-                if(gamepad1.left_stick_button)
-                    intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
 
-                if(gamepad1.right_bumper){
-                    tuningMode = TuningMode.INTAKE;
-                }
-                break;*/
+                if(gamepad1.right_stick_button)
+                    tuningMode = TuningMode.FINE_TUNE;
+                break;
         }
+
+        telemetry.addData("Tuning Mode: ", tuningMode);
+        telemetry.addData("Intake Arm Position: ", intake.intakeArm.getPosition());
         telemetry.addData("Intake State: ", intake.getIntakeState());
         telemetry.addData("IntakeArm State: ", intake.getIntakeArmState());
 
