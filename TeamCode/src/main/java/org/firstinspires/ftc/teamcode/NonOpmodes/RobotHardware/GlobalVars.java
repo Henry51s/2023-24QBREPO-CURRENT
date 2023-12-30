@@ -23,11 +23,11 @@ public class GlobalVars {
     public static int EXTENDO_FAR = 0;
 
 
-    public static int INTAKE_ARM_GROUND = 0;
-    public static int INTAKE_ARM_SECOND = 0;
-    public static int INTAKE_ARM_THIRD = 0;
-    public static int INTAKE_ARM_FOURTH = 0;
-    public static int INTAKE_ARM_FIFTH = 0;
+    public static double INTAKE_ARM_GROUND = 0.245;
+    public static double INTAKE_ARM_SECOND = 0.282;
+    public static double INTAKE_ARM_THIRD = 0.357;
+    public static double INTAKE_ARM_FOURTH = 0.366;
+    public static double INTAKE_ARM_FIFTH = 0.462;
 
     public static int LIFT_RETRACTED = 5;
     public static int LIFT_LOW = 500;

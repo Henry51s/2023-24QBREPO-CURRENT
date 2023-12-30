@@ -13,8 +13,8 @@ public class OdoTest extends OpMode {
     @Override
     public void init() {
         hardware.initDrive(hardwareMap);
-        parallel = hardware.frontLeft;
-        perp = hardware.backRight;
+        parallel = hardware.backLeft;
+        perp = hardware.frontLeft;
     }
 
     @Override
