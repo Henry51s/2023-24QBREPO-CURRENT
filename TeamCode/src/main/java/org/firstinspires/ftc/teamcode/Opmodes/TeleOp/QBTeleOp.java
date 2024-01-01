@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Diff;
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
@@ -16,7 +15,7 @@ public class QBTeleOp extends OpMode {
     Hardware hw = new Hardware();
 
     Claw claw;
-    Diff diff;
+    Differential differential;
     FourBar fourBar;
     Lift lift;
     Intake intake;
@@ -25,13 +24,13 @@ public class QBTeleOp extends OpMode {
     public void init() {
         hw.initRobot(hardwareMap);
         claw = new Claw(hardwareMap);
-        diff = new Diff(hardwareMap);
+        differential = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);
         lift = new Lift(hardwareMap);
         intake = new Intake(hardwareMap);
 
         claw.setClawState(Claw.ClawState.CLOSE);
-        diff.setDiffState(Diff.DiffState.DEPOSIT);
+        differential.setDiffState(Differential.DiffState.DEPOSIT);
         fourBar.setV4bState(FourBar.V4bState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
     }
@@ -61,12 +60,12 @@ public class QBTeleOp extends OpMode {
             fourBar.setV4bState(FourBar.V4bState.DEPOSIT);
         }
         if(gamepad2.a){
-            diff.setDiffState(Diff.DiffState.DEPOSIT);
+            differential.setDiffState(Differential.DiffState.DEPOSIT);
         }
 
         if(gamepad2.y){
             fourBar.setV4bState(FourBar.V4bState.PICKUP);
-            diff.setDiffState(Diff.DiffState.PICKUP);
+            differential.setDiffState(Differential.DiffState.PICKUP);
         }
         if(gamepad2.dpad_left){
             lift.setLiftState(Lift.LiftState.LOW);

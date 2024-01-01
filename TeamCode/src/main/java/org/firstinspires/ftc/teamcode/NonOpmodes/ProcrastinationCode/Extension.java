@@ -10,16 +10,23 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.i;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.p;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
+@Config
 public class Extension {
 
-    PIDController pid = new PIDController(p,i,d);
-    private int targetPosition = 0;
+
+    public static int targetPosition = 0;
+    public static double kp = 0;
+    public static double ki = 0;
+    public static double kd = 0;
+    public static double velFactor = 0.5;
+    PIDController pid = new PIDController(kp,ki,kd);
 
     DcMotorEx extendoL, extendoR;
     Hardware hardware = new Hardware();
@@ -37,8 +44,14 @@ public class Extension {
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
         pid.setTolerance(TOLERANCE);
+        
     }
-    public void setVelocity(double velocity){
+
+    public void setPower(double power){
+        extendoL.setPower(power);
+        extendoR.setPower(power);
+    }
+    private void setVelocity(double velocity){
         extendoL.setVelocity(velocity);
         extendoR.setVelocity(velocity);
     }
@@ -62,11 +75,12 @@ public class Extension {
                 setTargetPosition(EXTENDO_FAR);
         }
     }
+    public int getCurrentPosition(){return extendoL.getCurrentPosition();}
     public void loopExtension(){
         double output = pid.calculate(
                 extendoL.getCurrentPosition(), targetPosition
         ); //Getting position from extendoL
-        setVelocity(output);
+        setVelocity(output*velFactor);
     }
 
 }

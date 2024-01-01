@@ -12,70 +12,38 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="DifferentialTest",group="Tests")
 public class DifferentialTest extends OpMode {
-    Servo diffL, diffR, v4bL, v4bR;
-    Hardware hardware = new Hardware();
-    double posL = 0.2;
-    double posR = 0.2;
-    int timeBuffer = 5000;//5000ms
-    boolean pickup = false;
-    boolean deposit = true;
+
+
     enum TuneStates{
         FINE_TUNE,
         RUN_TO_POSITION
     }
     TuneStates tuneStates = TuneStates.FINE_TUNE;
 
-    ElapsedTime time = new ElapsedTime();
-
-
+    Differential diff;
+    double posL = 0.5;
+    double posR = 0.5;
     @Override
     public void init() {
-        hardware.initDeposit(hardwareMap);
-        diffL = hardware.diffL;
-        diffR = hardware.diffR;
-
-        v4bL = hardware.v4bL;
-        v4bR = hardware.v4bR;
-
-        diffL.setPosition(posL);
-        diffR.setPosition(posR);
-        v4bL.setPosition(V4B_DEPOSIT);
-        v4bR.setPosition(V4B_DEPOSIT);
-
-        time.reset();
-
-
+        diff = new Differential(hardwareMap);
     }
 
     @Override
     public void loop() {
         switch(tuneStates){
             case FINE_TUNE:
-
-                if(gamepad1.left_bumper){
-                    v4bL.setPosition(V4B_PICKUP);
-                    v4bR.setPosition(V4B_PICKUP);
+                diff.setDiffLPosition(posL);
+                diff.setDiffRPosition(posR);
+                if(Math.abs(gamepad1.left_stick_y) > 0){
+                    posL += gamepad1.left_stick_y*0.01;
                 }
-                if(gamepad1.right_bumper){
-                    v4bL.setPosition(V4B_DEPOSIT);
-                    v4bR.setPosition(V4B_DEPOSIT);
-                }
-
-                if(gamepad1.a){
-                    posL += 0.001;
-                }
-                if(gamepad1.b){
-                    posL -= 0.001;
-                }
-                if(gamepad1.x){
-                    posR += 0.001;
-                }
-                if(gamepad1.y){
-                    posR -= 0.001;
+                if(Math.abs(gamepad1.right_stick_y) > 0){
+                    posR += gamepad1.left_stick_y*0.01;
                 }
                 if(gamepad1.dpad_up){
                     posL += 0.001;
@@ -86,9 +54,12 @@ public class DifferentialTest extends OpMode {
                     posR -= 0.001;
                 }
 
-
-                diffL.setPosition(posL);
-                diffR.setPosition(posR);
+                if(Math.abs(posL) >= 1){
+                    posL = Math.signum(posL);
+                }
+                if(Math.abs(posR) >= 1){
+                    posR = Math.signum(posR);
+                }
 
                 if(gamepad1.left_stick_button){
                     tuneStates = TuneStates.RUN_TO_POSITION;
@@ -96,38 +67,7 @@ public class DifferentialTest extends OpMode {
                 break;
             case RUN_TO_POSITION:
 
-                if(gamepad2.x){
-                    pickup = false;
-                    deposit = true;
-                }
-                if(gamepad2.y){
-                    pickup = true;
-                    deposit = false;
-                }
 
-                if (pickup) {
-                    final double nowTime = time.milliseconds();
-
-                    diffL.setPosition(DIFFL_PICKUP);
-                    diffR.setPosition(DIFFR_PICKUP);
-
-                    if(time.milliseconds() < nowTime + timeBuffer ) {
-                        v4bL.setPosition(V4B_PICKUP - 0.1);
-                        v4bR.setPosition(V4B_PICKUP - 0.1);
-                    }
-                    if(time.milliseconds() > nowTime + timeBuffer)
-                    {
-                        v4bL.setPosition(V4B_PICKUP);
-                        v4bR.setPosition(V4B_PICKUP);
-                    }
-                }
-                if(deposit){
-                    diffL.setPosition(DIFFL_DEPOSIT);
-                    diffR.setPosition(DIFFR_DEPOSIT);
-                    v4bL.setPosition(V4B_DEPOSIT);
-                    v4bR.setPosition(V4B_DEPOSIT);
-
-                }
 
 
                 if(gamepad2.left_stick_button) {
@@ -137,12 +77,6 @@ public class DifferentialTest extends OpMode {
         }
 
 
-        telemetry.addData("secArmL Pos: ", diffL.getPosition());
-        telemetry.addData("secArmR Pos: ", diffR.getPosition());
-        telemetry.addData("State: ", tuneStates);
-        telemetry.addData("Pickup? ", pickup);
-        telemetry.addData("Deposit? ", deposit);
-        telemetry.addData("time: ", time.milliseconds());
 
 
     }

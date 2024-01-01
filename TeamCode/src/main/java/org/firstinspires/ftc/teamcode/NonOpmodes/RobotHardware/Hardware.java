@@ -18,6 +18,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
 
 import java.util.List;
 
+import kotlin.reflect.jvm.internal.RuntimeTypeMapperKt;
+
 
 public class Hardware{
     public enum DriveState{
@@ -59,8 +61,15 @@ public class Hardware{
         //intakeArm = hardwareMap.get(Servo.class, );
         intake = hardwareMap.get(DcMotor.class, EXMOTOR_1);//WHICH MOTOR IS INTAKE???
         extendoL = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
-        extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
         extendoR = hardwareMap.get(DcMotorEx.class, EXMOTOR_0);
+
+        extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extendoL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
         intakeArm = hardwareMap.get(Servo.class, EXSERVO_5);
 
     }

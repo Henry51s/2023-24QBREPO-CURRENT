@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
 
-public class Diff {
+public class Differential {
     Servo diffL, diffR;
     Hardware hardware = new Hardware();
 
@@ -14,12 +14,24 @@ public class Diff {
         PICKUP,
         DEPOSIT
     }
+    double[] diffPositions = new double[2];
     DiffState diffState = DiffState.DEPOSIT;
-    public Diff(HardwareMap hw){
+    public Differential(HardwareMap hw){
         hardware.initDeposit(hw);
         diffL = hardware.diffL;
         diffR = hardware.diffR;
 
+    }
+    public void setDiffLPosition(double position){
+        diffL.setPosition(position);
+    }
+    public void setDiffRPosition(double position){
+        diffR.setPosition(position);
+    }
+    public double[] getDiffPositions(){
+        diffPositions[0] = diffL.getPosition();
+        diffPositions[1] = diffR.getPosition();
+        return diffPositions;
     }
     public void setDiffState(DiffState state){
         diffState = state;
@@ -33,5 +45,8 @@ public class Diff {
                 diffR.setPosition(DIFFR_DEPOSIT);
                 break;
         }
+    }
+    public DiffState getDiffState(){
+        return diffState;
     }
 }

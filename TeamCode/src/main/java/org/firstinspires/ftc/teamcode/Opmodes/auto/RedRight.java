@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.AutoTrajectories;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Diff;
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
@@ -18,7 +18,7 @@ public class RedRight extends LinearOpMode {
 
     Hardware hardware = new Hardware();
     Claw claw;
-    Diff diff;
+    Differential differential;
     FourBar fourBar;
     Lift lift;
 
@@ -32,12 +32,12 @@ public class RedRight extends LinearOpMode {
         //AutoTrajectories autoTrajectories;
         hardware.initRobot(hardwareMap);
         claw = new Claw(hardwareMap);
-        diff = new Diff(hardwareMap);
+        differential = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);
         lift = new Lift(hardwareMap);
 
         claw.setClawState(Claw.ClawState.CLOSE);
-        diff.setDiffState(Diff.DiffState.DEPOSIT);
+        differential.setDiffState(Differential.DiffState.DEPOSIT);
         fourBar.setV4bState(FourBar.V4bState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
