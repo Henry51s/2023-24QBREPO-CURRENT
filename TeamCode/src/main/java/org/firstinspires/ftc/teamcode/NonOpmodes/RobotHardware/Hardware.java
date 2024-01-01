@@ -117,8 +117,8 @@ public class Hardware{
         double x = gamepad.left_stick_x * flipMultiplier;
         double rx = -gamepad.right_stick_x*0.5;
 
-        frontLeft.setPower(y + x + rx);
-        backLeft.setPower(y - x + rx);
+        frontLeft.setPower(y - x + rx);
+        backLeft.setPower(y + x + rx);
         frontRight.setPower(y - x - rx);
         backRight.setPower(y + x - rx);
 

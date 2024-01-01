@@ -39,12 +39,14 @@ public class DifferentialTest extends OpMode {
             case FINE_TUNE:
                 diff.setDiffLPosition(posL);
                 diff.setDiffRPosition(posR);
-                if(Math.abs(gamepad1.left_stick_y) > 0){
+
+                /*if(Math.abs(gamepad1.left_stick_y) > 0){
                     posL += gamepad1.left_stick_y*0.01;
                 }
                 if(Math.abs(gamepad1.right_stick_y) > 0){
-                    posR += gamepad1.left_stick_y*0.01;
-                }
+                    posR += gamepad1.right_stick_y*0.01;
+                }*/
+
                 if(gamepad1.dpad_up){
                     posL += 0.001;
                     posR += 0.001;
@@ -52,6 +54,14 @@ public class DifferentialTest extends OpMode {
                 if(gamepad1.dpad_down){
                     posL -= 0.001;
                     posR -= 0.001;
+                }
+                if(gamepad1.dpad_left){
+                    posL += 0.001;
+                    posR -= 0.001;
+                }
+                if(gamepad1.dpad_right){
+                    posL -= 0.001;
+                    posR += 0.001;
                 }
 
                 if(Math.abs(posL) >= 1){
@@ -77,6 +87,8 @@ public class DifferentialTest extends OpMode {
         }
 
 
+        telemetry.addData("Left Position: ", posL);
+        telemetry.addData("Right Position: ", posR);
 
 
     }

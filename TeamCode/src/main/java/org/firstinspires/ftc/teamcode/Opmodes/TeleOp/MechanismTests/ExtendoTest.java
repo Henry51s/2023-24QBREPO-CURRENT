@@ -27,7 +27,7 @@ public class ExtendoTest extends OpMode {
     public void loop() {
         switch (tuningMode){
             case MANUAL:
-                extendo.setPower(gamepad1.left_stick_y);
+                extendo.setPower(gamepad1.left_stick_y*0.5);
                 if(gamepad1.left_bumper)
                     tuningMode = TuningMode.PID;
                 break;
