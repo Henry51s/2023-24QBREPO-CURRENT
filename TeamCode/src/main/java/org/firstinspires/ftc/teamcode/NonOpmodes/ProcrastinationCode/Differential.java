@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
 
+import com.arcrobotics.ftclib.command.button.GamepadButton;
+import com.arcrobotics.ftclib.gamepad.ButtonReader;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,6 +14,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 public class Differential {
     Servo diffL, diffR;
     Hardware hardware = new Hardware();
+    double offset = 0;
 
     public enum DiffState{
         PICKUP,
@@ -41,10 +47,13 @@ public class Differential {
                 diffR.setPosition(DIFFR_PICKUP);
                 break;
             case DEPOSIT:
-                diffL.setPosition(DIFFL_DEPOSIT);
-                diffR.setPosition(DIFFR_DEPOSIT);
+                diffL.setPosition(DIFFL_DEPOSIT+offset);
+                diffR.setPosition(DIFFR_DEPOSIT-offset);
                 break;
         }
+    }
+    public void setOffset(double offset){
+        this.offset = offset;
     }
     public DiffState getDiffState(){
         return diffState;

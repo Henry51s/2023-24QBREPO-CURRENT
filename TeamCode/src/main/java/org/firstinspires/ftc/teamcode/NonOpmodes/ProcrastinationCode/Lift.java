@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.PIDMotor;
 public class Lift {
     DcMotor lift;
     Hardware hardware = new Hardware();
