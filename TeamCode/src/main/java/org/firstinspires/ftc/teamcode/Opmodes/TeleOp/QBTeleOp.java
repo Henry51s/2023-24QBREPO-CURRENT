@@ -76,6 +76,6 @@ public class QBTeleOp extends OpMode {
         if(gamepad2.dpad_down){
             lift.setLiftState(Lift.LiftState.RETRACTED);
         }
-        
+
     }
 }
