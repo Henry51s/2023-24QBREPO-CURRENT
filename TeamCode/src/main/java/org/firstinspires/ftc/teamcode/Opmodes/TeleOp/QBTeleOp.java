@@ -48,7 +48,7 @@ public class QBTeleOp extends OpMode {
          */
         hw.loopDrive(gamepad1);
         intake.loopIntake(gamepad1);
-        fourBar.loopFourBar();
+
 
         if(gamepad2.left_bumper){
             claw.setClawState(Claw.ClawState.OPEN);
@@ -76,7 +76,6 @@ public class QBTeleOp extends OpMode {
         if(gamepad2.dpad_down){
             lift.setLiftState(Lift.LiftState.RETRACTED);
         }
-        telemetry.addData("fourBar time: ", fourBar.getTime());
-        telemetry.addData("Before buffer: ", fourBar.beforeBuffer);
+
     }
 }
