@@ -41,7 +41,7 @@ public class TransferTest extends OpMode {
                 diff.setDiffLPosition(diffPosL);
                 diff.setDiffRPosition(diffPosR);
 
-                fourBar.setV4BPosition(fourBarPos);
+                fourBar.setFourBarPosition(fourBarPos);
 
                 if(gamepad1.dpad_up){
                     diffPosL += 0.001;
@@ -88,16 +88,16 @@ public class TransferTest extends OpMode {
             case OPERATIONAL:
 
                 if(gamepad1.dpad_up) {
-                    fourBar.setV4bState(FourBar.FourBarState.DEPOSIT);
+                    fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
                     diff.setDiffState(Differential.DiffState.DEPOSIT);
 
                 }
                 if(gamepad1.dpad_right){
-                    fourBar.setV4bState(FourBar.FourBarState.INTERMEDIATE);
+                    fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
                     diff.setDiffState(Differential.DiffState.INTERMEDIATE);
                 }
                 if(gamepad1.dpad_down) {
-                    fourBar.setV4bState(FourBar.FourBarState.PICKUP);
+                    fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
                     diff.setDiffState(Differential.DiffState.PICKUP);
                 }
                 if(gamepad1.left_bumper)

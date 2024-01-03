@@ -38,7 +38,7 @@ public class RedRight extends LinearOpMode {
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);
-        fourBar.setV4bState(FourBar.FourBarState.INIT);
+        fourBar.setFourBarState(FourBar.FourBarState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
         autoTrajectories = new AutoTrajectories(hardwareMap);
@@ -53,7 +53,7 @@ public class RedRight extends LinearOpMode {
 
         drive.followTrajectory(toScore);
         lift.setLiftState(Lift.LiftState.LOW);
-        fourBar.setV4bState(FourBar.FourBarState.DEPOSIT);
+        fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
         claw.setClawState(Claw.ClawState.OPEN);
         time.reset();
 
@@ -61,7 +61,7 @@ public class RedRight extends LinearOpMode {
         while(opModeIsActive()){
             telemetry.addData("Pose", drive.getPoseEstimate());
             if(time.milliseconds() > 7000){
-                fourBar.setV4bState(FourBar.FourBarState.INIT);
+                fourBar.setFourBarState(FourBar.FourBarState.INIT);
             }
         }
     }

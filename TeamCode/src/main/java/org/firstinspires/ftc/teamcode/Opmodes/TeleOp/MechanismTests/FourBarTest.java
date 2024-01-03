@@ -26,7 +26,7 @@ public class FourBarTest extends OpMode {
 
         switch(tuneStates){
             case FINE_TUNE:
-                fourBar.setV4BPosition(position);
+                fourBar.setFourBarPosition(position);
                 if(Math.abs(gamepad1.left_stick_y)>0){
                     position += 0.001*Math.signum(gamepad1.left_stick_y);
                 }
@@ -44,5 +44,6 @@ public class FourBarTest extends OpMode {
 
         }
         telemetry.addData("Four Bar Position: ", fourBar.getPosition());
+        telemetry.addData("Intermediate Position array: ", fourBar.setFourBarPositionSlow(1,5));
     }
 }
