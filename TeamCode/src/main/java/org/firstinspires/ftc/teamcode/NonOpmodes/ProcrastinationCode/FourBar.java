@@ -25,8 +25,9 @@ public class FourBar {
 
     FourBarState fourBarState = FourBarState.INIT;
 
-    static int callCounter = 0;
+
     ElapsedTime servoTime = new ElapsedTime();
+    double[] intermediatePositions;
 
 
     public FourBar(HardwareMap hw){
@@ -62,27 +63,31 @@ public class FourBar {
         return fourBarState;
     }
 
-    public double[] setFourBarPositionSlow(double targetPosition, int pathSections){
+    public void calculateIntermediatePositions(double targetPosition, int pathSections){
+        intermediatePositions = new double[pathSections];
+
         double currentPosition = getPosition();
         double dPosition = Math.abs(targetPosition - currentPosition);
         double direction = Math.signum(targetPosition - currentPosition);
-        int delay = 100;
-        double[] intermediatePositions = new double[pathSections];
 
         intermediatePositions[0] = currentPosition + (dPosition/pathSections)*direction;
-
         for(int i = 1;i < intermediatePositions.length;i++){
             intermediatePositions[i] = intermediatePositions[i-1] + (dPosition/pathSections)*direction;
         }
+    }
 
-        /*for(int j = 0;j < intermediatePositions.length;j++){
+    public void setFourBarPositionSlow(double targetPosition, int pathSections){
+        int delayCounter = 0;
+        calculateIntermediatePositions(targetPosition, pathSections);
+        for(int i = 0;i < intermediatePositions.length;i++){
             servoTime.reset();
-            if(servoTime.milliseconds() > 100){
-                setFourBarPosition(intermediatePositions[j]);
+            while(servoTime.milliseconds() <= 1000){
+                delayCounter++;
+            }
+            setFourBarPosition(intermediatePositions[i]);
             }
         }
-        */
-        return intermediatePositions;
+
     }
-}
+
 

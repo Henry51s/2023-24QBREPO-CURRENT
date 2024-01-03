@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
+
 import java.util.Arrays;
 
 
@@ -17,6 +19,9 @@ public class FourBarTest extends OpMode {
 
     FourBar fourBar;
 
+    Gamepad currentGamepad = new Gamepad();
+    Gamepad previousGamepad = new Gamepad();
+
     double position = 0.5;
     @Override
     public void init() {
@@ -26,6 +31,9 @@ public class FourBarTest extends OpMode {
     @Override
     public void loop() {
 
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad1);
+
         switch(tuneStates){
             case FINE_TUNE:
                 fourBar.setFourBarPosition(position);
@@ -34,6 +42,9 @@ public class FourBarTest extends OpMode {
                 }
                 if(Math.abs(position) >= 1)
                     position = Math.signum(position);
+
+                if(currentGamepad.a && !previousGamepad.a)
+                    fourBar.setFourBarPositionSlow(0.3, 7);
 
                 if(gamepad1.right_stick_button)
                     tuneStates = TuneStates.OPERATIONAL;
@@ -46,6 +57,6 @@ public class FourBarTest extends OpMode {
 
         }
         telemetry.addData("Four Bar Position: ", fourBar.getPosition());
-        telemetry.addData("Intermediate Position array: ", Arrays.toString(fourBar.setFourBarPositionSlow(0.3,7)));
+
     }
 }
