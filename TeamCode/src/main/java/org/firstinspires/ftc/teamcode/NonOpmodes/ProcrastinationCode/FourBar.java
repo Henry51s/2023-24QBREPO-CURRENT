@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_INIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_INTERMEDIATE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
@@ -16,12 +16,13 @@ public class FourBar {
     Servo v4bL, v4bR;
     Hardware hardware = new Hardware();
 
-    public enum V4bState{
+    public enum FourBarState {
         INIT,
         PICKUP,
+        INTERMEDIATE,
         DEPOSIT
     }
-    V4bState v4bState = V4bState.INIT;
+    FourBarState fourBarState = FourBarState.INIT;
 
 
     public FourBar(HardwareMap hw){
@@ -33,14 +34,17 @@ public class FourBar {
         v4bL.setPosition(position);
         v4bR.setPosition(position);
     }
-    public void setV4bState(V4bState state){
-        v4bState = state;
+    public void setV4bState(FourBarState state){
+        fourBarState = state;
         switch (state){
             case INIT:
                 setV4BPosition(V4B_INIT);
                 break;
             case PICKUP:
                 setV4BPosition(V4B_PICKUP);
+                break;
+            case INTERMEDIATE:
+                setV4BPosition(V4B_INTERMEDIATE);
                 break;
             case DEPOSIT:
                 setV4BPosition(V4B_DEPOSIT);
@@ -49,6 +53,9 @@ public class FourBar {
     }
     public double getPosition(){
         return v4bL.getPosition();
+    }
+    public FourBarState getFourBarState(){
+        return fourBarState;
     }
 }
 

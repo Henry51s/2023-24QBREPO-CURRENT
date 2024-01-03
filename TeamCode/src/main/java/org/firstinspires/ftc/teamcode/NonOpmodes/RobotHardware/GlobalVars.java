@@ -38,17 +38,23 @@ public class GlobalVars {
 
     public static double V4B_INIT = 0.533;
     public static double V4B_PICKUP = 0.811;
-    public static double V4B_DEPOSIT = 0.3339;
+    public static double V4B_DEPOSIT = 0.3739;
+
+    public static double V4B_INTERMEDIATE = 0.6;
 
     public static double DIFFL_INIT = 0;
-    public static double DIFFL_PICKUP = 0.268;
-    public static double DIFFL_DEPOSIT = 0.815;
-    public static double DIFFR_INIT = 0;
-    public static double DIFFR_PICKUP = 0.03599;
-    public static double DIFFR_DEPOSIT = 0.588;
+    public static double DIFFL_PICKUP = 0.127;
+    public static double DIFFL_DEPOSIT = 0.386;
 
-    public static double CLAW_RELEASE = 0.46099;
-    public static double CLAW_LATCH = 0.5;
+    public static double DIFFL_INTERMEDIATE = 0.1349;
+    public static double DIFFR_INIT = 0;
+    public static double DIFFR_PICKUP = 0.107;
+    public static double DIFFR_DEPOSIT = 0.90;
+
+    public static double DIFFR_INTERMEDIATE = 0.1109;
+
+    public static double CLAW_RELEASE = 0.176;
+    public static double CLAW_LATCH = 0.514;
 
     //Config Names-----------------
 

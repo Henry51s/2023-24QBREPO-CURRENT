@@ -31,7 +31,7 @@ public class QBTeleOp extends OpMode {
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);
-        fourBar.setV4bState(FourBar.V4bState.INIT);
+        fourBar.setV4bState(FourBar.FourBarState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
     }
 
@@ -57,14 +57,14 @@ public class QBTeleOp extends OpMode {
             claw.setClawState(Claw.ClawState.CLOSE);
         }
         if(gamepad2.x){
-            fourBar.setV4bState(FourBar.V4bState.DEPOSIT);
+            fourBar.setV4bState(FourBar.FourBarState.DEPOSIT);
         }
         if(gamepad2.a){
             differential.setDiffState(Differential.DiffState.DEPOSIT);
         }
 
         if(gamepad2.y){
-            fourBar.setV4bState(FourBar.V4bState.PICKUP);
+            fourBar.setV4bState(FourBar.FourBarState.PICKUP);
             differential.setDiffState(Differential.DiffState.PICKUP);
         }
         if(gamepad2.dpad_left){

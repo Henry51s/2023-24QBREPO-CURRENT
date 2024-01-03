@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 public class Claw {
-    Servo claw1, claw2;
+    Servo claw;
     Hardware hardware = new Hardware();
 
     public enum ClawState{
@@ -19,21 +19,27 @@ public class Claw {
     ClawState clawState = ClawState.CLOSE;
     public Claw(HardwareMap hw){
         hardware.initDeposit(hw);
-        //claw1 = hardware.claw1;
-        //claw2 = hardware.claw2;
+        claw = hardware.claw;
     }
 
     public void setClawState(ClawState state){
         clawState = state;
         switch(state){
             case OPEN:
-                claw1.setPosition(CLAW_RELEASE);
-                claw2.setPosition(CLAW_RELEASE);
+                claw.setPosition(CLAW_RELEASE);
                 break;
             case CLOSE:
-                claw1.setPosition(CLAW_LATCH);
-                claw2.setPosition(CLAW_LATCH);
+                claw.setPosition(CLAW_LATCH);
                 break;
         }
+    }
+    public void setClawPosition(double position){
+        claw.setPosition(position);
+    }
+    public double getClawPosition(){
+        return claw.getPosition();
+    }
+    public ClawState getClawState(){
+        return clawState;
     }
 }

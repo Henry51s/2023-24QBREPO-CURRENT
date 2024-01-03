@@ -40,7 +40,7 @@ public class BlueLeft extends LinearOpMode {
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);
-        fourBar.setV4bState(FourBar.V4bState.INIT);
+        fourBar.setV4bState(FourBar.FourBarState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
         autoTrajectories = new AutoTrajectories(hardwareMap);
@@ -55,7 +55,7 @@ public class BlueLeft extends LinearOpMode {
 
         drive.followTrajectory(toScore);
         lift.setLiftState(Lift.LiftState.LOW);
-        fourBar.setV4bState(FourBar.V4bState.DEPOSIT);
+        fourBar.setV4bState(FourBar.FourBarState.DEPOSIT);
         claw.setClawState(Claw.ClawState.OPEN);
         time.reset();
 
@@ -65,7 +65,7 @@ public class BlueLeft extends LinearOpMode {
         while(opModeIsActive()){
             telemetry.addData("Pose", drive.getPoseEstimate());
             if(time.milliseconds() > 7000){
-                fourBar.setV4bState(FourBar.V4bState.INIT);
+                fourBar.setV4bState(FourBar.FourBarState.INIT);
             }
 
         }

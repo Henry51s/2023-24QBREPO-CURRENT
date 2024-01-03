@@ -7,8 +7,12 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;
 
+import com.arcrobotics.ftclib.gamepad.ButtonReader;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -28,9 +32,18 @@ public class DifferentialTest extends OpMode {
     Differential diff;
     double posL = 0.5;
     double posR = 0.5;
+
+    double offset = 0.135;
+    double n = 0;
+
+    Gamepad currentGamepad1, previousGamepad1;
+
+
     @Override
     public void init() {
         diff = new Differential(hardwareMap);
+        previousGamepad1 = new Gamepad();
+        currentGamepad1 = new Gamepad();
     }
 
     @Override
@@ -76,20 +89,32 @@ public class DifferentialTest extends OpMode {
                 }
                 break;
             case RUN_TO_POSITION:
+                previousGamepad1.copy(currentGamepad1);
+                currentGamepad1.copy(gamepad1);
+                diff.setDiffState(Differential.DiffState.DEPOSIT);
+                diff.setOffset(offset*n);
+                if(gamepad1.dpad_left && !previousGamepad1.dpad_left){
+                    n++;
+                }
+                if(gamepad1.dpad_right && !previousGamepad1.dpad_right){
+                    n--;
+                }
 
 
 
 
-                if(gamepad2.left_stick_button) {
-                    tuneStates = TuneStates.RUN_TO_POSITION;
+
+
+                if(gamepad2.right_stick_button) {
+                    tuneStates = TuneStates.FINE_TUNE;
                 }
                 break;
         }
 
 
-        telemetry.addData("Left Position: ", posL);
-        telemetry.addData("Right Position: ", posR);
-
+        telemetry.addData("Left Position: ", diff.getDiffPositions()[0]);
+        telemetry.addData("Right Position: ", diff.getDiffPositions()[1]);
+        telemetry.addData("n: ", n);
 
     }
 }

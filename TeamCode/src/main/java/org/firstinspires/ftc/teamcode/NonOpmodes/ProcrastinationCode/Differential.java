@@ -18,6 +18,8 @@ public class Differential {
 
     public enum DiffState{
         PICKUP,
+
+        INTERMEDIATE,
         DEPOSIT
     }
     double[] diffPositions = new double[2];
@@ -45,6 +47,10 @@ public class Differential {
             case PICKUP:
                 diffL.setPosition(DIFFL_PICKUP);
                 diffR.setPosition(DIFFR_PICKUP);
+                break;
+            case INTERMEDIATE:
+                diffL.setPosition(DIFFL_INTERMEDIATE);
+                diffR.setPosition(DIFFR_INTERMEDIATE);
                 break;
             case DEPOSIT:
                 diffL.setPosition(DIFFL_DEPOSIT+offset);
