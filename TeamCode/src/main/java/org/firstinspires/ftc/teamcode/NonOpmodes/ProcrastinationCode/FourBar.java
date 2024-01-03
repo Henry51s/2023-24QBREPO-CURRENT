@@ -67,13 +67,14 @@ public class FourBar {
         double dPosition = Math.abs(targetPosition - currentPosition);
         double direction = Math.signum(targetPosition - currentPosition);
         int delay = 100;
-        double[] intermediatePositions = new double[pathSections + 1];
+        double[] intermediatePositions = new double[pathSections];
 
         intermediatePositions[0] = currentPosition + (dPosition/pathSections)*direction;
 
         for(int i = 1;i < intermediatePositions.length;i++){
             intermediatePositions[i] = intermediatePositions[i-1] + (dPosition/pathSections)*direction;
         }
+
         /*for(int j = 0;j < intermediatePositions.length;j++){
             servoTime.reset();
             if(servoTime.milliseconds() > 100){

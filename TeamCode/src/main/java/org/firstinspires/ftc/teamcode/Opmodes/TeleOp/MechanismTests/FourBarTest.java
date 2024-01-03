@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.util.Arrays;
+
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
 
@@ -44,6 +46,6 @@ public class FourBarTest extends OpMode {
 
         }
         telemetry.addData("Four Bar Position: ", fourBar.getPosition());
-        telemetry.addData("Intermediate Position array: ", fourBar.setFourBarPositionSlow(1,5));
+        telemetry.addData("Intermediate Position array: ", Arrays.toString(fourBar.setFourBarPositionSlow(0.3,7)));
     }
 }
