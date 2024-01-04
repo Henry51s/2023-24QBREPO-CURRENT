@@ -12,7 +12,7 @@ public class DifferentialTest extends OpMode {
 
     enum TuneStates{
         FINE_TUNE,
-        RUN_TO_POSITION
+        OPERATIONAL
     }
     TuneStates tuneStates = TuneStates.FINE_TUNE;
 
@@ -72,10 +72,10 @@ public class DifferentialTest extends OpMode {
                 }
 
                 if(gamepad1.left_stick_button){
-                    tuneStates = TuneStates.RUN_TO_POSITION;
+                    tuneStates = TuneStates.OPERATIONAL;
                 }
                 break;
-            case RUN_TO_POSITION:
+            case OPERATIONAL:
                 previousGamepad1.copy(currentGamepad1);
                 currentGamepad1.copy(gamepad1);
                 diff.setDiffState(Differential.DiffState.DEPOSIT);

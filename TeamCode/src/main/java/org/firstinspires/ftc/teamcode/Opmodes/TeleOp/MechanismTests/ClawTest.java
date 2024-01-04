@@ -62,6 +62,5 @@ public class ClawTest extends OpMode {
 
         telemetry.addData("Claw pos: ", claw.getClawPosition());
         telemetry.addData("Claw State: ", claw.getClawState());
-        telemetry.addData("Mode: ", clawStates);
         }
     }

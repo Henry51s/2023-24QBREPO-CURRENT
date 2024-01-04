@@ -63,9 +63,10 @@ public class IntakeTest extends OpMode {
         }
 
         telemetry.addData("Tuning Mode: ", tuningMode);
-        telemetry.addData("Intake Arm Position: ", intake.intakeArm.getPosition());
         telemetry.addData("Intake State: ", intake.getIntakeState());
         telemetry.addData("IntakeArm State: ", intake.getIntakeArmState());
+
+        telemetry.addData("Intake Arm Position: ", intake.getIntakeArmPosition());
 
     }
 }

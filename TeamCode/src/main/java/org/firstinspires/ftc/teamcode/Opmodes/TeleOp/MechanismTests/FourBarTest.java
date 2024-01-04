@@ -47,12 +47,12 @@ public class FourBarTest extends OpMode {
                 if(gamepad1.b)
                     fourBar.setFourBarPosition(position);
 
-                if(gamepad1.right_stick_button)
+                if(gamepad1.left_stick_button)
                     tuneStates = TuneStates.OPERATIONAL;
                 break;
             case OPERATIONAL:
 
-                if(gamepad2.left_stick_button)
+                if(gamepad2.right_stick_button)
                     tuneStates = TuneStates.FINE_TUNE;
                 break;
 

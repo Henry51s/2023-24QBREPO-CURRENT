@@ -46,7 +46,6 @@ public class Extension {
         pid.setTolerance(TOLERANCE);
         
     }
-
     public void setPower(double power){
         extendoL.setPower(power);
         extendoR.setPower(power);
@@ -75,12 +74,12 @@ public class Extension {
                 setTargetPosition(EXTENDO_FAR);
         }
     }
-    public int getCurrentPosition(){return extendoL.getCurrentPosition();}
     public void loopExtension(){
         double output = pid.calculate(
                 extendoL.getCurrentPosition(), targetPosition
         ); //Getting position from extendoL
         setVelocity(output*velFactor);
     }
+    public int getCurrentPosition(){return extendoL.getCurrentPosition();}
 
 }

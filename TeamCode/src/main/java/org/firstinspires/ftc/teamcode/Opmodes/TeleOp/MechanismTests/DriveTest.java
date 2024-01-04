@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
-@TeleOp(name="DriveTest")
+@TeleOp(name="DriveTest", group="Tests")
 public class DriveTest extends OpMode {
     Hardware hardware = new Hardware();
     @Override

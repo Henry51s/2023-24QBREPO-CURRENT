@@ -95,4 +95,7 @@ public class Intake {
     public IntakeArmState getIntakeArmState(){
         return intakeArmState;
     }
+    public double getIntakeArmPosition(){
+        return intakeArm.getPosition();
+    }
 }

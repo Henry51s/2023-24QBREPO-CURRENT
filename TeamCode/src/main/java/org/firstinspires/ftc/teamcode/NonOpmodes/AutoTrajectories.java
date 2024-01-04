@@ -14,8 +14,6 @@ public class AutoTrajectories {
     SampleMecanumDrive drive;
     public Pose2d startPose = new Pose2d(0,0,0);
 
-    Pose2d preScore;
-    Pose2d score;
     Trajectory toScore;
     Trajectory back;
 

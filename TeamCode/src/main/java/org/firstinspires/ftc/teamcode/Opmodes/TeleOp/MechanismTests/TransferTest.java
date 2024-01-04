@@ -17,7 +17,6 @@ public class TransferTest extends OpMode {
 
     double diffPosL = 0.5;
     double diffPosR = 0.5;
-
     double fourBarPos = 0.5;
 
     enum TuningState{
@@ -25,9 +24,6 @@ public class TransferTest extends OpMode {
         OPERATIONAL
     }
     TuningState tuningState = TuningState.FINE_TUNE;
-
-    ElapsedTime v4b_timer = new ElapsedTime();
-
     Gamepad previousGamepad = new Gamepad();
     Gamepad currentGamepad = new Gamepad();
     @Override
@@ -35,7 +31,6 @@ public class TransferTest extends OpMode {
         diff = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);
         claw = new Claw(hardwareMap);
-
     }
 
     @Override
@@ -116,12 +111,13 @@ public class TransferTest extends OpMode {
                 break;
         }
         telemetry.addData("FourBar Position: ", fourBar.getPosition());
+
         telemetry.addData("DiffL Position: ", diff.getDiffPositions()[0]);
         telemetry.addData("DiffR Position: ", diff.getDiffPositions()[1]);
 
         telemetry.addData("FourBar state: ", fourBar.getFourBarState());
         telemetry.addData("Diff state: ", diff.getDiffState());
-        telemetry.addData("Claw Position: ", claw.getClawPosition());
+        telemetry.addData("Claw State: ", claw.getClawState());
 
     }
 }

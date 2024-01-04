@@ -36,11 +36,7 @@ public class Differential {
     public void setDiffRPosition(double position){
         diffR.setPosition(position);
     }
-    public double[] getDiffPositions(){
-        diffPositions[0] = diffL.getPosition();
-        diffPositions[1] = diffR.getPosition();
-        return diffPositions;
-    }
+
     public void setDiffState(DiffState state){
         diffState = state;
         switch(state){
@@ -60,6 +56,11 @@ public class Differential {
     }
     public void setOffset(double offset){
         this.offset = offset;
+    }
+    public double[] getDiffPositions(){
+        diffPositions[0] = diffL.getPosition();
+        diffPositions[1] = diffR.getPosition();
+        return diffPositions;
     }
     public DiffState getDiffState(){
         return diffState;

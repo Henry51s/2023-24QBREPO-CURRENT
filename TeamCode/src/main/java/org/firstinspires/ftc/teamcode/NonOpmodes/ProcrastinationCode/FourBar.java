@@ -59,12 +59,7 @@ public class FourBar {
                 break;
         }
     }
-    public double getPosition(){
-        return v4bL.getPosition();
-    }
-    public FourBarState getFourBarState(){
-        return fourBarState;
-    }
+
 
     public void calculateIntermediatePositions(double targetPosition){
         double currentPosition = getPosition();
@@ -93,6 +88,12 @@ public class FourBar {
             setFourBarPosition(intermediatePositions[i]);
             }
         }
+    public double getPosition(){
+        return v4bL.getPosition();
+    }
+    public FourBarState getFourBarState(){
+        return fourBarState;
+    }
 
     }
 
