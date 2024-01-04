@@ -41,10 +41,7 @@ public class RedRight extends LinearOpMode {
         fourBar.setFourBarState(FourBar.FourBarState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
-        autoTrajectories = new AutoTrajectories(hardwareMap);
-        autoTrajectories.RedRight();
-        toScore = autoTrajectories.toScore;
-
+        autoTrajectories = new AutoTrajectories(hardwareMap, AutoTrajectories.AutoStartLocation.RED_RIGHT);
 
         waitForStart();
         if(isStopRequested()){
