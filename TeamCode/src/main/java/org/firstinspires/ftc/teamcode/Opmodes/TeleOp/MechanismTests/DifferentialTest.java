@@ -1,23 +1,10 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFL_PICKUP;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFR_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.DIFFR_PICKUP;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;
-
-import com.arcrobotics.ftclib.gamepad.ButtonReader;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="DifferentialTest",group="Tests")
 public class DifferentialTest extends OpMode {

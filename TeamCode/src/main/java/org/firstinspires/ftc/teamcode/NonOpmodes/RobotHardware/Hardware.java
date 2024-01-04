@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
 
 
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -17,8 +16,6 @@ import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftT
 import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
 
 import java.util.List;
-
-import kotlin.reflect.jvm.internal.RuntimeTypeMapperKt;
 
 
 public class Hardware{
@@ -38,7 +35,7 @@ public class Hardware{
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake, lift;
 
     public DcMotorEx extendoL, extendoR;
-    public Servo diffL, diffR, v4bL, v4bR, claw, intakeArm;
+    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm;
 
     //---------------------------
     public void initDrive(HardwareMap hardwareMap){
@@ -86,9 +83,9 @@ public class Hardware{
         diffR = hardwareMap.get(Servo.class, EXSERVO_3);
         diffL.setDirection(Servo.Direction.REVERSE);
 
-        v4bL = hardwareMap.get(Servo.class, EXSERVO_0);
-        v4bR = hardwareMap.get(Servo.class, EXSERVO_1);
-        v4bL.setDirection(Servo.Direction.REVERSE);
+        fourBarL = hardwareMap.get(Servo.class, EXSERVO_0);
+        fourBarR = hardwareMap.get(Servo.class, EXSERVO_1);
+        fourBarL.setDirection(Servo.Direction.REVERSE);
 
         claw = hardwareMap.get(Servo.class, EXSERVO_4);
     }

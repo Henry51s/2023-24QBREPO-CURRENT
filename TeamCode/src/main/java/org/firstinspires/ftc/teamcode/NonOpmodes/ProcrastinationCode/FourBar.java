@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_INIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_INTERMEDIATE;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_INIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_INTERMEDIATE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_PICKUP;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -35,8 +35,8 @@ public class FourBar {
 
     public FourBar(HardwareMap hw){
         hardware.initDeposit(hw);
-        v4bL = hardware.v4bL;
-        v4bR = hardware.v4bR;
+        v4bL = hardware.fourBarL;
+        v4bR = hardware.fourBarR;
     }
     public void setFourBarPosition(double position){
         v4bL.setPosition(position);
@@ -46,16 +46,16 @@ public class FourBar {
         fourBarState = state;
         switch (state){
             case INIT:
-                setFourBarPositionSlow(V4B_INIT);
+                setFourBarPositionSlow(FOURBAR_INIT);
                 break;
             case PICKUP:
-                setFourBarPositionSlow(V4B_PICKUP);
+                setFourBarPositionSlow(FOURBAR_PICKUP);
                 break;
             case INTERMEDIATE:
-                setFourBarPositionSlow(V4B_INTERMEDIATE);
+                setFourBarPositionSlow(FOURBAR_INTERMEDIATE);
                 break;
             case DEPOSIT:
-                setFourBarPositionSlow(V4B_DEPOSIT);
+                setFourBarPositionSlow(FOURBAR_DEPOSIT);
                 break;
         }
     }
@@ -71,13 +71,13 @@ public class FourBar {
         double dPosition = Math.abs(targetPosition - currentPosition);
         double direction = Math.signum(targetPosition - currentPosition);
 
-        int pathSections = Math.max((int) (dPosition*stepRatio),1);
+        int steps = Math.max((int) (dPosition*stepRatio),1);
 
-        intermediatePositions = new double[pathSections];
+        intermediatePositions = new double[steps];
 
-        intermediatePositions[0] = currentPosition + (dPosition/pathSections)*direction;
+        intermediatePositions[0] = currentPosition + (dPosition/steps)*direction;
         for(int i = 1;i < intermediatePositions.length;i++){
-            intermediatePositions[i] = intermediatePositions[i-1] + (dPosition/pathSections)*direction;
+            intermediatePositions[i] = intermediatePositions[i-1] + (dPosition/steps)*direction;
         }
     }
 
