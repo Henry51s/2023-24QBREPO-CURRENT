@@ -37,7 +37,7 @@ public class GlobalVars {
 
 
     public static double V4B_INIT = 0.533;
-    public static double V4B_PICKUP = 0.811;
+    public static double V4B_PICKUP = 0.759;
     public static double V4B_DEPOSIT = 0.3739;
 
     public static double V4B_INTERMEDIATE = 0.6;

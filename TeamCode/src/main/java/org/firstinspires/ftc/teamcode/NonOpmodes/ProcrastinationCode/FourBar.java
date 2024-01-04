@@ -29,7 +29,8 @@ public class FourBar {
 
     ElapsedTime servoTime = new ElapsedTime();
     public double[] intermediatePositions;
-    public static int delay = 500;
+    public static int delay = 25;
+    public static int stepRatio = 150;
 
 
     public FourBar(HardwareMap hw){
@@ -45,16 +46,16 @@ public class FourBar {
         fourBarState = state;
         switch (state){
             case INIT:
-                setFourBarPosition(V4B_INIT);
+                setFourBarPositionSlow(V4B_INIT);
                 break;
             case PICKUP:
-                setFourBarPosition(V4B_PICKUP);
+                setFourBarPositionSlow(V4B_PICKUP);
                 break;
             case INTERMEDIATE:
-                setFourBarPosition(V4B_INTERMEDIATE);
+                setFourBarPositionSlow(V4B_INTERMEDIATE);
                 break;
             case DEPOSIT:
-                setFourBarPosition(V4B_DEPOSIT);
+                setFourBarPositionSlow(V4B_DEPOSIT);
                 break;
         }
     }
@@ -70,8 +71,7 @@ public class FourBar {
         double dPosition = Math.abs(targetPosition - currentPosition);
         double direction = Math.signum(targetPosition - currentPosition);
 
-        int stepRatio = 70;
-        int pathSections = (int) dPosition*stepRatio;
+        int pathSections = Math.max((int) (dPosition*stepRatio),1);
 
         intermediatePositions = new double[pathSections];
 
@@ -81,7 +81,7 @@ public class FourBar {
         }
     }
 
-    public void setFourBarPositionSlow(double targetPosition, int pathSections){
+    public void setFourBarPositionSlow(double targetPosition){
         int delayCounter = 0;
 
         calculateIntermediatePositions(targetPosition);

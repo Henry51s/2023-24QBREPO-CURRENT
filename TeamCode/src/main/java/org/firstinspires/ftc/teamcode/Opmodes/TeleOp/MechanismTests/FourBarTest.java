@@ -43,7 +43,7 @@ public class FourBarTest extends OpMode {
                     position = Math.signum(position);
 
                 if(currentGamepad.a && !previousGamepad.a)
-                    fourBar.calculateIntermediatePositions(0.4);
+                    fourBar.setFourBarPositionSlow(0.65);
                 if(gamepad1.b)
                     fourBar.setFourBarPosition(position);
 

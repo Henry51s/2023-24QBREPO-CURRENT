@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
@@ -26,6 +27,9 @@ public class TransferTest extends OpMode {
     TuningState tuningState = TuningState.FINE_TUNE;
 
     ElapsedTime v4b_timer = new ElapsedTime();
+
+    Gamepad previousGamepad = new Gamepad();
+    Gamepad currentGamepad = new Gamepad();
     @Override
     public void init() {
         diff = new Differential(hardwareMap);
@@ -36,6 +40,8 @@ public class TransferTest extends OpMode {
 
     @Override
     public void loop() {
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad1);
         switch(tuningState){
             case FINE_TUNE:
                 diff.setDiffLPosition(diffPosL);
@@ -87,18 +93,18 @@ public class TransferTest extends OpMode {
                 break;
             case OPERATIONAL:
 
-                if(gamepad1.dpad_up) {
+                if(currentGamepad.dpad_up && !previousGamepad.dpad_up) {
                     fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
                     diff.setDiffState(Differential.DiffState.DEPOSIT);
 
                 }
-                if(gamepad1.dpad_right){
+                if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
                     fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
                     diff.setDiffState(Differential.DiffState.INTERMEDIATE);
                 }
-                if(gamepad1.dpad_down) {
-                    fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
+                if(currentGamepad.dpad_left && !previousGamepad.dpad_left) {
                     diff.setDiffState(Differential.DiffState.PICKUP);
+                    fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
                 }
                 if(gamepad1.left_bumper)
                     claw.setClawState(Claw.ClawState.OPEN);
