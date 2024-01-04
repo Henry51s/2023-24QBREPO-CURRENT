@@ -43,7 +43,7 @@ public class FourBarTest extends OpMode {
                     position = Math.signum(position);
 
                 if(currentGamepad.a && !previousGamepad.a)
-                    fourBar.setFourBarPositionSlow(0.4, 7);
+                    fourBar.calculateIntermediatePositions(0.4);
                 if(gamepad1.b)
                     fourBar.setFourBarPosition(position);
 
@@ -58,6 +58,7 @@ public class FourBarTest extends OpMode {
 
         }
         telemetry.addData("Four Bar Position: ", fourBar.getPosition());
+        telemetry.addData("Intermediate Positions: ", Arrays.toString(fourBar.intermediatePositions));
 
     }
 }

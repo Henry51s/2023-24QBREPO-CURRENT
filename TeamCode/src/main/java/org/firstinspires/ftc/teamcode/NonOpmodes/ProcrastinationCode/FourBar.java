@@ -28,7 +28,7 @@ public class FourBar {
 
 
     ElapsedTime servoTime = new ElapsedTime();
-    double[] intermediatePositions;
+    public double[] intermediatePositions;
     public static int delay = 500;
 
 
@@ -65,12 +65,15 @@ public class FourBar {
         return fourBarState;
     }
 
-    public void calculateIntermediatePositions(double targetPosition, int pathSections){
-        intermediatePositions = new double[pathSections];
-
+    public void calculateIntermediatePositions(double targetPosition){
         double currentPosition = getPosition();
         double dPosition = Math.abs(targetPosition - currentPosition);
         double direction = Math.signum(targetPosition - currentPosition);
+
+        int stepRatio = 70;
+        int pathSections = (int) dPosition*stepRatio;
+
+        intermediatePositions = new double[pathSections];
 
         intermediatePositions[0] = currentPosition + (dPosition/pathSections)*direction;
         for(int i = 1;i < intermediatePositions.length;i++){
@@ -80,7 +83,8 @@ public class FourBar {
 
     public void setFourBarPositionSlow(double targetPosition, int pathSections){
         int delayCounter = 0;
-        calculateIntermediatePositions(targetPosition, pathSections);
+
+        calculateIntermediatePositions(targetPosition);
         for(int i = 0;i < intermediatePositions.length;i++){
             servoTime.reset();
             while(servoTime.milliseconds() <= delay){
