@@ -36,7 +36,6 @@ public class FourBarTest extends OpMode {
 
         switch(tuneStates){
             case FINE_TUNE:
-                fourBar.setFourBarPosition(position);
                 if(Math.abs(gamepad1.left_stick_y)>0){
                     position += 0.001*Math.signum(gamepad1.left_stick_y);
                 }
@@ -44,7 +43,9 @@ public class FourBarTest extends OpMode {
                     position = Math.signum(position);
 
                 if(currentGamepad.a && !previousGamepad.a)
-                    fourBar.setFourBarPositionSlow(0.3, 7);
+                    fourBar.setFourBarPositionSlow(0.4, 7);
+                if(gamepad1.b)
+                    fourBar.setFourBarPosition(position);
 
                 if(gamepad1.right_stick_button)
                     tuneStates = TuneStates.OPERATIONAL;

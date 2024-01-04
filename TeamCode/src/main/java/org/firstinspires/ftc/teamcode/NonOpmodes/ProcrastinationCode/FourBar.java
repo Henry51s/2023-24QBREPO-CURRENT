@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_INTERMEDIATE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.V4B_PICKUP;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 
-
+@Config
 public class FourBar {
     Servo v4bL, v4bR;
     Hardware hardware = new Hardware();
@@ -28,6 +29,7 @@ public class FourBar {
 
     ElapsedTime servoTime = new ElapsedTime();
     double[] intermediatePositions;
+    public static int delay = 500;
 
 
     public FourBar(HardwareMap hw){
@@ -81,7 +83,7 @@ public class FourBar {
         calculateIntermediatePositions(targetPosition, pathSections);
         for(int i = 0;i < intermediatePositions.length;i++){
             servoTime.reset();
-            while(servoTime.milliseconds() <= 1000){
+            while(servoTime.milliseconds() <= delay){
                 delayCounter++;
             }
             setFourBarPosition(intermediatePositions[i]);
