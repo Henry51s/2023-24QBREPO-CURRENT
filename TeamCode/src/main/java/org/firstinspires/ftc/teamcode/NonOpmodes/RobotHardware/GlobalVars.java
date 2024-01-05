@@ -39,15 +39,12 @@ public class GlobalVars {
     public static double FOURBAR_INIT = 0.533;
     public static double FOURBAR_PICKUP = 0.759;
     public static double FOURBAR_DEPOSIT = 0.3739;
-
     public static double FOURBAR_INTERMEDIATE = 0.6;
 
-    public static double DIFFL_INIT = 0;
     public static double DIFFL_PICKUP = 0.127;
     public static double DIFFL_DEPOSIT = 0.386;
 
     public static double DIFFL_INTERMEDIATE = 0.1349;
-    public static double DIFFR_INIT = 0;
     public static double DIFFR_PICKUP = 0.107;
     public static double DIFFR_DEPOSIT = 0.90;
 
