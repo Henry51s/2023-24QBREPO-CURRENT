@@ -53,8 +53,8 @@ public class GlobalVars {
 
     public static double DIFFR_INTERMEDIATE = 0.1109;
 
-    public static double CLAW_RELEASE = 0.176;
-    public static double CLAW_LATCH = 0.514;
+    public static double CLAW_RELEASE = 0.150;
+    public static double CLAW_LATCH = 0.393;
 
     //Config Names-----------------
 

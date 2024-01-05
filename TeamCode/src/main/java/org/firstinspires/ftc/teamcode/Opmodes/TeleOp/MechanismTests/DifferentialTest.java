@@ -20,7 +20,7 @@ public class DifferentialTest extends OpMode {
     double posL = 0.5;
     double posR = 0.5;
 
-    double offset = 0.135;
+    public double offset = 0.135;
     double n = 0;
 
     Gamepad currentGamepad1, previousGamepad1;
