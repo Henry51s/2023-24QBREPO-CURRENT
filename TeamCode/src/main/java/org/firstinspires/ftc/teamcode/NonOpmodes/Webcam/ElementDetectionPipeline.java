@@ -21,13 +21,23 @@ public class ElementDetectionPipeline implements VisionProcessor {
         CENTER,
         RIGHT
     }
+    public enum ElementColor{
+        BLUE,
+        RED
+    }
     DetectionLocation detectionLocation = DetectionLocation.LEFT;
+    ElementColor elementColor = ElementColor.RED;
 
-    Mat testMat = new Mat();
-    Mat highMat = new Mat();
-    Mat lowMat = new Mat();
-    Mat finalMat = new Mat();
-    double redThreshold = 0.5;
+    private Mat testMat = new Mat();
+    private Mat highMat = new Mat();
+    private Mat lowMat = new Mat();
+    private Mat finalMat = new Mat();
+
+    static private Scalar lowHSVColorLower, lowHSVColorUpper; //Beginning of Color Wheel
+    static private Scalar highHSVColorLower, highHSVColorUpper; //Wraps around Color Wheel
+
+
+    private static final double colorThreshold = 0.5;
 
     static final Rect LEFT_RECTANGLE = new Rect(
             new Point(0,0),
@@ -42,9 +52,24 @@ public class ElementDetectionPipeline implements VisionProcessor {
             new Point(xResolution, yResolution)
     );
 
+    public ElementDetectionPipeline(ElementColor elementColor){
+        this.elementColor = elementColor;
+    }
+
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
+        if(elementColor == ElementColor.RED){
+            lowHSVColorLower = new Scalar(0, 100, 20);
 
+            lowHSVColorUpper = new Scalar(10, 255, 255);
+
+            highHSVColorLower = new Scalar(160, 100, 20);
+
+            highHSVColorUpper = new Scalar(180, 255, 255);
+        }
+        else if(elementColor == ElementColor.BLUE){
+            //Tune scalar values
+        }
     }
 
     @Override
@@ -53,14 +78,8 @@ public class ElementDetectionPipeline implements VisionProcessor {
         Imgproc.cvtColor(frame, testMat, Imgproc.COLOR_RGB2HSV);
 
 
-        Scalar lowHSVRedLower = new Scalar(0, 100, 20);  //Beginning of Color Wheel
-        Scalar lowHSVRedUpper = new Scalar(10, 255, 255);
-
-        Scalar redHSVRedLower = new Scalar(160, 100, 20); //Wraps around Color Wheel
-        Scalar highHSVRedUpper = new Scalar(180, 255, 255);
-
-        Core.inRange(testMat, lowHSVRedLower, lowHSVRedUpper, lowMat);
-        Core.inRange(testMat, redHSVRedLower, highHSVRedUpper, highMat);
+        Core.inRange(testMat, lowHSVColorLower, lowHSVColorUpper, lowMat);
+        Core.inRange(testMat, highHSVColorLower, highHSVColorUpper, highMat);
 
         testMat.release();
 
@@ -80,17 +99,14 @@ public class ElementDetectionPipeline implements VisionProcessor {
 
 
 
-        if(averagedLeftBox > redThreshold){        //Must Tune Red Threshold
+        if(averagedLeftBox > colorThreshold){        //Must Tune Red Threshold
             detectionLocation = DetectionLocation.LEFT;
-        }else if(averagedRightBox> redThreshold){
+        }else if(averagedRightBox> colorThreshold){
             detectionLocation = DetectionLocation.RIGHT;
-        }else if(averagedMiddleBox > redThreshold){
+        }else if(averagedMiddleBox > colorThreshold){
             detectionLocation = DetectionLocation.CENTER;
         }
 
-        finalMat.copyTo(frame); /*This line should only be added in when you want to see your custom pipeline
-                                  on the driver station stream, do not use this permanently in your code as
-                                  you use the "frame" mat for all of your pipelines, such as April Tags*/
         return null;            //You do not return the original mat anymore, instead return null
     }
 

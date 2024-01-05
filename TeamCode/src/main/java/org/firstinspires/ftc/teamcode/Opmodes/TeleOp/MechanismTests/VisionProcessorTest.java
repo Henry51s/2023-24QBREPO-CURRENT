@@ -18,7 +18,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 public class VisionProcessorTest extends LinearOpMode {
 
     private VisionPortal portal;
-    private ElementDetectionPipeline elementDetectionPipeline = new ElementDetectionPipeline();
+    private ElementDetectionPipeline elementDetectionPipeline = new ElementDetectionPipeline(ElementDetectionPipeline.ElementColor.RED);
 
     @Override
     public void runOpMode() throws InterruptedException {
