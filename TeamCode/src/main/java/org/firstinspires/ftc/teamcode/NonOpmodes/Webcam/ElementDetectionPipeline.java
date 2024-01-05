@@ -38,7 +38,7 @@ public class ElementDetectionPipeline implements VisionProcessor {
             new Point(2*xResolution/3, yResolution)
     );
     static final Rect RIGHT_RECTANGLE = new Rect(
-            new Point(2*xResolution, 0),
+            new Point(2*xResolution/3, 0),
             new Point(xResolution, yResolution)
     );
 
