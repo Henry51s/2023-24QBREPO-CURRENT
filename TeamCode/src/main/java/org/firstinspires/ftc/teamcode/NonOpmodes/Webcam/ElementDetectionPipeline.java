@@ -69,6 +69,13 @@ public class ElementDetectionPipeline implements VisionProcessor {
         }
         else if(elementColor == ElementColor.BLUE){
             //Tune scalar values
+            lowHSVColorLower = new Scalar(180, 100, 20);
+
+            lowHSVColorUpper = new Scalar(200, 255, 255);
+
+            highHSVColorLower = new Scalar(320, 100, 20);
+
+            highHSVColorUpper = new Scalar(360, 255, 255);
         }
     }
 
