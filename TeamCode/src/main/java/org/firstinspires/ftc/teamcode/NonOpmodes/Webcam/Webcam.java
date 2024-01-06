@@ -17,13 +17,25 @@ public class Webcam {
     private ElementDetectionPipeline elementDetectionPipeline;
 
     public Webcam(HardwareMap hw, ElementDetectionPipeline.ElementColor elementColor){
-        elementDetectionPipeline.elementColor = elementColor;
-        portal = new VisionPortal.Builder()
-                .setCamera(hw.get(WebcamName.class, WEBCAM))
-                .setCameraResolution(new Size(xResolution,yResolution))
-                .setCamera(BuiltinCameraDirection.BACK)
-                .addProcessor(elementDetectionPipeline)
-                .build();
+        elementDetectionPipeline = new ElementDetectionPipeline(elementColor);
+        try {
+            portal = new VisionPortal.Builder()
+                    .setCamera(hw.get(WebcamName.class, WEBCAM))
+                    .setCameraResolution(new Size(xResolution, yResolution))
+                    .setCamera(BuiltinCameraDirection.BACK)
+                    .addProcessor(elementDetectionPipeline)
+                    .build();
+        }
+        catch (Exception e) {
+            portal = new VisionPortal.Builder()
+                    .setCamera(hw.get(WebcamName.class, WEBCAM))
+                    .setCameraResolution(new Size(xResolution, yResolution))
+                    .setCamera(BuiltinCameraDirection.BACK)
+
+                    .build();
+        }
+
+
 
     }
     public ElementDetectionPipeline.DetectionLocation getDetectionLocation(){
