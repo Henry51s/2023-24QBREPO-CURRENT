@@ -12,33 +12,30 @@ import org.firstinspires.ftc.robotcore.external.android.util.Size;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.ElementDetectionPipeline;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.Webcam;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @TeleOp(name="VisionProcessorTest")
 public class VisionProcessorTest extends LinearOpMode {
 
-    private VisionPortal portal;
-    private ElementDetectionPipeline elementDetectionPipeline = new ElementDetectionPipeline(ElementDetectionPipeline.ElementColor.RED);
+    //private VisionPortal portal;
+    //private ElementDetectionPipeline elementDetectionPipeline = new ElementDetectionPipeline(ElementDetectionPipeline.ElementColor.RED);
+    Webcam webcam;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
-
-        portal = new VisionPortal.Builder()
+        webcam = new Webcam(hardwareMap, ElementDetectionPipeline.ElementColor.RED);
+        /*portal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, WEBCAM))
                 .setCameraResolution(new android.util.Size(xResolution,yResolution))
                 .setCamera(BuiltinCameraDirection.BACK)
                 .addProcessor(elementDetectionPipeline)
-                .build();
-        portal.getProcessorEnabled(elementDetectionPipeline);
-
-
-
+                .build();*/
 
 
         waitForStart();
         while(opModeIsActive()){
-            telemetry.addData("Prop Position", elementDetectionPipeline.getDetectionLocation());
+            telemetry.addData("Prop Position", webcam.getDetectionLocation());
             telemetry.update();                        //Will output prop position on Driver Station Console
         }
 

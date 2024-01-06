@@ -24,6 +24,7 @@ public class Webcam {
                 .setCamera(BuiltinCameraDirection.BACK)
                 .addProcessor(elementDetectionPipeline)
                 .build();
+
     }
     public ElementDetectionPipeline.DetectionLocation getDetectionLocation(){
         return elementDetectionPipeline.getDetectionLocation();

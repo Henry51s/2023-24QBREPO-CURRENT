@@ -19,7 +19,7 @@ public class ElementDetectionPipeline implements VisionProcessor {
     public enum DetectionLocation{
         LEFT,
         CENTER,
-        RIGHT
+        RIGHT,
     }
     public enum ElementColor{
         BLUE,
@@ -101,11 +101,13 @@ public class ElementDetectionPipeline implements VisionProcessor {
 
         if(averagedLeftBox > colorThreshold){        //Must Tune Red Threshold
             detectionLocation = DetectionLocation.LEFT;
-        }else if(averagedRightBox> colorThreshold){
+        }else if(averagedRightBox > colorThreshold){
             detectionLocation = DetectionLocation.RIGHT;
         }else if(averagedMiddleBox > colorThreshold){
             detectionLocation = DetectionLocation.CENTER;
         }
+        else
+            detectionLocation = null;
 
         return null;            //You do not return the original mat anymore, instead return null
     }
