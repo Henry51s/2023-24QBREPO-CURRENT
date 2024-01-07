@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @Config
@@ -18,15 +19,20 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 public class LiftTest extends OpMode {
 
     //max is 1781
-    DcMotor lift;
-    Hardware hardware = new Hardware();
+    Lift lift;
     FtcDashboard dashboard;
     TelemetryPacket packet;
 
+    enum TuningMode{
+        FINE_TUNE,
+        OPERATIONAL
+    }
+    TuningMode tuningMode = TuningMode.FINE_TUNE;
+
     @Override
     public void init() {
-        hardware.initDeposit(hardwareMap);
-        lift = hardware.lift;
+        lift = new Lift(hardwareMap);
+
 
         dashboard = FtcDashboard.getInstance();
         dashboard.setTelemetryTransmissionInterval(25);
@@ -36,12 +42,35 @@ public class LiftTest extends OpMode {
 
     @Override
     public void loop() {
-        lift.setPower(POWER);
-        lift.setTargetPosition(TARGET);
-        telemetry.addData("Lift Position", lift.getCurrentPosition());
+        switch(tuningMode){
+            case FINE_TUNE:
+                lift.setPower(gamepad1.left_stick_y*0.5);
 
-        packet.put("Lift Position: ", lift.getCurrentPosition());
-        packet.put("Target Position: ", TARGET);
-        dashboard.sendTelemetryPacket(packet);
+
+
+
+                if(gamepad1.left_stick_button)
+                    lift.setTargetPosition(lift.getCurrentPosition());
+                    tuningMode = TuningMode.OPERATIONAL;
+                break;
+            case OPERATIONAL:
+                lift.loopLift();
+
+                if(gamepad1.a)
+                    lift.setLiftState(Lift.LiftState.RETRACTED);
+                if(gamepad1.b)
+                    lift.setLiftState(Lift.LiftState.LOW);
+                if(gamepad1.x)
+                    lift.setLiftState(Lift.LiftState.MED);
+                if(gamepad1.y)
+                    lift.setLiftState(Lift.LiftState.HIGH);
+
+
+                if(gamepad1.right_stick_button)
+                    tuningMode = TuningMode.FINE_TUNE;
+                break;
+        }
+        telemetry.addData("Lift State: ", lift.getLiftState());
+        telemetry.addData("Lift Position: ", lift.getCurrentPosition());
     }
 }
