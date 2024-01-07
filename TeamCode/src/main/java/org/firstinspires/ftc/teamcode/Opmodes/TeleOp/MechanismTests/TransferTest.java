@@ -8,12 +8,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
 
 @TeleOp(name="TransferTest")
 public class TransferTest extends OpMode {
     Differential diff;
     FourBar fourBar;
     Claw claw;
+    Intake intake;
 
     double diffPosL = 0.5;
     double diffPosR = 0.5;
@@ -31,6 +33,7 @@ public class TransferTest extends OpMode {
         diff = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);
         claw = new Claw(hardwareMap);
+        intake = new Intake(hardwareMap);
     }
 
     @Override
@@ -89,6 +92,7 @@ public class TransferTest extends OpMode {
             case OPERATIONAL:
 
                 if(currentGamepad.dpad_up && !previousGamepad.dpad_up) {
+                    intake.runIntakeSetTime(0.1, 500);
                     fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
                     diff.setDiffState(Differential.DiffState.DEPOSIT);
 

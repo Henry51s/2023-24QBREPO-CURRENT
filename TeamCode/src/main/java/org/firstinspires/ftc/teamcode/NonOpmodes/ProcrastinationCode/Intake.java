@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
@@ -18,6 +19,7 @@ public class Intake {
     public DcMotor intake;
     public Servo intakeArm;
     Hardware hardware = new Hardware();
+    ElapsedTime timer = new ElapsedTime();
 
     public enum IntakeState{
         STOP,
@@ -73,6 +75,13 @@ public class Intake {
             case FIFTH:
                 intakeArm.setPosition(INTAKE_ARM_FIFTH);
                 break;
+        }
+    }
+
+    public void runIntakeSetTime(double power, int milliseconds){
+        timer.reset();
+        while(timer.milliseconds() < milliseconds){
+            intake.setPower(power);
         }
     }
     public void loopIntake(Gamepad gamepad){
