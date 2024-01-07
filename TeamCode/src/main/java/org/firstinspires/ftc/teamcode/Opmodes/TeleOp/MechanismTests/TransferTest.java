@@ -92,8 +92,9 @@ public class TransferTest extends OpMode {
             case OPERATIONAL:
 
                 if(currentGamepad.dpad_up && !previousGamepad.dpad_up) {
-                    intake.runIntakeSetTime(0.1, 500);
+                    intake.runIntakeSetTime(500);
                     fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
+
                     diff.setDiffState(Differential.DiffState.DEPOSIT);
 
                 }

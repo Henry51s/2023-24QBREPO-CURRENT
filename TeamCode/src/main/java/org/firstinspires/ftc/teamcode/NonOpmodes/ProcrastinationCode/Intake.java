@@ -49,10 +49,10 @@ public class Intake {
             case STOP:
                 intake.setPower(0);
                 break;
-            case NORMAL:
+            case REVERSED:
                 intake.setPower(INTAKE_MAX_POWER);
                 break;
-            case REVERSED:
+            case NORMAL:
                 intake.setPower(-INTAKE_MAX_POWER);
                 break;
         }
@@ -78,11 +78,30 @@ public class Intake {
         }
     }
 
-    public void runIntakeSetTime(double power, int milliseconds){
-        timer.reset();
-        while(timer.milliseconds() < milliseconds){
-            intake.setPower(power);
+    public void runIntakeSetTime(int milliseconds){
+
+        Thread intakeThread = new Thread(() -> {
+
+            timer.reset();
+            while (timer.milliseconds() <= milliseconds) {
+                setIntakeState(IntakeState.NORMAL);
+                // You might want to add a small delay here to avoid busy waiting
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            setIntakeState(IntakeState.STOP);
+        });
+        intakeThread.start();
+        /*timer.reset();
+        if (timer.milliseconds() <= milliseconds){
+            setIntakeState(IntakeState.NORMAL);
         }
+        if(timer.milliseconds() > milliseconds){
+            setIntakeState(IntakeState.STOP);
+        }*/
     }
     public void loopIntake(Gamepad gamepad){
         if(gamepad.left_bumper){
