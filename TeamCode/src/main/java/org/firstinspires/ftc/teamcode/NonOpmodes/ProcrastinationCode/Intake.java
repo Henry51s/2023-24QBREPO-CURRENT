@@ -95,13 +95,6 @@ public class Intake {
             setIntakeState(IntakeState.STOP);
         });
         intakeThread.start();
-        /*timer.reset();
-        if (timer.milliseconds() <= milliseconds){
-            setIntakeState(IntakeState.NORMAL);
-        }
-        if(timer.milliseconds() > milliseconds){
-            setIntakeState(IntakeState.STOP);
-        }*/
     }
     public void loopIntake(Gamepad gamepad){
         if(gamepad.left_bumper){
