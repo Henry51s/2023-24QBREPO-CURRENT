@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 
-import java.util.Vector;
-
 public class AutoTrajectories {
 
     SampleMecanumDrive drive;
@@ -17,19 +15,19 @@ public class AutoTrajectories {
     Trajectory toScore;
     Trajectory back;
 
-    public enum AutoStartLocation{
+    public enum AutoLocation {
         BLUE_LEFT,
         BLUE_RIGHT,
         RED_LEFT,
         RED_RIGHT
     }
-    AutoStartLocation autoStartLocation = AutoStartLocation.BLUE_LEFT;
+    AutoLocation autoLocation = AutoLocation.BLUE_LEFT;
 
-    public AutoTrajectories(HardwareMap hw, AutoStartLocation autoStartLocation){
+    public AutoTrajectories(HardwareMap hw, AutoLocation autoLocation){
         drive = new SampleMecanumDrive(hw);
         drive.setPoseEstimate(startPose);
-        this.autoStartLocation = autoStartLocation;
-        switch(autoStartLocation){
+        this.autoLocation = autoLocation;
+        switch(autoLocation){
             case BLUE_LEFT:
 
                 toScore = drive.trajectoryBuilder(startPose)

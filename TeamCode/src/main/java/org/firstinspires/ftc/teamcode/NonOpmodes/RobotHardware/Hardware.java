@@ -32,7 +32,8 @@ public class Hardware{
     //---------------------------
 
     //Robot Hardware-------------
-    public DcMotor frontLeft, frontRight, backLeft, backRight, intake, lift;
+    public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
+    public DcMotorEx lift;
 
     public DcMotorEx extendoL, extendoR;
     public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm;
@@ -72,12 +73,10 @@ public class Hardware{
     }
     public void initDeposit(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
-        lift = hardwareMap.get(DcMotor.class, CHMOTOR_2);
+        lift = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setTargetPosition(LIFT_RETRACTED);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(POWER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         diffL = hardwareMap.get(Servo.class, EXSERVO_2);
         diffR = hardwareMap.get(Servo.class, EXSERVO_3);
