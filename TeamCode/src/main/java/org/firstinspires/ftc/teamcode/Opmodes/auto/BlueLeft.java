@@ -43,7 +43,9 @@ public class BlueLeft extends LinearOpMode {
         fourBar.setFourBarState(FourBar.FourBarState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
-        autoTrajectories = new AutoTrajectories(hardwareMap, AutoTrajectories.AutoLocation.BLUE_LEFT);
+        autoTrajectories = new AutoTrajectories(hardwareMap);
+        autoTrajectories.setAutoLocation(AutoTrajectories.AutoLocation.BLUE_LEFT);
+
 
 
         waitForStart();
