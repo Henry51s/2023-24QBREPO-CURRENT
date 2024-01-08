@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_2;
 import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.POWER;
 import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.TARGET;
 
@@ -10,6 +11,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
@@ -19,9 +21,11 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 public class LiftTest extends OpMode {
 
     //max is 1781
-    Lift lift;
+    //Lift lift;
     FtcDashboard dashboard;
     TelemetryPacket packet;
+
+    DcMotorEx lift;
 
     enum TuningMode{
         FINE_TUNE,
@@ -31,8 +35,8 @@ public class LiftTest extends OpMode {
 
     @Override
     public void init() {
-        lift = new Lift(hardwareMap);
-
+        //lift = new Lift(hardwareMap);
+        lift = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);;
 
         dashboard = FtcDashboard.getInstance();
         dashboard.setTelemetryTransmissionInterval(25);
@@ -42,12 +46,10 @@ public class LiftTest extends OpMode {
 
     @Override
     public void loop() {
-        switch(tuningMode){
+        lift.setPower(gamepad1.left_stick_y*0.5);
+        /*switch(tuningMode){
             case FINE_TUNE:
                 lift.setPower(gamepad1.left_stick_y*0.5);
-
-
-
 
                 if(gamepad1.left_stick_button)
                     lift.setTargetPosition(lift.getCurrentPosition());
@@ -69,8 +71,8 @@ public class LiftTest extends OpMode {
                 if(gamepad1.right_stick_button)
                     tuningMode = TuningMode.FINE_TUNE;
                 break;
-        }
-        telemetry.addData("Lift State: ", lift.getLiftState());
+        }*/
+
         telemetry.addData("Lift Position: ", lift.getCurrentPosition());
     }
 }
