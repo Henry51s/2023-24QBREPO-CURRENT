@@ -61,15 +61,6 @@ public class Hardware{
         extendoL = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
         extendoR = hardwareMap.get(DcMotorEx.class, EXMOTOR_0);
 
-        extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        extendoL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        extendoR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
         intakeArm = hardwareMap.get(Servo.class, EXSERVO_5);
 
     }
