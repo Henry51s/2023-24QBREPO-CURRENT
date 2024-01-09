@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.AutoTrajectories;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
@@ -41,8 +40,8 @@ public class RedRight extends LinearOpMode {
         fourBar.setFourBarState(FourBar.FourBarState.INIT);
         lift.setLiftState(Lift.LiftState.RETRACTED);
 
-        autoTrajectories = new AutoTrajectories(hardwareMap);
-        autoTrajectories.setAutoLocation(AutoTrajectories.AutoLocation.RED_RIGHT);
+        autoTrajectories = new AutoTrajectories(hardwareMap, AutoTrajectories.AutoLocation.RED_RIGHT);
+
 
         waitForStart();
         if(isStopRequested()){

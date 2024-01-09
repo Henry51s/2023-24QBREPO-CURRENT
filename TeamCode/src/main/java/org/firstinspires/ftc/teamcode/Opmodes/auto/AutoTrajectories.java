@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes;
+package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -34,12 +34,10 @@ public class AutoTrajectories {
     SpikeMark spikeMark = SpikeMark.LEFT;
     AutoLocation autoLocation = AutoLocation.BLUE_LEFT;
 
-    public AutoTrajectories(HardwareMap hw){
+    public AutoTrajectories(HardwareMap hw, AutoLocation autoLocation){
         drive = new SampleMecanumDrive(hw);
         drive.setPoseEstimate(startPose);
-    }
 
-    public void setAutoLocation(AutoLocation autoLocation){
         this.autoLocation = autoLocation;
         switch(autoLocation){
             case RED_RIGHT:
@@ -89,7 +87,6 @@ public class AutoTrajectories {
                 break;
         }
     }
-
     public void setSpikeMark(SpikeMark spikeMark){
         this.spikeMark = spikeMark;
         switch(spikeMark){
