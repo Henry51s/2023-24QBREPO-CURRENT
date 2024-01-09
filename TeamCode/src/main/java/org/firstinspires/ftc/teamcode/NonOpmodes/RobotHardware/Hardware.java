@@ -74,9 +74,7 @@ public class Hardware{
     public void initDeposit(HardwareMap hardwareMap){
         //Insert code to init pickup hardware
         lift = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
         diffL = hardwareMap.get(Servo.class, EXSERVO_2);
         diffR = hardwareMap.get(Servo.class, EXSERVO_3);

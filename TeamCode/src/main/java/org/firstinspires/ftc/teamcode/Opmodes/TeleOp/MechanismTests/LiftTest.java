@@ -21,22 +21,17 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 public class LiftTest extends OpMode {
 
     //max is 1781
-    //Lift lift;
+    Lift lift;
     FtcDashboard dashboard;
     TelemetryPacket packet;
 
-    DcMotorEx lift;
+    public static int targetPosition = 0;
 
-    enum TuningMode{
-        FINE_TUNE,
-        OPERATIONAL
-    }
-    TuningMode tuningMode = TuningMode.FINE_TUNE;
 
     @Override
     public void init() {
-        //lift = new Lift(hardwareMap);
-        lift = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);;
+        lift = new Lift(hardwareMap);
+
 
         dashboard = FtcDashboard.getInstance();
         dashboard.setTelemetryTransmissionInterval(25);
@@ -46,17 +41,7 @@ public class LiftTest extends OpMode {
 
     @Override
     public void loop() {
-        lift.setPower(gamepad1.left_stick_y*0.5);
-        /*switch(tuningMode){
-            case FINE_TUNE:
-                lift.setPower(gamepad1.left_stick_y*0.5);
-
-                if(gamepad1.left_stick_button)
-                    lift.setTargetPosition(lift.getCurrentPosition());
-                    tuningMode = TuningMode.OPERATIONAL;
-                break;
-            case OPERATIONAL:
-                lift.loopLift();
+        lift.setTargetPosition(targetPosition);
 
                 if(gamepad1.a)
                     lift.setLiftState(Lift.LiftState.RETRACTED);
@@ -67,12 +52,14 @@ public class LiftTest extends OpMode {
                 if(gamepad1.y)
                     lift.setLiftState(Lift.LiftState.HIGH);
 
+                telemetry.addData("Lift Position: ", lift.getCurrentPosition());
+                telemetry.addData("Lift State: ", lift.getLiftState());
 
-                if(gamepad1.right_stick_button)
-                    tuningMode = TuningMode.FINE_TUNE;
-                break;
-        }*/
+                packet.put("Current Position: ", lift.getCurrentPosition());
+                packet.put("Target Position: ", lift.targetPosition);
+                packet.put("Error: ", lift.targetPosition - lift.getCurrentPosition());
+                dashboard.sendTelemetryPacket(packet);
+        }
 
-        telemetry.addData("Lift Position: ", lift.getCurrentPosition());
+
     }
-}
