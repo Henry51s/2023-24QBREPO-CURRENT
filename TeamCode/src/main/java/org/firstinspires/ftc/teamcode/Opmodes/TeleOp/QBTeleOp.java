@@ -67,6 +67,7 @@ public class QBTeleOp extends OpMode {
             claw.setClawState(Claw.ClawState.CLOSE);
         if(currentGamepad2.dpad_up && !previousGamepad2.dpad_up){
             //Deposit sequence
+            intake.runIntakeSetTime(500);
             fourBar.setFourBarPositionSlow(FOURBAR_DEPOSIT);
             differential.setDiffState(Differential.DiffState.DEPOSIT);
 

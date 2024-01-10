@@ -13,7 +13,7 @@ public class Lift {
     DcMotorEx lift;
     Hardware hardware = new Hardware();
 
-    public static double power = 0.;
+    public static double power = 0.25;
 
     public static int targetPosition = 0;
     public enum LiftState{

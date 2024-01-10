@@ -53,6 +53,8 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_1;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_2;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_3;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.EXMOTOR_2;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.EXMOTOR_3;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
@@ -104,10 +106,10 @@ public class SampleMecanumDrive extends MecanumDrive {
                 DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, CHMOTOR_3);
-        leftRear = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
-        rightRear = hardwareMap.get(DcMotorEx.class, CHMOTOR_0);
-        rightFront = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);
+        leftFront = hardwareMap.get(DcMotorEx.class, CHMOTOR_0);
+        leftRear = hardwareMap.get(DcMotorEx.class, CHMOTOR_3);
+        rightRear = hardwareMap.get(DcMotorEx.class, EXMOTOR_3);
+        rightFront = hardwareMap.get(DcMotorEx.class, EXMOTOR_2);
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 

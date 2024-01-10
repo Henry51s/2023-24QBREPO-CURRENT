@@ -12,21 +12,19 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDController;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @Config
 public class Extension {
-
+    //Max position: 999
 
     public static int targetPosition = 0;
-    public static double kp = 0;
-    public static double ki = 0;
-    public static double kd = 0;
-    public static double velFactor = 0.5;
-    PIDController pid = new PIDController(kp,ki,kd);
+    public static double power = 0.25;
 
     DcMotorEx extendoL, extendoR;
     Hardware hardware = new Hardware();
@@ -43,20 +41,24 @@ public class Extension {
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
-        pid.setTolerance(TOLERANCE);
+        extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
+        /*extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setTargetPosition(0);
+        extendoL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setPower(power);*/
+
+
         
     }
     public void setPower(double power){
         extendoL.setPower(power);
         extendoR.setPower(power);
     }
-    private void setVelocity(double velocity){
-        extendoL.setVelocity(velocity);
-        extendoR.setVelocity(velocity);
-    }
-
     public void setTargetPosition(int targetPosition){
-        this.targetPosition = targetPosition;
+        extendoL.setTargetPosition(targetPosition);
+        extendoR.setTargetPosition(targetPosition);
     }
     public void setExtensionState(ExtensionState extensionState){
         this.extensionState = extensionState;
@@ -73,12 +75,6 @@ public class Extension {
             case FAR:
                 setTargetPosition(EXTENDO_FAR);
         }
-    }
-    public void loopExtension(){
-        double output = pid.calculate(
-                extendoL.getCurrentPosition(), targetPosition
-        ); //Getting position from extendoL
-        setVelocity(output*velFactor);
     }
     public int getCurrentPosition(){return extendoL.getCurrentPosition();}
 

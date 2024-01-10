@@ -1,21 +1,24 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Extension;
 
+@Config
 @TeleOp(name="ExtendoTest", group="Tests")
 public class ExtendoTest extends OpMode {
     FtcDashboard dashboard;
 
     Extension extendo;
+    public static int targetPosition = 0;
     enum TuningMode {
         FINE_TUNE,
         OPERATIONAL
     }
-    TuningMode tuningMode = TuningMode.FINE_TUNE;
+    TuningMode tuningMode = TuningMode.OPERATIONAL;
     @Override
     public void init() {
         dashboard = FtcDashboard.getInstance();
@@ -24,16 +27,12 @@ public class ExtendoTest extends OpMode {
     @Override
     public void loop() {
         switch (tuningMode){
-            case FINE_TUNE:
-                extendo.setPower(gamepad1.left_stick_y*0.5);
-                if(gamepad1.left_bumper)
-                    tuningMode = TuningMode.OPERATIONAL;
-                break;
+
             case OPERATIONAL:
                 //insert target position code
-                extendo.loopExtension();
-                if(gamepad1.right_bumper)
-                    tuningMode = TuningMode.FINE_TUNE;
+                //extendo.setTargetPosition(targetPosition);
+
+
                 break;
         }
         telemetry.addData("Tuning Mode: ", tuningMode);

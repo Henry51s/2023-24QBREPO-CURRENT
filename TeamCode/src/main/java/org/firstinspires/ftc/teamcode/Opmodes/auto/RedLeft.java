@@ -22,10 +22,9 @@ public class RedLeft extends LinearOpMode {
         if(isStopRequested()){
             return;
         }
-        drive.followTrajectorySequence(autoTrajectories.liamTrajectory);
-
-
-
+        drive.followTrajectorySequence(autoTrajectories.scoreSpikeMark);
+        drive.followTrajectorySequence(autoTrajectories.scoreBackBoard);
+        drive.followTrajectorySequence(autoTrajectories.park);
     }
 
 }

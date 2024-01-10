@@ -16,19 +16,21 @@ public class MeepMeepTesting {
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-35, -61, Math.toRadians(270)))
 
+                                //Scoring spike mark
                                 .setReversed(true)
-                                .splineTo(new Vector2d(-35,-12), Math.toRadians(90))
+                                .splineTo(new Vector2d(-30,-12), Math.toRadians(90))
                                 .setReversed(false)
                                 .turn(Math.toRadians(180))
-                                .back(3)
-                                // deposit purple (you may have to move back slightly)
+
+                                //To backboard
                                 .waitSeconds(2)
                                 .splineTo(new Vector2d(0,-14), Math.toRadians(0))
-                                .splineTo(new Vector2d(28,-14), Math.toRadians(0))
-                                .splineTo(new Vector2d(48,-35), Math.toRadians(0))
-                                // deposit yellow
+                                .splineToConstantHeading(new Vector2d(28,-14), Math.toRadians(0))
+                                .splineToConstantHeading(new Vector2d(48,-35), Math.toRadians(0))
+
+
+                                //Park
                                 .waitSeconds(2)
-                                // parked
                                 .strafeRight(24)
                                 .build()
                 );
