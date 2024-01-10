@@ -34,7 +34,7 @@ public class FourBar {
 
 
     public FourBar(HardwareMap hw){
-        hardware.initDeposit(hw);
+        hardware.initFourBar(hw);
         v4bL = hardware.fourBarL;
         v4bR = hardware.fourBarR;
     }

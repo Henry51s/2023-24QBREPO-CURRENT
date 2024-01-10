@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Drive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
@@ -23,6 +24,7 @@ public class QBTeleOp extends OpMode {
     FourBar fourBar;
     Lift lift;
     Intake intake;
+    Drive drive;
 
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
 
@@ -36,6 +38,7 @@ public class QBTeleOp extends OpMode {
         differential = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);
         intake = new Intake(hardwareMap);
+        drive = new Drive(hardwareMap)
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);
@@ -55,7 +58,7 @@ public class QBTeleOp extends OpMode {
         previousGamepad2.copy(currentGamepad2);
         currentGamepad2.copy(gamepad2);
 
-        hw.loopDrive(gamepad1);
+        drive.loopDrive(gamepad1);
         intake.loopIntake(gamepad1);
 
         if(gamepad2.left_bumper)

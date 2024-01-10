@@ -31,7 +31,7 @@ public class BlueLeft extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         //AutoTrajectories autoTrajectories;
-        hardware.initRobot(hardwareMap);
+
         claw = new Claw(hardwareMap);
         differential = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);

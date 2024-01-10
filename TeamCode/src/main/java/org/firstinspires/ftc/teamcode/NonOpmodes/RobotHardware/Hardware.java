@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
-import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.POWER;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
 
@@ -19,13 +18,6 @@ import java.util.List;
 
 
 public class Hardware{
-    public enum DriveState{
-        NORMAL, //Outtake = forward
-        REVERSED //Intake = forward
-    }
-    DriveState driveState = DriveState.NORMAL;
-
-    double flipMultiplier = 1;
 
     //Webcam---------------------
     public CVMaster webcam = new CVMaster();
@@ -33,9 +25,8 @@ public class Hardware{
 
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
-    public DcMotorEx lift;
+    public DcMotorEx lift, extendoL, extendoR;
 
-    public DcMotorEx extendoL, extendoR;
     public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm;
 
     //---------------------------
@@ -50,47 +41,40 @@ public class Hardware{
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-
     }
     public void initIntake(HardwareMap hardwareMap){
-        //Insert code to init intake motor + anything else
-        //intakeArm = hardwareMap.get(Servo.class, );
-        intake = hardwareMap.get(DcMotor.class, EXMOTOR_1);//WHICH MOTOR IS INTAKE???
-        extendoL = hardwareMap.get(DcMotorEx.class, CHMOTOR_1);
-        extendoR = hardwareMap.get(DcMotorEx.class, EXMOTOR_0);
+        intake = hardwareMap.get(DcMotor.class, EXMOTOR_1);
+        intakeArm = hardwareMap.get(Servo.class, EXSERVO_5);
+    }
+    public void initExtension(HardwareMap hw){
+        extendoL = hw.get(DcMotorEx.class, CHMOTOR_1);
+        extendoR = hw.get(DcMotorEx.class, EXMOTOR_0);
 
         extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendoL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-        intakeArm = hardwareMap.get(Servo.class, EXSERVO_5);
-
     }
-    public void initDeposit(HardwareMap hardwareMap){
+    public void initLift(HardwareMap hw){
         //Insert code to init pickup hardware
-        lift = hardwareMap.get(DcMotorEx.class, CHMOTOR_2);
-
-
-        diffL = hardwareMap.get(Servo.class, EXSERVO_2);
-        diffR = hardwareMap.get(Servo.class, EXSERVO_3);
+        lift = hw.get(DcMotorEx.class, CHMOTOR_2);
+    }
+    public void initDifferential(HardwareMap hw){
+        diffL = hw.get(Servo.class, EXSERVO_2);
+        diffR = hw.get(Servo.class, EXSERVO_3);
         diffL.setDirection(Servo.Direction.REVERSE);
-
-        fourBarL = hardwareMap.get(Servo.class, EXSERVO_0);
-        fourBarR = hardwareMap.get(Servo.class, EXSERVO_1);
+    }
+    public void initFourBar(HardwareMap hw){
+        fourBarL = hw.get(Servo.class, EXSERVO_0);
+        fourBarR = hw.get(Servo.class, EXSERVO_1);
         fourBarL.setDirection(Servo.Direction.REVERSE);
-
-        claw = hardwareMap.get(Servo.class, EXSERVO_4);
     }
-    public void initSensors(HardwareMap hardwareMap){
-        //Insert code to init sensors
-        webcam.initCamera(hardwareMap, WEBCAM);
 
+    public void initClaw(HardwareMap hw){
+        claw = hw.get(Servo.class, EXSERVO_4);
     }
+
     public void initLynxModule(HardwareMap hardwareMap){
         List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs){
@@ -103,38 +87,8 @@ public class Hardware{
         webcam.initCamera(hardwareMap, WEBCAM);
         initDrive(hardwareMap);
         initIntake(hardwareMap);
-        initDeposit(hardwareMap);
-    }
-    public void loopDrive(Gamepad gamepad){
-
-        double y = -gamepad.left_stick_y * flipMultiplier; // Remember, Y stick is reversed!
-        double x = gamepad.left_stick_x * flipMultiplier;
-        double rx = -gamepad.right_stick_x*0.5;
-
-        frontLeft.setPower(y - x + rx);
-        backLeft.setPower(y + x + rx);
-        frontRight.setPower(y - x - rx);
-        backRight.setPower(y + x - rx);
-
-        switch(driveState){
-            case NORMAL:
-                if(gamepad.left_stick_button){
-                    flipMultiplier = 1;
-                }
-                if(gamepad.right_stick_button){
-                    driveState = DriveState.REVERSED;
-                }
-                break;
-            case REVERSED:
-                if(gamepad.right_stick_button){
-                    flipMultiplier = -1;
-                }
-                if(gamepad.left_stick_button){
-                    driveState = DriveState.NORMAL;
-                }
-                break;
-
+        initLift(hardwareMap);
         }
     }
-}
+
 

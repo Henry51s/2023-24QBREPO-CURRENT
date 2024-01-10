@@ -25,7 +25,7 @@ public class Differential {
     double[] diffPositions = new double[2];
     DiffState diffState = DiffState.DEPOSIT;
     public Differential(HardwareMap hw){
-        hardware.initDeposit(hw);
+        hardware.initDifferential(hw);
         diffL = hardware.diffL;
         diffR = hardware.diffR;
 

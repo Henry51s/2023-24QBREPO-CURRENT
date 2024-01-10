@@ -18,10 +18,9 @@ public class Claw {
     }
     ClawState clawState = ClawState.CLOSE;
     public Claw(HardwareMap hw){
-        hardware.initDeposit(hw);
+        hardware.initClaw(hw);
         claw = hardware.claw;
     }
-
     public void setClawState(ClawState state){
         clawState = state;
         switch(state){

@@ -40,7 +40,7 @@ public class Extension {
     ExtensionState extensionState = ExtensionState.RETRACTED;
 
     public Extension(HardwareMap hw){
-        hardware.initIntake(hw);
+        hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
         pid.setTolerance(TOLERANCE);
