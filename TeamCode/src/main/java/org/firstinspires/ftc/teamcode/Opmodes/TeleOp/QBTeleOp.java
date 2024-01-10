@@ -33,12 +33,11 @@ public class QBTeleOp extends OpMode {
 
     @Override
     public void init() {
-        hw.initRobot(hardwareMap);
         claw = new Claw(hardwareMap);
         differential = new Differential(hardwareMap);
         fourBar = new FourBar(hardwareMap);
         intake = new Intake(hardwareMap);
-        drive = new Drive(hardwareMap)
+        drive = new Drive(hardwareMap);
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);
@@ -60,6 +59,7 @@ public class QBTeleOp extends OpMode {
 
         drive.loopDrive(gamepad1);
         intake.loopIntake(gamepad1);
+        differential.loopDifferential(gamepad2);
 
         if(gamepad2.left_bumper)
             claw.setClawState(Claw.ClawState.OPEN);

@@ -49,16 +49,12 @@ public class Hardware{
     public void initExtension(HardwareMap hw){
         extendoL = hw.get(DcMotorEx.class, CHMOTOR_1);
         extendoR = hw.get(DcMotorEx.class, EXMOTOR_0);
-
-        extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void initLift(HardwareMap hw){
         //Insert code to init pickup hardware
         lift = hw.get(DcMotorEx.class, CHMOTOR_2);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void initDifferential(HardwareMap hw){
         diffL = hw.get(Servo.class, EXSERVO_2);
@@ -81,13 +77,6 @@ public class Hardware{
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-    }
-    public void initRobot(HardwareMap hardwareMap){
-        //Run all init methods
-        webcam.initCamera(hardwareMap, WEBCAM);
-        initDrive(hardwareMap);
-        initIntake(hardwareMap);
-        initLift(hardwareMap);
         }
     }
 

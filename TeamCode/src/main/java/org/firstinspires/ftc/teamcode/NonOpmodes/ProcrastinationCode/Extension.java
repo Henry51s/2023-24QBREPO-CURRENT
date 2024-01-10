@@ -26,8 +26,8 @@ public class Extension {
     public static int targetPosition = 0;
     public static double power = 0.25;
 
-    DcMotorEx extendoL, extendoR;
-    Hardware hardware = new Hardware();
+    private DcMotorEx extendoL, extendoR;
+    private Hardware hardware = new Hardware();
 
     public enum ExtensionState{
         RETRACTED,
@@ -41,13 +41,13 @@ public class Extension {
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
-        extendoL.setDirection(DcMotorSimple.Direction.REVERSE);
-        /*extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setTargetPosition(0);
         extendoL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        setPower(power);*/
+        setPower(power);
 
 
         

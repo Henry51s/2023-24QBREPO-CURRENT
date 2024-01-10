@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @Config
 public class Lift {
-    DcMotorEx lift;
-    Hardware hardware = new Hardware();
+    private DcMotorEx lift;
+    private Hardware hardware = new Hardware();
 
     public static double power = 0.25;
 
@@ -26,7 +26,7 @@ public class Lift {
     public Lift(HardwareMap hw){
         hardware.initLift(hw);
         lift = hardware.lift;
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
+
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);

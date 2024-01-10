@@ -18,8 +18,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 public class Intake {
     public DcMotor intake;
     public Servo intakeArm;
-    Hardware hardware = new Hardware();
-    ElapsedTime timer = new ElapsedTime();
+    private Hardware hardware = new Hardware();
+    private ElapsedTime timer = new ElapsedTime();
 
     public enum IntakeState{
         STOP,

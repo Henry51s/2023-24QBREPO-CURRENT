@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @Config
 public class FourBar {
-    Servo v4bL, v4bR;
-    Hardware hardware = new Hardware();
+    private Servo v4bL, v4bR;
+    private Hardware hardware = new Hardware();
     public enum FourBarState {
         INIT,
         PICKUP,

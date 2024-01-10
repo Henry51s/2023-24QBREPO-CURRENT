@@ -7,28 +7,31 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.sun.tools.javac.tree.DCTree;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
 
 public class Differential {
-    Servo diffL, diffR;
-    Hardware hardware = new Hardware();
-    double offset = 0;
+    private Servo diffL, diffR;
+    private Hardware hardware = new Hardware();
+    private double offset = 0.135;
+    private int n = 0;
+    private int maxTurns = 2;
 
     public enum DiffState{
         PICKUP,
-
         INTERMEDIATE,
         DEPOSIT
     }
-    double[] diffPositions = new double[2];
     DiffState diffState = DiffState.DEPOSIT;
+    double[] diffPositions = new double[2];
+
+    Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
     public Differential(HardwareMap hw){
         hardware.initDifferential(hw);
         diffL = hardware.diffL;
         diffR = hardware.diffR;
-
     }
     public void setDiffLPosition(double position){
         diffL.setPosition(position);
@@ -61,6 +64,23 @@ public class Differential {
         diffPositions[0] = diffL.getPosition();
         diffPositions[1] = diffR.getPosition();
         return diffPositions;
+    }
+    public void loopDifferential(Gamepad gamepad){
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad);
+        if(diffState == DiffState.DEPOSIT){
+            if(currentGamepad.dpad_left && !previousGamepad.dpad_left){
+                n++;
+            }
+            else if (currentGamepad.dpad_right && !previousGamepad.dpad_right){
+                n--;
+            }
+            if(Math.abs(n) >= maxTurns){
+                n = (int) (Math.signum(n)*maxTurns);
+            }
+        }
+        else
+            n = 0;
     }
     public DiffState getDiffState(){
         return diffState;

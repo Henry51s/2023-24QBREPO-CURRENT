@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 public class Claw {
-    Servo claw;
-    Hardware hardware = new Hardware();
+    private Servo claw;
+    private Hardware hardware = new Hardware();
 
     public enum ClawState{
         OPEN,

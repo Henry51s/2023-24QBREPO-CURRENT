@@ -3,18 +3,19 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Drive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
 
 @TeleOp(name="DriveTest", group="Tests")
 public class DriveTest extends OpMode {
-    Hardware hardware = new Hardware();
+    Drive drive;
     @Override
     public void init() {
-        hardware.initDrive(hardwareMap);
+        drive = new Drive(hardwareMap);
     }
 
     @Override
     public void loop() {
-        hardware.loopDrive(gamepad1);
+        drive.loopDrive(gamepad1);
     }
 }
