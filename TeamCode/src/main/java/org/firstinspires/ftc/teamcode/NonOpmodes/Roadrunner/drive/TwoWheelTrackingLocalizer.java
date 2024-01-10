@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_0;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_3;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CHMOTOR_0;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CHMOTOR_3;
 
 import androidx.annotation.NonNull;
 

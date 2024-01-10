@@ -1,20 +1,13 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_2;
-import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.POWER;
-import static org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests.LiftTestConstants.TARGET;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 
 @Config
 @TeleOp(name="LiftTest",group="Tests")
@@ -30,7 +23,8 @@ public class LiftTest extends OpMode {
 
     @Override
     public void init() {
-        lift = new Lift(hardwareMap);
+        lift = Lift.getInstance();
+        lift.initLift(hardwareMap);
 
 
         dashboard = FtcDashboard.getInstance();

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
 import com.acmerobotics.dashboard.config.Config;
 

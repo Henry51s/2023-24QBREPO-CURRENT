@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Drive;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 //Welcome to Hell
 @TeleOp(name="QBTeleOp")
 public class QBTeleOp extends OpMode {
@@ -33,11 +33,12 @@ public class QBTeleOp extends OpMode {
 
     @Override
     public void init() {
-        claw = new Claw(hardwareMap);
-        differential = new Differential(hardwareMap);
-        fourBar = new FourBar(hardwareMap);
-        intake = new Intake(hardwareMap);
-        drive = new Drive(hardwareMap);
+        hw.initAll(hardwareMap);
+        claw = hw.clawInstance;
+        differential = hw.differentialInstance;
+        fourBar = hw.fourBarInstance;
+        intake = hw.intakeInstance;
+        drive = hw.driveInstance;
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);

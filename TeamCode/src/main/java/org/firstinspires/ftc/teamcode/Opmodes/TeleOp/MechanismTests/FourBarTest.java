@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import java.util.Arrays;
 
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 
 @TeleOp(name="FourBarTest",group="Tests")
 public class FourBarTest extends OpMode {
@@ -25,7 +25,8 @@ public class FourBarTest extends OpMode {
     double position = 0.5;
     @Override
     public void init() {
-        fourBar = new FourBar(hardwareMap);
+        fourBar = FourBar.getInstance();
+        fourBar.initFourBar(hardwareMap);
     }
 
     @Override

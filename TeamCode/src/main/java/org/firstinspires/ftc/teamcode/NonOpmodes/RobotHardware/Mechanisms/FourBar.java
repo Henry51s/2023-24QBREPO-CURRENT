@@ -1,20 +1,27 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_INIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_INTERMEDIATE;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.FOURBAR_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
 
 @Config
 public class FourBar {
+    private static FourBar instance;
+    public static FourBar getInstance(){
+        if(instance == null){
+            instance = new FourBar();
+        }
+        return instance;
+    }
     private Servo v4bL, v4bR;
     private Hardware hardware = new Hardware();
     public enum FourBarState {
@@ -33,7 +40,13 @@ public class FourBar {
     public static int stepRatio = 150;
 
 
-    public FourBar(HardwareMap hw){
+    /*public FourBar(HardwareMap hw){
+        hardware.initFourBar(hw);
+        v4bL = hardware.fourBarL;
+        v4bR = hardware.fourBarR;
+    }*/
+
+    public void initFourBar(HardwareMap hw){
         hardware.initFourBar(hw);
         v4bL = hardware.fourBarL;
         v4bR = hardware.fourBarR;

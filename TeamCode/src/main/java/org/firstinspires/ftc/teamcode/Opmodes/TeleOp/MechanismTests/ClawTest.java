@@ -1,14 +1,9 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CLAW_LATCH;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CLAW_RELEASE;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 
 @TeleOp(name="ClawTest", group="Tests")
 public class ClawTest extends OpMode {
@@ -22,7 +17,8 @@ public class ClawTest extends OpMode {
     ClawStates clawStates = ClawStates.FINE_TUNE;
     @Override
     public void init() {
-        claw = new Claw(hardwareMap);
+        claw = Claw.getInstance();
+        claw.initClaw(hardwareMap);
     }
 
     @Override

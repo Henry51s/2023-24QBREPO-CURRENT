@@ -1,13 +1,20 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
 public class Drive {
 
+    private static Drive instance;
+    public static Drive getInstance(){
+        if(instance == null){
+            instance = new Drive();
+        }
+        return instance;
+    }
     private DcMotor frontLeft, frontRight, backLeft, backRight;
 
     private Hardware hardware = new Hardware();
@@ -20,7 +27,15 @@ public class Drive {
     }
     DriveState driveState = DriveState.NORMAL;
 
-    public Drive(HardwareMap hw){
+    /*public Drive(HardwareMap hw){
+        hardware.initDrive(hw);
+        frontLeft = hardware.frontLeft;
+        frontRight = hardware.frontRight;
+        backLeft = hardware.backLeft;
+        backRight = hardware.backRight;
+    }*/
+
+    public void initDrive(HardwareMap hw){
         hardware.initDrive(hw);
         frontLeft = hardware.frontLeft;
         frontRight = hardware.frontRight;

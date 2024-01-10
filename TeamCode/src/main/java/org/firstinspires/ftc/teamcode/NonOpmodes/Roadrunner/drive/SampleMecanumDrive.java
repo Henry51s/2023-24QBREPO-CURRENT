@@ -49,12 +49,10 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveCo
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.DriveConstants.kV;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_0;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_1;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_2;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.CHMOTOR_3;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.EXMOTOR_2;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.EXMOTOR_3;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CHMOTOR_0;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CHMOTOR_3;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXMOTOR_2;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXMOTOR_3;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.

@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.INTAKE_ARM_FIFTH;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.INTAKE_ARM_FOURTH;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.INTAKE_ARM_GROUND;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.INTAKE_ARM_SECOND;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.INTAKE_ARM_THIRD;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.INTAKE_MAX_POWER;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_FIFTH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_FOURTH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_GROUND;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_SECOND;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_THIRD;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_MAX_POWER;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -13,9 +13,16 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
 public class Intake {
+    private static Intake instance;
+    public static Intake getInstance(){
+        if(instance == null){
+            instance = new Intake();
+        }
+        return instance;
+    }
     public DcMotor intake;
     public Servo intakeArm;
     private Hardware hardware = new Hardware();
@@ -36,11 +43,17 @@ public class Intake {
     IntakeArmState intakeArmState = IntakeArmState.GROUND;
     IntakeState intakeState = IntakeState.NORMAL;
 
-    public Intake(HardwareMap hw){
+    /*public Intake(HardwareMap hw){
         hardware.initIntake(hw);
         intake = hardware.intake;
         intakeArm = hardware.intakeArm;
         //setIntakeArmState(IntakeArmState.GROUND);
+    }*/
+
+    public void initIntake(HardwareMap hw){
+        hardware.initIntake(hw);
+        intake = hardware.intake;
+        intakeArm = hardware.intakeArm;
     }
 
     public void setIntakeState(IntakeState state) {

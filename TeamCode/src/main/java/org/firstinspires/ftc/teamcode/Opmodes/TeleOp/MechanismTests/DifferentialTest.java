@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 
 @TeleOp(name="DifferentialTest",group="Tests")
 public class DifferentialTest extends OpMode {
@@ -28,7 +28,8 @@ public class DifferentialTest extends OpMode {
 
     @Override
     public void init() {
-        diff = new Differential(hardwareMap);
+        diff = Differential.getInstance();
+        diff.initDifferential(hardwareMap);
         previousGamepad1 = new Gamepad();
         currentGamepad1 = new Gamepad();
     }

@@ -3,12 +3,11 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 
 @TeleOp(name="TransferTest")
 public class TransferTest extends OpMode {
@@ -30,10 +29,15 @@ public class TransferTest extends OpMode {
     Gamepad currentGamepad = new Gamepad();
     @Override
     public void init() {
-        diff = new Differential(hardwareMap);
-        fourBar = new FourBar(hardwareMap);
-        claw = new Claw(hardwareMap);
-        intake = new Intake(hardwareMap);
+        diff = Differential.getInstance();
+        fourBar = FourBar.getInstance();
+        claw = Claw.getInstance();
+        intake = Intake.getInstance();
+
+        diff.initDifferential(hardwareMap);
+        fourBar.initFourBar(hardwareMap);
+        claw.initClaw(hardwareMap);
+        intake.initIntake(hardwareMap);
     }
 
     @Override

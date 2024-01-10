@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Extension;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
 
 @Config
 @TeleOp(name="ExtendoTest", group="Tests")
@@ -22,7 +22,8 @@ public class ExtendoTest extends OpMode {
     @Override
     public void init() {
         dashboard = FtcDashboard.getInstance();
-        extendo = new Extension(hardwareMap);
+        extendo = Extension.getInstance();
+        extendo.initExtension(hardwareMap);
     }
     @Override
     public void loop() {

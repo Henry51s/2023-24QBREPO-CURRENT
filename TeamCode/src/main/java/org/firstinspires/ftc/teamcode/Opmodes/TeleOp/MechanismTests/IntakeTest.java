@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Intake;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 
 @TeleOp(name="IntakeTest", group="Tests")
 public class IntakeTest extends OpMode {
@@ -18,7 +18,8 @@ public class IntakeTest extends OpMode {
     TuningMode tuningMode = TuningMode.FINE_TUNE;
     @Override
     public void init() {
-        intake = new Intake(hardwareMap);
+        intake = Intake.getInstance();
+        intake.initIntake(hardwareMap);
         intake.intakeArm.setPosition(pos);
     }
 

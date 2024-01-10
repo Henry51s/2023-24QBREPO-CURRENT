@@ -1,15 +1,21 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
 @Config
 public class Lift {
+    private static Lift instance;
+    public static Lift getInstance(){
+        if(instance == null){
+            instance = new Lift();
+        }
+        return instance;
+    }
     private DcMotorEx lift;
     private Hardware hardware = new Hardware();
 
@@ -23,7 +29,17 @@ public class Lift {
         HIGH
     }
     LiftState liftState = LiftState.RETRACTED;
-    public Lift(HardwareMap hw){
+    /*public Lift(HardwareMap hw){
+        hardware.initLift(hw);
+        lift = hardware.lift;
+
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setTargetPosition(0);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(power);
+    }*/
+
+    public void initLift(HardwareMap hw){
         hardware.initLift(hw);
         lift = hardware.lift;
 

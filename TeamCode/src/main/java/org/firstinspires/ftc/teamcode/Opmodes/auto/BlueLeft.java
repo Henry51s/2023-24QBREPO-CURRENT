@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Differential;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.FourBar;
-import org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode.Lift;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
 @Disabled
 @Autonomous(name="BlueLeft")
@@ -33,11 +33,11 @@ public class BlueLeft extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         //AutoTrajectories autoTrajectories;
-
-        claw = new Claw(hardwareMap);
-        differential = new Differential(hardwareMap);
-        fourBar = new FourBar(hardwareMap);
-        lift = new Lift(hardwareMap);
+        hardware.initAuto(hardwareMap);
+        claw = hardware.clawInstance;
+        differential = hardware.differentialInstance;
+        fourBar = hardware.fourBarInstance;
+        lift = hardware.liftInstance;
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);

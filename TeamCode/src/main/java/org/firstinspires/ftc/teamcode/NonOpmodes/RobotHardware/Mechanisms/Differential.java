@@ -1,18 +1,20 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.ProcrastinationCode;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
-import com.arcrobotics.ftclib.command.button.GamepadButton;
-import com.arcrobotics.ftclib.gamepad.ButtonReader;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.sun.tools.javac.tree.DCTree;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Hardware;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.*;
 
 public class Differential {
+    private static Differential instance;
+    public static Differential getInstance(){
+        if(instance == null){
+            instance = new Differential();
+        }
+        return instance;
+    }
     private Servo diffL, diffR;
     private Hardware hardware = new Hardware();
     private double offset = 0.135;
@@ -28,7 +30,13 @@ public class Differential {
     double[] diffPositions = new double[2];
 
     Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
-    public Differential(HardwareMap hw){
+    /*public Differential(HardwareMap hw){
+        hardware.initDifferential(hw);
+        diffL = hardware.diffL;
+        diffR = hardware.diffR;
+    }*/
+
+    public void initDifferential(HardwareMap hw){
         hardware.initDifferential(hw);
         diffL = hardware.diffL;
         diffR = hardware.diffR;

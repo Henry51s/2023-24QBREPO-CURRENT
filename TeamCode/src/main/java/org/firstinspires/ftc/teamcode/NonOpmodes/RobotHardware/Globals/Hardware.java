@@ -1,27 +1,28 @@
-package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware;
+package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
 
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.GlobalVars.*;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.*;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Webcam.CVMaster;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 
 import java.util.List;
 
 
 public class Hardware{
-
-    //Webcam---------------------
-    public CVMaster webcam = new CVMaster();
-    //---------------------------
 
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
@@ -30,6 +31,46 @@ public class Hardware{
     public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm;
 
     //---------------------------
+
+    public Claw clawInstance;
+    public Differential differentialInstance;
+    public Drive driveInstance;
+    public Extension extensionInstance;
+    public FourBar fourBarInstance;
+    public Intake intakeInstance;
+    public Lift liftInstance;
+
+
+    private void getInstances(){
+        clawInstance = Claw.getInstance();
+        differentialInstance = Differential.getInstance();
+        driveInstance = Drive.getInstance();
+        extensionInstance = Extension.getInstance();
+        fourBarInstance = FourBar.getInstance();
+        intakeInstance = Intake.getInstance();
+        liftInstance = Lift.getInstance();
+    }
+    public void initAll(HardwareMap hw){
+        getInstances();
+        clawInstance.initClaw(hw);
+        differentialInstance.initDifferential(hw);
+        driveInstance.initDrive(hw);
+        extensionInstance.initExtension(hw);
+        fourBarInstance.initFourBar(hw);
+        intakeInstance.initIntake(hw);
+        liftInstance.initLift(hw);
+    }
+    public void initAuto(HardwareMap hw){
+        getInstances();
+        clawInstance.initClaw(hw);
+        differentialInstance.initDifferential(hw);
+        extensionInstance.initExtension(hw);
+        fourBarInstance.initFourBar(hw);
+        intakeInstance.initIntake(hw);
+        liftInstance.initLift(hw);
+    }
+
+    //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms
     public void initDrive(HardwareMap hardwareMap){
         frontLeft = hardwareMap.get(DcMotor.class, CHMOTOR_0);
         frontRight = hardwareMap.get(DcMotor.class, EXMOTOR_2);
