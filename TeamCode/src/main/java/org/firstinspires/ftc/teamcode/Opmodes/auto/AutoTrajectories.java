@@ -39,28 +39,40 @@ public class AutoTrajectories {
         this.autoLocation = autoLocation;
         switch(autoLocation){
             case RED_RIGHT:
-
-
+                startPose = new Pose2d(11, -61, Math.toRadians(90));
+                scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                        .splineTo(new Vector2d(11,-38), Math.toRadians(90))
+                        .build();
+                scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                        .setReversed(true)
+                        .waitSeconds(2)
+                        .turn(Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(48,-35), Math.toRadians(0))
+                        .build();
+                park = drive.trajectorySequenceBuilder(scoreBackBoard.end())
+                        .waitSeconds(2)
+                        .strafeLeft(24)
+                        .build();
                 break;
 
             case RED_LEFT: //Work on this for now
-                startPose = new Pose2d(-35, -61, Math.toRadians(270));
+                startPose = new Pose2d(-35, -61, Math.toRadians(90));
                 scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
-                        .setReversed(true)
-                        .splineTo(new Vector2d(-30,-12), Math.toRadians(90))
-                        .setReversed(false)
-                        .turn(Math.toRadians(180))
+                        .splineTo(new Vector2d(-35,-12), Math.toRadians(90))
                         .build();
                 scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                        .turn(Math.toRadians(180))
+                        .setReversed(true)
                         .waitSeconds(2)
-                        .splineTo(new Vector2d(0,-14), Math.toRadians(0))
-                        .splineToConstantHeading(new Vector2d(28,-14), Math.toRadians(0))
+                        .turn(Math.toRadians(-90))
+                        .lineTo(new Vector2d(0,-11))
+                        .splineToConstantHeading(new Vector2d(28,-11), Math.toRadians(0))
                         .splineToConstantHeading(new Vector2d(48,-35), Math.toRadians(0))
                         .build();
 
                 park = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                         .waitSeconds(2)
-                        .strafeRight(24)
+                        .strafeLeft(24)
                         .build();
                 break;
 
@@ -69,6 +81,20 @@ public class AutoTrajectories {
                 break;
 
             case BLUE_LEFT:
+                startPose = new Pose2d(11, 61, Math.toRadians(-90));
+                scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                        .splineTo(new Vector2d(11,38), Math.toRadians(-90))
+                        .build();
+                scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                        .setReversed(true)
+                        .waitSeconds(2)
+                        .turn(Math.toRadians(-90))
+                        .splineToConstantHeading(new Vector2d(48,35), Math.toRadians(0))
+                        .build();
+                park = drive.trajectorySequenceBuilder(scoreBackBoard.end())
+                        .waitSeconds(2)
+                        .strafeRight(24)
+                        .build();
 
 
                 break;
