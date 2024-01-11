@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MAX_POWER;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -19,7 +21,7 @@ public class Lift {
     private DcMotorEx lift;
     private Hardware hardware = new Hardware();
 
-    public static double power = 0.25;
+
 
     public static int targetPosition = 0;
     public enum LiftState{
@@ -46,7 +48,7 @@ public class Lift {
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(power);
+        lift.setPower(LIFT_MAX_POWER);
     }
 
     public void setTargetPosition(int targetPosition){
@@ -69,16 +71,7 @@ public class Lift {
                 break;
         }*/
     }
-    public void setPower(double power){
-        this.power = power;
-    }
-    /*public void loopLift(){
-        pidf.setPIDF(p,i,d,f);
-        output = pidf.calculate(
-          getCurrentPosition(), targetPosition
-        );
-        lift.setVelocity(output);
-    }*/
+
     public int getCurrentPosition(){
         return lift.getCurrentPosition();
     }

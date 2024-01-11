@@ -9,31 +9,25 @@ public class GlobalVars {
 
 
 
-    public static double INTAKE_MAX_POWER = 0.65;
 
-
-    public static double p = 0;
-
-    public static double i = 0;
-    public static double d = 0;
-    public static double TOLERANCE = 0;
+    public static double EXTENDO_MAX_POWER = 0.25;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_SHORT = 0;
     public static int EXTENDO_MED = 0;
-    public static int EXTENDO_FAR = 0;
+    public static int EXTENDO_FAR = 900;
 
-
+    public static double INTAKE_MAX_POWER = 0.65;
     public static double INTAKE_ARM_GROUND = 0.245;
     public static double INTAKE_ARM_SECOND = 0.282;
     public static double INTAKE_ARM_THIRD = 0.357;
     public static double INTAKE_ARM_FOURTH = 0.366;
     public static double INTAKE_ARM_FIFTH = 0.462;
 
+    public static double LIFT_MAX_POWER = 0.25;
     public static int LIFT_RETRACTED = 5;
     public static int LIFT_LOW = 500;
     public static int LIFT_MED = 1000;
     public static int LIFT_HIGH = 0;
-
 
 
     public static double FOURBAR_INIT = 0.533;

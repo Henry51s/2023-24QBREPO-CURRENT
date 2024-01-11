@@ -23,15 +23,11 @@ import java.util.List;
 
 
 public class Hardware{
-
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
     public DcMotorEx lift, extendoL, extendoR;
-
     public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm;
-
     //---------------------------
-
     public Claw clawInstance;
     public Differential differentialInstance;
     public Drive driveInstance;

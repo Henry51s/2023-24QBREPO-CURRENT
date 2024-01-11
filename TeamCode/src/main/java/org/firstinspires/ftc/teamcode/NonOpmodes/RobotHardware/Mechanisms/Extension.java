@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_FAR;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MAX_POWER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_SHORT;
@@ -24,7 +25,6 @@ public class Extension {
         return instance;
     }
     public static int targetPosition = 0;
-    public static double power = 0.25;
 
     private DcMotorEx extendoL, extendoR;
     private Hardware hardware = new Hardware();
@@ -51,6 +51,7 @@ public class Extension {
     }*/
 
     public void initExtension(HardwareMap hw){
+
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
@@ -60,7 +61,7 @@ public class Extension {
         setTargetPosition(0);
         extendoL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        setPower(power);
+        setPower(EXTENDO_MAX_POWER);
     }
     public void setPower(double power){
         extendoL.setPower(power);

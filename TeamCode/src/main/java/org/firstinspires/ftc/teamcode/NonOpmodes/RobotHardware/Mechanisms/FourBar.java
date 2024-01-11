@@ -47,6 +47,7 @@ public class FourBar {
     }*/
 
     public void initFourBar(HardwareMap hw){
+
         hardware.initFourBar(hw);
         v4bL = hardware.fourBarL;
         v4bR = hardware.fourBarR;

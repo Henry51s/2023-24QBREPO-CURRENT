@@ -97,7 +97,7 @@ public class Intake {
 
             timer.reset();
             while (timer.milliseconds() <= milliseconds) {
-                setIntakeState(IntakeState.NORMAL);
+                intake.setPower(-INTAKE_MAX_POWER/2);
                 // You might want to add a small delay here to avoid busy waiting
                 try {
                     Thread.sleep(10);

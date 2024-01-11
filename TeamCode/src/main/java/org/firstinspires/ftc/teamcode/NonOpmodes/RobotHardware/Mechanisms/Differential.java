@@ -18,7 +18,7 @@ public class Differential {
     private Servo diffL, diffR;
     private Hardware hardware = new Hardware();
     private double offset = 0.135;
-    private int n = 0;
+    private int turns = 0;
     private int maxTurns = 2;
 
     public enum DiffState{
@@ -78,17 +78,17 @@ public class Differential {
         currentGamepad.copy(gamepad);
         if(diffState == DiffState.DEPOSIT){
             if(currentGamepad.dpad_left && !previousGamepad.dpad_left){
-                n++;
+                turns++;
             }
             else if (currentGamepad.dpad_right && !previousGamepad.dpad_right){
-                n--;
+                turns--;
             }
-            if(Math.abs(n) >= maxTurns){
-                n = (int) (Math.signum(n)*maxTurns);
+            if(Math.abs(turns) >= maxTurns){
+                turns = (int) Math.signum(turns)*maxTurns;
             }
         }
         else
-            n = 0;
+            turns = 0;
     }
     public DiffState getDiffState(){
         return diffState;
