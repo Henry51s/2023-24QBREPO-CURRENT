@@ -33,6 +33,7 @@ public class Claw {
     }
 
     public void initClaw(HardwareMap hw){
+
         hardware.initClaw(hw);
         claw = hardware.claw;
     }

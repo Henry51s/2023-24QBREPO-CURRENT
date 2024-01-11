@@ -40,6 +40,24 @@ public class AutoTrajectories {
         switch(autoLocation){
             case RED_RIGHT:
 
+                startPose = new Pose2d(15, -61, Math.toRadians(90));
+                scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                        .setReversed(false)
+                        .lineTo(new Vector2d(15,-12))
+                        .setReversed(true)
+                        .turn(Math.toRadians(180))
+                        .back(1)
+                        //.build();
+                //scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                        .waitSeconds(2)
+                        .turn(Math.toRadians(-90))
+                        .splineToConstantHeading(new Vector2d(48,-35), Math.toRadians(0))
+                 //       .build();
+                //park = drive.trajectorySequenceBuilder(scoreBackBoard.end())
+                        .waitSeconds(2)
+                        .strafeRight(24)
+                        .build();
+
 
                 break;
 

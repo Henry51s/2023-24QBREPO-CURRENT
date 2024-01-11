@@ -39,7 +39,10 @@ public class QBTeleOp extends OpMode {
         fourBar = hw.fourBarInstance;
         intake = hw.intakeInstance;
         drive = hw.driveInstance;
+    }
 
+    @Override
+    public void init_loop(){
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.DEPOSIT);
         fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
@@ -86,8 +89,5 @@ public class QBTeleOp extends OpMode {
             differential.setDiffState(Differential.DiffState.PICKUP);
             fourBar.setFourBarPositionSlow(FOURBAR_PICKUP);
         }
-
-
-
     }
 }
