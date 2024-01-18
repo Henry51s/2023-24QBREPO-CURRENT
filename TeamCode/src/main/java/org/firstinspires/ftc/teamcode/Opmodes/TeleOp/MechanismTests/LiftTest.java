@@ -35,7 +35,6 @@ public class LiftTest extends OpMode {
 
     @Override
     public void loop() {
-        lift.setTargetPosition(targetPosition);
 
                 if(gamepad1.a)
                     lift.setLiftState(Lift.LiftState.RETRACTED);

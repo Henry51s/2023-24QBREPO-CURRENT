@@ -10,7 +10,12 @@ public class GlobalVars {
 
 
 
-    public static double EXTENDO_MAX_POWER = 0.25;
+    public static double climbRelease = 0.370;
+    public static double climbLatch = 0.739;
+
+    public static int extendoClimb = 85;
+
+    public static double EXTENDO_MAX_POWER = 0.30;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_SHORT = 0;
     public static int EXTENDO_MED = 0;
@@ -23,29 +28,33 @@ public class GlobalVars {
     public static double INTAKE_ARM_FOURTH = 0.366;
     public static double INTAKE_ARM_FIFTH = 0.462;
 
-    public static double LIFT_MAX_POWER = 0.25;
-    public static int LIFT_RETRACTED = 5;
-    public static int LIFT_LOW = 500;
-    public static int LIFT_MED = 1000;
-    public static int LIFT_HIGH = 0;
+    public static double LIFT_MAX_POWER = 0.30;
+    public static int LIFT_RETRACTED = 1;
+    public static int LIFT_LOW = 583;
+    public static int LIFT_MED = 1166;
+    public static int LIFT_HIGH = 1750;
 
 
-    public static double FOURBAR_INIT = 0.533;
-    public static double FOURBAR_PICKUP = 0.759;
-    public static double FOURBAR_DEPOSIT = 0.3739;
+    public static double FOURBAR_INIT = 0.523;
+    public static double FOURBAR_PICKUP = 0.694;
+    public static double FOURBAR_DEPOSIT = 0.31;
     public static double FOURBAR_INTERMEDIATE = 0.6;
 
-    public static double DIFFL_PICKUP = 0.127;
+    public static double DIFFL_PICKUP = 0.1299;
     public static double DIFFL_DEPOSIT = 0.386;
-
     public static double DIFFL_INTERMEDIATE = 0.1349;
-    public static double DIFFR_PICKUP = 0.107;
-    public static double DIFFR_DEPOSIT = 0.90;
+    public static double DIFFL_INIT = 0.3899;
 
     public static double DIFFR_INTERMEDIATE = 0.1109;
+    public static double DIFFR_PICKUP = 0.111;
+    public static double DIFFR_DEPOSIT = 0.90;
+    public static double DIFFR_INIT = 0.3699;
 
-    public static double CLAW_RELEASE = 0.150;
-    public static double CLAW_LATCH = 0.393;
+
+
+    public static double CLAW_RELEASE = 0.032;
+    public static double CLAW_LATCH = 0.41;
+    public static double CLAW_LATCH_ONE_PIXEL = 0.434;
 
     //Config Names-----------------
 

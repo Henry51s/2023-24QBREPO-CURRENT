@@ -24,7 +24,8 @@ public class Differential {
     public enum DiffState{
         PICKUP,
         INTERMEDIATE,
-        DEPOSIT
+        DEPOSIT,
+        INIT
     }
     DiffState diffState = DiffState.DEPOSIT;
     double[] diffPositions = new double[2];
@@ -60,8 +61,12 @@ public class Differential {
                 diffR.setPosition(DIFFR_INTERMEDIATE);
                 break;
             case DEPOSIT:
-                diffL.setPosition(DIFFL_DEPOSIT+offset);
-                diffR.setPosition(DIFFR_DEPOSIT-offset);
+                diffL.setPosition(DIFFL_DEPOSIT+offset);//+offset);
+                diffR.setPosition(DIFFR_DEPOSIT-offset);//-offset);
+                break;
+            case INIT:
+                diffL.setPosition(DIFFL_INIT);
+                diffR.setPosition(DIFFR_INIT);
                 break;
         }
     }
@@ -73,7 +78,7 @@ public class Differential {
         diffPositions[1] = diffR.getPosition();
         return diffPositions;
     }
-    public void loopDifferential(Gamepad gamepad){
+    /*public void loopDifferential(Gamepad gamepad){
         previousGamepad.copy(currentGamepad);
         currentGamepad.copy(gamepad);
         if(diffState == DiffState.DEPOSIT){
@@ -89,7 +94,7 @@ public class Differential {
         }
         else
             turns = 0;
-    }
+    }*/
     public DiffState getDiffState(){
         return diffState;
     }

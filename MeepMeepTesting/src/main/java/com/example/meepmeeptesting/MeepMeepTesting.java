@@ -14,16 +14,16 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 30, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(11, 61, Math.toRadians(-90)))
-
+                        drive.trajectorySequenceBuilder(new Pose2d(15, -61, Math.toRadians(90)))
                                 //Scoring spike mark
-                                .splineTo(new Vector2d(11,38), Math.toRadians(-90))
+                                .setReversed(true)
+                                .lineTo(new Vector2d(15,-35))
 
                                 //To backboard
-                                .setReversed(true)
+                                .setReversed(false)
                                 .waitSeconds(2)
-                                .turn(Math.toRadians(-90))
-                                .splineToConstantHeading(new Vector2d(48,35), Math.toRadians(0))
+                                .turn(Math.toRadians(90))
+                                .splineToConstantHeading(new Vector2d(48,-35), Math.toRadians(0))
                                 //Park
                                 .waitSeconds(2)
                                 .strafeRight(24)

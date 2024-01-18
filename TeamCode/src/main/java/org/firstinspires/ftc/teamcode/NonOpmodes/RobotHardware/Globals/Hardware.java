@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
 
 
+import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
+
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -26,7 +28,7 @@ public class Hardware{
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
     public DcMotorEx lift, extendoL, extendoR;
-    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm;
+    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm, climb1, climb2;
     //---------------------------
     public Claw clawInstance;
     public Differential differentialInstance;
@@ -55,6 +57,11 @@ public class Hardware{
         fourBarInstance.initFourBar(hw);
         intakeInstance.initIntake(hw);
         liftInstance.initLift(hw);
+
+        initClimb(hw);
+        climb1.setPosition(climbLatch);
+        climb2.setPosition(climbLatch);
+
     }
     public void initAuto(HardwareMap hw){
         getInstances();
@@ -64,24 +71,34 @@ public class Hardware{
         fourBarInstance.initFourBar(hw);
         intakeInstance.initIntake(hw);
         liftInstance.initLift(hw);
+
+        initClimb(hw);
+        climb1.setPosition(climbLatch);
+        climb2.setPosition(climbLatch);
     }
 
     //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms
-    public void initDrive(HardwareMap hardwareMap){
-        frontLeft = hardwareMap.get(DcMotor.class, CHMOTOR_0);
-        frontRight = hardwareMap.get(DcMotor.class, EXMOTOR_2);
-        backLeft = hardwareMap.get(DcMotor.class, CHMOTOR_3);
-        backRight = hardwareMap.get(DcMotor.class, EXMOTOR_3);
+    public void initClimb(HardwareMap hw){
+        climb1 = hw.get(Servo.class, CHSERVO_4);
+        climb1.setDirection(REVERSE);
+        climb2 = hw.get(Servo.class, CHSERVO_5);
 
-        //For intake side forward, reverse frontRight and backRight
-        //For Outtake side forward, reverse
-
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public void initIntake(HardwareMap hardwareMap){
-        intake = hardwareMap.get(DcMotor.class, EXMOTOR_1);
-        intakeArm = hardwareMap.get(Servo.class, EXSERVO_5);
+    public void initDrive(HardwareMap hw){
+        backLeft = hw.get(DcMotorEx.class, CHMOTOR_0);
+        frontRight = hw.get(DcMotorEx.class, EXMOTOR_2);
+        frontLeft = hw.get(DcMotorEx.class, CHMOTOR_3);
+        backRight = hw.get(DcMotorEx.class, EXMOTOR_3);
+
+        frontLeft .setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+
+    }
+    public void initIntake(HardwareMap hw){
+        intake = hw.get(DcMotor.class, EXMOTOR_1);
+        intakeArm = hw.get(Servo.class, EXSERVO_5);
     }
     public void initExtension(HardwareMap hw){
         extendoL = hw.get(DcMotorEx.class, CHMOTOR_1);
@@ -96,12 +113,12 @@ public class Hardware{
     public void initDifferential(HardwareMap hw){
         diffL = hw.get(Servo.class, EXSERVO_2);
         diffR = hw.get(Servo.class, EXSERVO_3);
-        diffL.setDirection(Servo.Direction.REVERSE);
+        diffL.setDirection(REVERSE);
     }
     public void initFourBar(HardwareMap hw){
         fourBarL = hw.get(Servo.class, EXSERVO_0);
         fourBarR = hw.get(Servo.class, EXSERVO_1);
-        fourBarL.setDirection(Servo.Direction.REVERSE);
+        fourBarL.setDirection(REVERSE);
     }
 
     public void initClaw(HardwareMap hw){

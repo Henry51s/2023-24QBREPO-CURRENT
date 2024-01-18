@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLAW_LATCH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLAW_LATCH_ONE_PIXEL;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLAW_RELEASE;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -21,7 +22,8 @@ public class Claw {
 
     public enum ClawState{
         OPEN,
-        CLOSE
+        CLOSE,
+        CLOSE_ONE_PIXEL
     }
     ClawState clawState = ClawState.CLOSE;
     /*public Claw(HardwareMap hw){
@@ -45,6 +47,9 @@ public class Claw {
                 break;
             case CLOSE:
                 claw.setPosition(CLAW_LATCH);
+                break;
+            case CLOSE_ONE_PIXEL:
+                claw.setPosition(CLAW_LATCH_ONE_PIXEL);
                 break;
         }
     }

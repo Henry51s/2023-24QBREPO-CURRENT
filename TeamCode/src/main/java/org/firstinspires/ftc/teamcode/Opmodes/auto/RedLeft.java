@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 
+@Disabled
 @Autonomous(name="RedLeft")
 public class RedLeft extends LinearOpMode {
 

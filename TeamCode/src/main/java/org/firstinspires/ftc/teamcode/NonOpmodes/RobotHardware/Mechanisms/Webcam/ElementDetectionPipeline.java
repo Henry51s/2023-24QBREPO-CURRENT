@@ -5,6 +5,8 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 
 import android.graphics.Canvas;
 
+import com.acmerobotics.dashboard.config.Config;
+
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
@@ -13,6 +15,9 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+
+@Config
+
 
 public class ElementDetectionPipeline implements VisionProcessor {
 
@@ -37,7 +42,7 @@ public class ElementDetectionPipeline implements VisionProcessor {
     static private Scalar highHSVColorLower, highHSVColorUpper; //Wraps around Color Wheel
 
 
-    private static final double colorThreshold = 0.5;
+    public static double colorThreshold = 0.25;
 
     static final Rect LEFT_RECTANGLE = new Rect(
             new Point(0,0),

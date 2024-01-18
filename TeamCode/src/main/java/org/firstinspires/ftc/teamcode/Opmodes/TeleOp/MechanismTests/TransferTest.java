@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
@@ -27,6 +30,9 @@ public class TransferTest extends OpMode {
     TuningState tuningState = TuningState.FINE_TUNE;
     Gamepad previousGamepad = new Gamepad();
     Gamepad currentGamepad = new Gamepad();
+
+    ElapsedTime timer = new ElapsedTime();
+    boolean isRunning = false;
     @Override
     public void init() {
         diff = Differential.getInstance();
@@ -94,14 +100,26 @@ public class TransferTest extends OpMode {
                     tuningState = TuningState.OPERATIONAL;
                 break;
             case OPERATIONAL:
+                intake.loopIntake(gamepad1);
 
                 if(currentGamepad.dpad_up && !previousGamepad.dpad_up) {
-                    intake.runIntakeSetTime(500);
-                    fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
+                    claw.setClawState(Claw.ClawState.OPEN);
+                    int counter = 0;
+                    isRunning = true;
+                    timer.reset();
+                    fourBar.setFourBarPositionSlow(FOURBAR_DEPOSIT);
+                    while(timer.milliseconds() < 1000){
+                        counter ++;
+                    }
 
-                    diff.setDiffState(Differential.DiffState.DEPOSIT);
+                        diff.setDiffState(Differential.DiffState.DEPOSIT);
+                        isRunning = false;
+                    }
 
-                }
+
+
+
+
                 if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
                     fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
                     diff.setDiffState(Differential.DiffState.INTERMEDIATE);

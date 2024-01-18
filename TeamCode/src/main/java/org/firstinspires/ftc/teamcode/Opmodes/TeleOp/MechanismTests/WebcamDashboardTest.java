@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.RegularVisionPipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
 @TeleOp(name="WebcamDashboardTest",group="Tests")
@@ -37,12 +38,12 @@ public class WebcamDashboardTest extends OpMode {
             @Override
             public void onOpened() {
                 try {
-                    webcam.setPipeline(pipeline);
+                    webcam.setPipeline(regPipeline);
                 }
                 catch(Exception exception){
                     telemetry.addLine("Error!");
                 }
-                webcam.startStreaming(xResolution, yResolution, cameraOrientation);
+                webcam.startStreaming(xResolution, yResolution, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override

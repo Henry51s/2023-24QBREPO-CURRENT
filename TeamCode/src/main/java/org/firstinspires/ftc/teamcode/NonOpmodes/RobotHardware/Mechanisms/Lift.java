@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_HIGH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MAX_POWER;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MED;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_RETRACTED;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -56,7 +60,7 @@ public class Lift {
     }
     public void setLiftState(LiftState state){
         liftState = state;
-        /*switch(state){
+        switch(state){
             case RETRACTED:
                 setTargetPosition(LIFT_RETRACTED);
                 break;
@@ -69,7 +73,7 @@ public class Lift {
             case HIGH:
                 setTargetPosition(LIFT_HIGH);
                 break;
-        }*/
+        }
     }
 
     public int getCurrentPosition(){

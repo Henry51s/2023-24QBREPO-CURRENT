@@ -31,7 +31,8 @@ public class Intake {
     public enum IntakeState{
         STOP,
         NORMAL,
-        REVERSED
+        REVERSED,
+        RUN_SET_TIME,
     }
     public enum IntakeArmState{
         GROUND,
@@ -40,6 +41,7 @@ public class Intake {
         FOURTH,
         FIFTH
     }
+
     IntakeArmState intakeArmState = IntakeArmState.GROUND;
     IntakeState intakeState = IntakeState.NORMAL;
 
@@ -68,6 +70,9 @@ public class Intake {
             case NORMAL:
                 intake.setPower(-INTAKE_MAX_POWER);
                 break;
+            case RUN_SET_TIME:
+                runIntakeSetTime(500, false);
+
         }
     }
     public void setIntakeArmState(IntakeArmState state) {
@@ -91,13 +96,18 @@ public class Intake {
         }
     }
 
-    public void runIntakeSetTime(int milliseconds){
-
+    public void runIntakeSetTime(int milliseconds, boolean reversed){
+        /*int motorDirection = 1;
+        if(reversed)
+            motorDirection = -1;
+        else
+            motorDirection = 1;
+        int finalMotorDirection = motorDirection;
         Thread intakeThread = new Thread(() -> {
 
             timer.reset();
             while (timer.milliseconds() <= milliseconds) {
-                intake.setPower(-INTAKE_MAX_POWER/2);
+                intake.setPower(-INTAKE_MAX_POWER/2* finalMotorDirection);
                 // You might want to add a small delay here to avoid busy waiting
                 try {
                     Thread.sleep(10);
@@ -105,7 +115,39 @@ public class Intake {
                     e.printStackTrace();
                 }
             }
-            setIntakeState(IntakeState.STOP);
+            intakeState = IntakeState.STOP;
+        });*/
+        int directionConstant = 1;
+        if(reversed){
+            directionConstant = -1;
+        }
+
+        timer.reset();
+        while(timer.milliseconds() < milliseconds){
+            intake.setPower(-INTAKE_MAX_POWER*directionConstant);
+        }
+        setIntakeState(IntakeState.STOP);
+    }
+    public void runIntakeSetTimeAsync(int milliseconds, boolean reversed){
+        int motorDirection = 1;
+        if(reversed)
+            motorDirection = -1;
+        else
+            motorDirection = 1;
+        int finalMotorDirection = motorDirection;
+        Thread intakeThread = new Thread(() -> {
+
+            timer.reset();
+            while (timer.milliseconds() <= milliseconds) {
+                intake.setPower(-INTAKE_MAX_POWER/2* finalMotorDirection);
+                // You might want to add a small delay here to avoid busy waiting
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            intakeState = IntakeState.STOP;
         });
         intakeThread.start();
     }
@@ -115,6 +157,9 @@ public class Intake {
         }
         if(gamepad.right_bumper){
             setIntakeState(IntakeState.REVERSED);
+        }
+        if(gamepad.dpad_up){
+            setIntakeState(IntakeState.RUN_SET_TIME);
         }
         if (!gamepad.right_bumper && !gamepad.left_bumper){
             setIntakeState(IntakeState.STOP);

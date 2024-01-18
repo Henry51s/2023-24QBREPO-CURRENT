@@ -75,32 +75,33 @@ public class FourBar {
     }
 
 
-    public void calculateIntermediatePositions(double targetPosition){
-        double currentPosition = getPosition();
-        double dPosition = Math.abs(targetPosition - currentPosition);
-        double direction = Math.signum(targetPosition - currentPosition);
 
-        int steps = Math.max((int) (dPosition*stepRatio),1);
+    public double[] setFourBarPositionSlow(double targetPosition){
+        Thread fourBarThread = new Thread(() -> {
+            int delayCounter = 0;
 
-        intermediatePositions = new double[steps];
+            double currentPosition = getPosition();
+            double dPosition = Math.abs(targetPosition - currentPosition);
+            double direction = Math.signum(targetPosition - currentPosition);
 
-        intermediatePositions[0] = currentPosition + (dPosition/steps)*direction;
-        for(int i = 1;i < intermediatePositions.length;i++){
-            intermediatePositions[i] = intermediatePositions[i-1] + (dPosition/steps)*direction;
-        }
-    }
+            int steps = Math.max((int) (dPosition*stepRatio),1);
 
-    public void setFourBarPositionSlow(double targetPosition){
-        int delayCounter = 0;
+            intermediatePositions = new double[steps];
 
-        calculateIntermediatePositions(targetPosition);
-        for(int i = 0;i < intermediatePositions.length;i++){
-            servoTime.reset();
-            while(servoTime.milliseconds() <= delay){
-                delayCounter++;
+            intermediatePositions[0] = currentPosition + (dPosition/steps)*direction;
+            for(int i = 1;i < intermediatePositions.length;i++){
+                intermediatePositions[i] = intermediatePositions[i-1] + (dPosition/steps)*direction;
             }
-            setFourBarPosition(intermediatePositions[i]);
+            for(int i = 0;i < intermediatePositions.length;i++){
+                servoTime.reset();
+                while(servoTime.milliseconds() <= delay){
+                    delayCounter++;
+                }
+                setFourBarPosition(intermediatePositions[i]);
             }
+        });
+        fourBarThread.start();
+        return intermediatePositions;
         }
     public double getPosition(){
         return v4bL.getPosition();
