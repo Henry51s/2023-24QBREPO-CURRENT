@@ -103,7 +103,6 @@ public class TransferTest extends OpMode {
                 intake.loopIntake(gamepad1);
 
                 if(currentGamepad.dpad_up && !previousGamepad.dpad_up) {
-                    claw.setClawState(Claw.ClawState.OPEN);
                     int counter = 0;
                     isRunning = true;
                     timer.reset();
@@ -125,6 +124,7 @@ public class TransferTest extends OpMode {
                     diff.setDiffState(Differential.DiffState.INTERMEDIATE);
                 }
                 if(currentGamepad.dpad_left && !previousGamepad.dpad_left) {
+                    claw.setClawState(Claw.ClawState.OPEN);
                     diff.setDiffState(Differential.DiffState.PICKUP);
                     fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
                 }

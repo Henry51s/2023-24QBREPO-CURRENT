@@ -71,7 +71,7 @@ public class Intake {
                 intake.setPower(-INTAKE_MAX_POWER);
                 break;
             case RUN_SET_TIME:
-                runIntakeSetTime(500, false);
+                runIntakeSetTimeAsync(500, false);
 
         }
     }

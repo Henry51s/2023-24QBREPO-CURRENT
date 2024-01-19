@@ -15,7 +15,7 @@ public class RedLeft extends LinearOpMode {
     SampleMecanumDrive drive;
     @Override
     public void runOpMode() throws InterruptedException {
-        autoTrajectories = new AutoTrajectories(hardwareMap, AutoTrajectories.AutoLocation.RED_LEFT);
+        autoTrajectories = new AutoTrajectories(hardwareMap);
         drive = autoTrajectories.drive;
 
 

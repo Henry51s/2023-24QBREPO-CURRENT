@@ -32,14 +32,11 @@ public class RedRight extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        autoTrajectories = new AutoTrajectories(hardwareMap, AutoTrajectories.AutoLocation.RED_RIGHT);
-        autoTrajectories.setSpikeMark(AutoTrajectories.SpikeMark.MIDDLE);
-        autoTrajectories.setAutoPath(AutoTrajectories.AutoLocation.RED_RIGHT);
+        autoTrajectories = new AutoTrajectories(hardwareMap);
+        autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, autoTrajectories.spikeMark);
         drive = autoTrajectories.drive;
         scoreSpikeMark = autoTrajectories.scoreSpikeMark;
         scoreBackBoard = autoTrajectories.scoreBackBoard;
-        park = autoTrajectories.park;
-        backBoardOffset = autoTrajectories.backBoardOffset;
 
         hw.initAuto(hardwareMap);
         intake = hw.intakeInstance;
@@ -59,8 +56,8 @@ public class RedRight extends LinearOpMode {
 
         drive.followTrajectorySequence(scoreSpikeMark);
         intake.runIntakeSetTime(500, true);
+        fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
         drive.followTrajectorySequence(scoreBackBoard);
-        drive.followTrajectorySequence(backBoardOffset);
 
         claw.setClawState(Claw.ClawState.OPEN);
         //drive.followTrajectorySequence(park);

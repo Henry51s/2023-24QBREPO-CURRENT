@@ -36,25 +36,25 @@ public class GlobalVars {
 
 
     public static double FOURBAR_INIT = 0.523;
-    public static double FOURBAR_PICKUP = 0.694;
-    public static double FOURBAR_DEPOSIT = 0.31;
+    public static double FOURBAR_PICKUP = 0.731;
+    public static double FOURBAR_DEPOSIT = 0.3629;
     public static double FOURBAR_INTERMEDIATE = 0.6;
 
-    public static double DIFFL_PICKUP = 0.1299;
-    public static double DIFFL_DEPOSIT = 0.386;
+    public static double DIFFL_PICKUP = 0.1789;
+    public static double DIFFL_DEPOSIT = 0.723;
     public static double DIFFL_INTERMEDIATE = 0.1349;
     public static double DIFFL_INIT = 0.3899;
 
     public static double DIFFR_INTERMEDIATE = 0.1109;
-    public static double DIFFR_PICKUP = 0.111;
-    public static double DIFFR_DEPOSIT = 0.90;
+    public static double DIFFR_PICKUP = 0.24099;
+    public static double DIFFR_DEPOSIT = 0.785;
     public static double DIFFR_INIT = 0.3699;
 
 
 
     public static double CLAW_RELEASE = 0.032;
     public static double CLAW_LATCH = 0.41;
-    public static double CLAW_LATCH_ONE_PIXEL = 0.434;
+    public static double CLAW_LATCH_ONE_PIXEL = 0.5;
 
     //Config Names-----------------
 

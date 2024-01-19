@@ -20,6 +20,9 @@ public class BlueLeft extends LinearOpMode {
 
     Hardware hardware = new Hardware();
     Intake intake;
+    FourBar fourBar;
+    Differential diff;
+    Claw claw;
 
 
     AutoTrajectories autoTrajectories;
@@ -29,20 +32,31 @@ public class BlueLeft extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        autoTrajectories = new AutoTrajectories(hardwareMap, AutoTrajectories.AutoLocation.BLUE_LEFT);
+        autoTrajectories = new AutoTrajectories(hardwareMap);
+        autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LEFT, autoTrajectories.spikeMark);
         drive = autoTrajectories.drive;
 
         scoreSpikeMark = autoTrajectories.scoreSpikeMark;
         scoreBackBoard = autoTrajectories.scoreBackBoard;
         park = autoTrajectories.park;
 
+        hardware.initAuto(hardwareMap);
+        fourBar = hardware.fourBarInstance;
+        diff = hardware.differentialInstance;
+        claw = hardware.clawInstance;
+
+        fourBar.setFourBarState(FourBar.FourBarState.INIT);
+        diff.setDiffState(Differential.DiffState.DEPOSIT);
+        claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
+
         waitForStart();
         if(isStopRequested()){
             return;
         }
         drive.followTrajectorySequence(scoreSpikeMark);
-        intake.runIntakeSetTime(500, true);
+        fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
         drive.followTrajectorySequence(scoreBackBoard);
+        claw.setClawState(Claw.ClawState.OPEN);
 
 
 
