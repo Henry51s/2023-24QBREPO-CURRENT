@@ -29,7 +29,7 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
     private static double gValue = 50.0;
     private static double bValue = 200.0;
 
-    public enum Color{
+    public enum Color {
         BLUE,
         RED
     }
@@ -61,20 +61,10 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
     }
 
     // Coordinate Locations for bounding boxes of each of the three individual "subviews" of the camera (left, center, right)
-    public static int centerRowStart = xResolution/3;
-    public static int centerRowEnd = 2*xResolution/3;
-    public static int sideRowStart = 0;
-    public static int sideRowEnd = xResolution/3;
-    public static int leftColStart = 0;
-    public static int leftColEnd = yResolution;
-    public static int centerColStart = 0;
-    public static int centerColEnd = yResolution;
-
-    private int threshold = 400000;
+    private int threshold = 600000;
 
 
     double leftTotal;
-    double rightTotal;
     double centerTotal;
 
     // Define the enum for ItemLocation

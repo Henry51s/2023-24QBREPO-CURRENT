@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.xResolution;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.yResolution;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.Color.BLUE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.Color.RED;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -32,7 +33,7 @@ public class WebcamDashboardTest extends OpMode {
 
     @Override
     public void init() {
-        goodPipeline.initPipeline(BLUE);
+        goodPipeline.initPipeline(RED);
 
         int cameraMonitorId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId","id",hardwareMap.appContext.getPackageName());
 

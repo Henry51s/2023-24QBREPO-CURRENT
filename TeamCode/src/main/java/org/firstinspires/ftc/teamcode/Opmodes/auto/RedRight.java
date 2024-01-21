@@ -30,7 +30,6 @@ public class RedRight extends LinearOpMode {
     Claw claw;
 
     Webcam webcam = new Webcam();
-    PrimaryDetectionPipeline pipeline = new PrimaryDetectionPipeline();
 
     @Override
     public void runOpMode() throws InterruptedException {
