@@ -56,6 +56,9 @@ public class GlobalVars {
     public static double CLAW_LATCH = 0.41;
     public static double CLAW_LATCH_ONE_PIXEL = 0.5;
 
+    public static double DRONE_LATCH = 0;
+    public static double DRONE_RELEASE = 0;
+
     //Config Names-----------------
 
     public static String CHMOTOR_0 = "motor0"; //Front Left
@@ -84,13 +87,13 @@ public class GlobalVars {
     //Vision Constants-------------
 
     //Webcam Resolution
-    public static final int xResolution = 800;
-    public static final int yResolution = 448;
+    public static final int xResolution = 800; //1280
+    public static final int yResolution = 448; //720
 
     public static final int dashboardStreamFps = 5;
 
     //Camera Orientation
-    public static final OpenCvCameraRotation cameraOrientation = OpenCvCameraRotation.UPSIDE_DOWN;
+    public static final OpenCvCameraRotation cameraOrientation = OpenCvCameraRotation.UPRIGHT;
 
 
     //Lower bound yCbCr values for desired color

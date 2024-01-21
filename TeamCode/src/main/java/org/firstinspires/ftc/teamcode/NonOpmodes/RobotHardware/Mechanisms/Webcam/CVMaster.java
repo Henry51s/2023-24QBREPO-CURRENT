@@ -14,8 +14,7 @@ public class CVMaster {
     OpenCvCamera camera;
     ObjectDetectionPipeline pipeline = new ObjectDetectionPipeline();
     RegularVisionPipeline regPipeline = new RegularVisionPipeline();
-    VisionPipelineBlue bluePipeline = new VisionPipelineBlue();
-    VisionPipelineRed redPipeline = new VisionPipelineRed();
+
 
     public void initCamera(HardwareMap hardwareMap, String configName){
         int cameraMonitorId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId","id",hardwareMap.appContext.getPackageName());
@@ -25,7 +24,7 @@ public class CVMaster {
 
             @Override
             public void onOpened() {
-                camera.setPipeline(redPipeline);
+                camera.setPipeline(regPipeline);
                 camera.startStreaming(xResolution, yResolution, cameraOrientation);
             }
 

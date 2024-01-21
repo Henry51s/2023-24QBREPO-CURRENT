@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
 
 @Autonomous(name="RedRight")
@@ -28,15 +29,12 @@ public class RedRight extends LinearOpMode {
     Differential diff;
     Claw claw;
 
-    Webcam webcam;
+    Webcam webcam = new Webcam();
+    PrimaryDetectionPipeline pipeline = new PrimaryDetectionPipeline();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        autoTrajectories = new AutoTrajectories(hardwareMap);
-        autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, autoTrajectories.spikeMark);
-        drive = autoTrajectories.drive;
-        scoreSpikeMark = autoTrajectories.scoreSpikeMark;
-        scoreBackBoard = autoTrajectories.scoreBackBoard;
+
 
         hw.initAuto(hardwareMap);
         intake = hw.intakeInstance;
@@ -44,9 +42,31 @@ public class RedRight extends LinearOpMode {
         diff = hw.differentialInstance;
         claw = hw.clawInstance;
 
+
+        webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.RED);
+
+
+
         fourBar.setFourBarPosition(FOURBAR_INIT);
         diff.setDiffState(Differential.DiffState.DEPOSIT);
         claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
+
+        autoTrajectories = new AutoTrajectories(hardwareMap);
+
+        while(opModeInInit()){
+            telemetry.addData("Location: ", webcam.getLocation());
+            telemetry.update();
+            if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.MIDDLE);
+            }
+            if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.RIGHT);
+            }
+        }
+
+        drive = autoTrajectories.drive;
+        scoreSpikeMark = autoTrajectories.scoreSpikeMark;
+        scoreBackBoard = autoTrajectories.scoreBackBoard;
 
 
         waitForStart();

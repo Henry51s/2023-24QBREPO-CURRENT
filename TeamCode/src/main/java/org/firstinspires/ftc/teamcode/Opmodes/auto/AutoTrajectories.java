@@ -44,7 +44,7 @@ public class AutoTrajectories {
             case BLUE_RIGHT:
 
             case BLUE_LEFT:
-                startPose = new Pose2d(15,61,Math.toRadians(90));
+                startPose = new Pose2d(9,61,Math.toRadians(90));
                 if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
@@ -78,10 +78,11 @@ public class AutoTrajectories {
                 }
                 break;
             case RED_RIGHT:
-                startPose = new Pose2d(15, -61, Math.toRadians(-90));
+                startPose = new Pose2d(16, -61, Math.toRadians(-90));
                 if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
+                            .strafeRight(2)
                             .lineToLinearHeading(new Pose2d(16,-30, Math.toRadians(0)))
                             .build();
                     scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
@@ -95,6 +96,7 @@ public class AutoTrajectories {
                 else if(spikeMark == SpikeMark.MIDDLE){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
+                            .strafeRight(2)
                             .lineToLinearHeading(new Pose2d(12,-35, Math.toRadians(-90)))
                             .build();
                     scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
@@ -109,6 +111,7 @@ public class AutoTrajectories {
                 else if(spikeMark == SpikeMark.RIGHT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
+                            .strafeRight(2)
                             .lineToLinearHeading(new Pose2d(22,-45, Math.toRadians(-90)))
                             .build();
                     scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())

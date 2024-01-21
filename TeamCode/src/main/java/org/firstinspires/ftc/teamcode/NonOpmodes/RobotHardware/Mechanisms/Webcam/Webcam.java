@@ -13,45 +13,46 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class Webcam {
 
-    private static Webcam instance;
-    private VisionPortal portal;
-    private ElementDetectionPipeline elementDetectionPipeline;
-    KookyDetectionPipeline kookyDetectionPipeline;
+    OpenCvCamera camera;
+    PrimaryDetectionPipeline pipeline = new PrimaryDetectionPipeline();
+
+    public void initCamera(HardwareMap hardwareMap, PrimaryDetectionPipeline.Color color){
+
+        pipeline.initPipeline(color);
+
+        int cameraMonitorId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId","id",hardwareMap.appContext.getPackageName());
+
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorId);
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+
+            @Override
+            public void onOpened() {
+                try {
+                    camera.setPipeline(pipeline);
+                }
+                catch(Exception exception){
+                    telemetry.addLine("Error!");
+                }
+                camera.startStreaming(xResolution, yResolution, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+            }
+        });
+    }
+    public PrimaryDetectionPipeline.ItemLocation getLocation(){
+        return pipeline.getLocation();
+    }
 
 
-    private Webcam(){
 
-    }
-    public static Webcam getInstance(){
-        if(instance == null){
-            instance = new Webcam();
-        }
-        return instance;
-    }
-    public void startWebcam(HardwareMap hw, ElementDetectionPipeline.ElementColor elementColor){
-        //elementDetectionPipeline = new ElementDetectionPipeline(elementColor);
-        kookyDetectionPipeline = new KookyDetectionPipeline();
-        try {
-            portal = new VisionPortal.Builder()
-                    .setCamera(hw.get(WebcamName.class, WEBCAM))
-                    .setCameraResolution(new Size(xResolution, yResolution))
-                    .setCamera(BuiltinCameraDirection.BACK)
-                    .addProcessor(kookyDetectionPipeline)
-                    .build();
-        }
-        catch (Exception exception) {
-            portal = new VisionPortal.Builder()
-                    .setCamera(hw.get(WebcamName.class, WEBCAM))
-                    .setCameraResolution(new Size(xResolution, yResolution))
-                    .setCamera(BuiltinCameraDirection.BACK)
-                    .build();
-        }
-    }
-    //public ElementDetectionPipeline.DetectionLocation getDetectionLocation(){
-    //    return elementDetectionPipeline.getDetectionLocation();
-    //}
+
 
 }

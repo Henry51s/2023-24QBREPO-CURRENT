@@ -28,7 +28,7 @@ public class Hardware{
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
     public DcMotorEx lift, extendoL, extendoR;
-    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm, climb1, climb2;
+    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm, climb1, climb2, drone;
     //---------------------------
     public Claw clawInstance;
     public Differential differentialInstance;
@@ -58,7 +58,7 @@ public class Hardware{
         intakeInstance.initIntake(hw);
         liftInstance.initLift(hw);
 
-        initClimb(hw);
+        initClimbAndDrone(hw);
         climb1.setPosition(climbLatch);
         climb2.setPosition(climbLatch);
 
@@ -72,16 +72,19 @@ public class Hardware{
         intakeInstance.initIntake(hw);
         liftInstance.initLift(hw);
 
-        initClimb(hw);
+        initClimbAndDrone(hw);
         climb1.setPosition(climbLatch);
         climb2.setPosition(climbLatch);
     }
 
     //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms
-    public void initClimb(HardwareMap hw){
+    public void initClimbAndDrone(HardwareMap hw){
         climb1 = hw.get(Servo.class, CHSERVO_4);
         climb1.setDirection(REVERSE);
         climb2 = hw.get(Servo.class, CHSERVO_5);
+
+        drone = hw.get(Servo.class, CHSERVO_3);
+        drone.setPosition(DRONE_LATCH);
 
     }
     public void initDrive(HardwareMap hw){

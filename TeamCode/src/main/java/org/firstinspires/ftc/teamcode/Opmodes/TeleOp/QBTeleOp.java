@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_RELEASE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
@@ -35,7 +36,7 @@ public class QBTeleOp extends OpMode {
     Drive drive;
     Extension extendo;
 
-    Servo climb1, climb2;
+    Servo climb1, climb2, drone;
 
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
 
@@ -47,6 +48,7 @@ public class QBTeleOp extends OpMode {
     public void init() {
         hw.initAll(hardwareMap);
         claw = hw.clawInstance;
+        drone = hw.drone;
         differential = hw.differentialInstance;
         fourBar = hw.fourBarInstance;
         intake = hw.intakeInstance;
@@ -61,7 +63,7 @@ public class QBTeleOp extends OpMode {
         drive.setDriveState(REVERSED);
         extendo.setTargetPosition(0);
 
-        hw.initClimb(hardwareMap);
+        hw.initClimbAndDrone(hardwareMap);
         climb1 = hw.climb1;
         climb2 = hw.climb2;
         climb1.setPosition(climbLatch);
@@ -119,6 +121,9 @@ public class QBTeleOp extends OpMode {
         if(gamepad1.dpad_left){
             climb1.setPosition(climbRelease);
             climb2.setPosition(climbRelease);
+
+            drone.setPosition(DRONE_RELEASE);
+
         }
         if(gamepad1.dpad_right){
             extendo.setTargetPosition(extendoClimb);

@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.cameraOrientation;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.dashboardStreamFps;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.xResolution;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.yResolution;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.Color.BLUE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.ObjectDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.RegularVisionPipeline;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -22,7 +22,9 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @TeleOp(name="WebcamDashboardTest",group="Tests")
 public class WebcamDashboardTest extends OpMode {
     OpenCvCamera webcam;
-    ObjectDetectionPipeline pipeline = new ObjectDetectionPipeline();
+
+    PrimaryDetectionPipeline goodPipeline = new PrimaryDetectionPipeline();
+
     RegularVisionPipeline regPipeline = new RegularVisionPipeline();
 
     FtcDashboard dashboard;
@@ -30,6 +32,8 @@ public class WebcamDashboardTest extends OpMode {
 
     @Override
     public void init() {
+        goodPipeline.initPipeline(BLUE);
+
         int cameraMonitorId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId","id",hardwareMap.appContext.getPackageName());
 
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorId);
@@ -38,7 +42,7 @@ public class WebcamDashboardTest extends OpMode {
             @Override
             public void onOpened() {
                 try {
-                    webcam.setPipeline(regPipeline);
+                    webcam.setPipeline(goodPipeline);
                 }
                 catch(Exception exception){
                     telemetry.addLine("Error!");
@@ -59,15 +63,29 @@ public class WebcamDashboardTest extends OpMode {
     }
 
     @Override
+    public void init_loop(){
+        telemetry.addData("Position: ", goodPipeline.getLocation());
+        telemetry.addData("Left Position: ", goodPipeline.getLeftTotal());
+        telemetry.addData("Center Position: ", goodPipeline.getCenterTotal());
+
+        telemetry.addData("Center Rows: ", goodPipeline.getMatInfo()[0]);
+        telemetry.addData("Center Col: ", goodPipeline.getMatInfo()[1]);
+        //telemetry.addData("Left Rows: ", goodPipeline.getMatInfo()[2]);
+        //telemetry.addData("Left Col: ", goodPipeline.getMatInfo()[3]);
+    }
+
+    @Override
     public void loop() {
+        telemetry.addData("Position: ", goodPipeline.getLocation());
+        telemetry.addData("Left Position: ", goodPipeline.getLeftTotal());
+        telemetry.addData("Center Position: ", goodPipeline.getCenterTotal());
 
 
-        packet.put("xPos: ", pipeline.getX());
-        packet.put("yPos: ", pipeline.getY());
-        dashboard.sendTelemetryPacket(packet);
+        //packet.put("xPos: ", pipeline.getX());
+        //packet.put("yPos: ", pipeline.getY());
+        //dashboard.sendTelemetryPacket(packet);
 
-        telemetry.addData("xPos: ", pipeline.getX());
-        telemetry.addData("yPos: ", pipeline.getY());
+
 
     }
 }
