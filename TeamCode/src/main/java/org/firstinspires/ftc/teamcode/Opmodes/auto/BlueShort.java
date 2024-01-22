@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
-@Autonomous(name="BlueLeft")
-public class BlueLeft extends LinearOpMode {
+@Autonomous(name="BlueShort")
+public class BlueShort extends LinearOpMode {
 
     Hardware hardware = new Hardware();
     Intake intake;
@@ -33,7 +33,7 @@ public class BlueLeft extends LinearOpMode {
         drive = autoTrajectories.drive;
 
         scoreSpikeMark = autoTrajectories.scoreSpikeMark;
-        scoreBackBoard = autoTrajectories.scoreBackBoard;
+        scoreBackBoard = autoTrajectories.scoreBackDrop;
         park = autoTrajectories.park;
 
         hardware.initAuto(hardwareMap);

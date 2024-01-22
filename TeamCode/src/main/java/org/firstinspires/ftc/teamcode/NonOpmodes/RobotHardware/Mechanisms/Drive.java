@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
+@Config
 public class Drive {
 
     private static Drive instance;
@@ -20,6 +22,9 @@ public class Drive {
     private Hardware hardware = new Hardware();
 
     private int flipMultiplier = 1;
+    public static double frontStrafeMultiplier = 0.5;
+    public static double backStrafeMultiplier = 0.5;
+
 
     public enum DriveState{
         NORMAL,
@@ -62,10 +67,10 @@ public class Drive {
 
 
 
-        frontLeft.setPower(y + x + rx);
-        backLeft.setPower(y - x + rx);
-        frontRight.setPower(y - x - rx);
-        backRight.setPower(y + x - rx);
+        frontLeft.setPower(y + x* frontStrafeMultiplier + rx);
+        backLeft.setPower(y - x*backStrafeMultiplier + rx);
+        frontRight.setPower(y - x* frontStrafeMultiplier - rx);
+        backRight.setPower(y + x*backStrafeMultiplier - rx);
 
     }
 }

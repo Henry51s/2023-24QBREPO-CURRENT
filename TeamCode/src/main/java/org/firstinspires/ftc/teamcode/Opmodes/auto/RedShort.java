@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
 
-@Autonomous(name="RedRight")
-public class RedRight extends LinearOpMode {
+@Autonomous(name="RedShort")
+public class RedShort extends LinearOpMode {
     AutoTrajectories autoTrajectories;
     TrajectorySequence scoreSpikeMark, scoreBackBoard, park, backBoardOffset;
     SampleMecanumDrive drive;
@@ -67,7 +67,7 @@ public class RedRight extends LinearOpMode {
 
         drive = autoTrajectories.drive;
         scoreSpikeMark = autoTrajectories.scoreSpikeMark;
-        scoreBackBoard = autoTrajectories.scoreBackBoard;
+        scoreBackBoard = autoTrajectories.scoreBackDrop;
 
 
         waitForStart();

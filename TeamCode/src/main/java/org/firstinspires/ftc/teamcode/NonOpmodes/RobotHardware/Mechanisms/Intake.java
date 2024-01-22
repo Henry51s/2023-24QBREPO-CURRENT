@@ -34,6 +34,7 @@ public class Intake {
         REVERSED,
         RUN_SET_TIME,
     }
+
     public enum IntakeArmState{
         GROUND,
         SECOND,
@@ -97,26 +98,6 @@ public class Intake {
     }
 
     public void runIntakeSetTime(int milliseconds, boolean reversed){
-        /*int motorDirection = 1;
-        if(reversed)
-            motorDirection = -1;
-        else
-            motorDirection = 1;
-        int finalMotorDirection = motorDirection;
-        Thread intakeThread = new Thread(() -> {
-
-            timer.reset();
-            while (timer.milliseconds() <= milliseconds) {
-                intake.setPower(-INTAKE_MAX_POWER/2* finalMotorDirection);
-                // You might want to add a small delay here to avoid busy waiting
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            intakeState = IntakeState.STOP;
-        });*/
         int directionConstant = 1;
         if(reversed){
             directionConstant = -1;
@@ -132,8 +113,6 @@ public class Intake {
         int motorDirection = 1;
         if(reversed)
             motorDirection = -1;
-        else
-            motorDirection = 1;
         int finalMotorDirection = motorDirection;
         Thread intakeThread = new Thread(() -> {
 
