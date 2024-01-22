@@ -38,7 +38,10 @@ public class AutoTrajectories {
         drive = new SampleMecanumDrive(hw);
         }
     public static double x1 = 22, y1 = 40;
-    public static double x2 = 16, y2 = 0;
+    public static double[] spikemark = {0,0,0};
+    public static double[] backDrop = {0,0,0};
+
+
     public static SpikeMark spikeMark = SpikeMark.MIDDLE;
     public void setPath(AutoLocation autoLocation, SpikeMark spikeMark){
         switch(autoLocation){
