@@ -21,10 +21,10 @@ public class AutoTrajectories {
 
 
     public enum AutoLocation {
-        BLUE_LEFT,
-        BLUE_RIGHT,
-        RED_LEFT,
-        RED_RIGHT
+        BLUE_SHORT,
+        BLUE_LONG,
+        RED_LONG,
+        RED_SHORT
     }
 
     public enum SpikeMark {
@@ -42,9 +42,9 @@ public class AutoTrajectories {
     public static SpikeMark spikeMark = SpikeMark.MIDDLE;
     public void setPath(AutoLocation autoLocation, SpikeMark spikeMark){
         switch(autoLocation){
-            case BLUE_RIGHT:
+            case BLUE_LONG:
 
-            case BLUE_LEFT:
+            case BLUE_SHORT:
                 startPose = new Pose2d(9,61,Math.toRadians(90));
                 if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
@@ -78,7 +78,7 @@ public class AutoTrajectories {
 
                 }
                 break;
-            case RED_RIGHT:
+            case RED_SHORT:
                 startPose = new Pose2d(16, -61, Math.toRadians(-90));
                 if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
@@ -124,7 +124,7 @@ public class AutoTrajectories {
 
                 }
                 break;
-            case RED_LEFT:
+            case RED_LONG:
                 break;
         }
         drive.setPoseEstimate(startPose);

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -56,13 +55,13 @@ public class RedRight extends LinearOpMode {
             telemetry.addData("Location: ", webcam.getLocation());
             telemetry.update();
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.MIDDLE);
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_SHORT, AutoTrajectories.SpikeMark.MIDDLE);
             }
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.RIGHT);
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_SHORT, AutoTrajectories.SpikeMark.RIGHT);
             }
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.LEFT);
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_SHORT, AutoTrajectories.SpikeMark.LEFT);
             }
         }
 

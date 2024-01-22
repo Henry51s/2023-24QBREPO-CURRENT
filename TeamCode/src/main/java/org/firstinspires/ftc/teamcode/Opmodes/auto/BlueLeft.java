@@ -1,17 +1,13 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
@@ -33,7 +29,7 @@ public class BlueLeft extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         autoTrajectories = new AutoTrajectories(hardwareMap);
-        autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LEFT, autoTrajectories.spikeMark);
+        autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_SHORT, autoTrajectories.spikeMark);
         drive = autoTrajectories.drive;
 
         scoreSpikeMark = autoTrajectories.scoreSpikeMark;
