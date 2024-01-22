@@ -54,7 +54,6 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
                 saturationMax = 255;
                 valueMin = 70;
                 valueMax = 250;
-
                 break;
 
         }
@@ -62,7 +61,6 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
 
     // Coordinate Locations for bounding boxes of each of the three individual "subviews" of the camera (left, center, right)
     private int threshold = 600000;
-
 
     double leftTotal;
     double centerTotal;
@@ -76,11 +74,9 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
     private Mat workingMatrix = new Mat();
     private Mat matLeft = new Mat(), matCenter = new Mat();
 
-
     @Override
     public Mat processFrame(Mat input) {
         input.copyTo(workingMatrix);
-
         if (workingMatrix.empty()) {
             return input;
         }
@@ -93,39 +89,26 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
 
         // Create 3 areas to analyze
         workingMatrix.copyTo(matLeft);
-        //workingMatrix.copyTo(matCenter);
+
 
         Rect roiLeft = new Rect(0, 0, xResolution/3, yResolution);
         Rect roiCenter = new Rect(xResolution/3, 0, 2*xResolution/3, yResolution);
 
-        //Imgproc.resize(matLeft, matLeft, new Size(2*xResolution/3, yResolution));
-       // matCenter = workingMatrix.submat(xResolution/2, Math.min(xResolution-1,workingMatrix.rows()), 0, Math.min(yResolution-1,workingMatrix.cols()));
         matLeft = workingMatrix.submat(roiLeft);
         matCenter = workingMatrix.submat(roiCenter);
-        //matLeft = workingMatrix.submat(0, (xResolution/2)-1, 0, Math.min(leftColEnd-1,workingMatrix.cols()));
-        //matCenter = workingMatrix.submat(xResolution/2, Math.min((xResolution)-1,workingMatrix.rows()), 0, Math.min(centerColEnd-1,workingMatrix.cols()));
-
 
         // Draw boxes on screen
-        //Imgproc.rectangle(workingMatrix, new Point(0, 0), new Point(xResolution/2, yResolution), new Scalar(rValue, gValue, bValue), 2);
-        //Imgproc.rectangle(workingMatrix, new Point(xResolution/2, 0), new Point(xResolution, yResolution), new Scalar(rValue, gValue, bValue), 2);
-
         Imgproc.rectangle(workingMatrix, roiLeft, new Scalar(rValue, gValue, bValue));
         Imgproc.rectangle(workingMatrix, roiCenter, new Scalar(rValue, gValue, bValue));
 
         // Calculate pixel density in each box
-        //leftTotal = Core.sumElems(matLeft).val[0];
-        leftTotal = ((matLeft.empty()) ? 0: Core.sumElems(matLeft).val[0]);
-        //centerTotal = Core.sumElems(matCenter).val[0];
-        centerTotal = ((matCenter.empty()) ? 0: Core.sumElems(matCenter).val[0]);
+        leftTotal = (matLeft.empty()) ? 0: Core.sumElems(matLeft).val[0];
+        centerTotal = (matCenter.empty()) ? 0: Core.sumElems(matCenter).val[0];
 
         matLeft.release();
         matCenter.release();
 
-
-
         // Compare to determine location
-
         if(leftTotal > centerTotal){
             location = ItemLocation.LEFT;
         }
@@ -135,21 +118,6 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
         if(centerTotal < threshold && leftTotal < threshold){
             location = ItemLocation.RIGHT;
         }
-
-        /*if (leftTotal > centerTotal) {
-            if (leftTotal > rightTotal) {
-                location = ItemLocation.LEFT;
-            } else {
-                location = ItemLocation.RIGHT;
-            }
-        } else {
-            if (centerTotal > rightTotal) {
-                location = ItemLocation.CENTER;
-            } else {
-                location = ItemLocation.RIGHT;
-            }
-        }
-*/
         return workingMatrix;
     }
 

@@ -56,8 +56,8 @@ public class GlobalVars {
     public static double CLAW_LATCH = 0.41;
     public static double CLAW_LATCH_ONE_PIXEL = 0.5;
 
-    public static double DRONE_LATCH = 0;
-    public static double DRONE_RELEASE = 0;
+    public static double DRONE_LATCH = 0.571;
+    public static double DRONE_RELEASE = 0.038;
 
     //Config Names-----------------
 

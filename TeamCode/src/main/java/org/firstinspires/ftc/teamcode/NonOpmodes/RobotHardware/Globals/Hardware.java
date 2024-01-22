@@ -84,7 +84,7 @@ public class Hardware{
         climb2 = hw.get(Servo.class, CHSERVO_5);
 
         drone = hw.get(Servo.class, CHSERVO_3);
-        drone.setPosition(DRONE_LATCH);
+
 
     }
     public void initDrive(HardwareMap hw){

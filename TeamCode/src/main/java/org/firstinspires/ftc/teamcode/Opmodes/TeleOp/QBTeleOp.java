@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_LATCH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_RELEASE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
@@ -68,6 +69,7 @@ public class QBTeleOp extends OpMode {
         climb2 = hw.climb2;
         climb1.setPosition(climbLatch);
         climb2.setPosition(climbLatch);
+        drone.setPosition(DRONE_LATCH);
 
         hw.initDrive(hardwareMap);
 
@@ -123,7 +125,6 @@ public class QBTeleOp extends OpMode {
             climb2.setPosition(climbRelease);
 
             drone.setPosition(DRONE_RELEASE);
-
         }
         if(gamepad1.dpad_right){
             extendo.setTargetPosition(extendoClimb);

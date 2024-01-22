@@ -37,7 +37,8 @@ public class AutoTrajectories {
     public AutoTrajectories(HardwareMap hw){
         drive = new SampleMecanumDrive(hw);
         }
-    public static double x = 56, y = 40;
+    public static double x1 = 22, y1 = 40;
+    public static double x2 = 16, y2 = 0;
     public static SpikeMark spikeMark = SpikeMark.MIDDLE;
     public void setPath(AutoLocation autoLocation, SpikeMark spikeMark){
         switch(autoLocation){
@@ -83,7 +84,7 @@ public class AutoTrajectories {
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
                             .strafeRight(2)
-                            .lineToLinearHeading(new Pose2d(16,-30, Math.toRadians(0)))
+                            .lineToLinearHeading(new Pose2d(x1,-30, Math.toRadians(0)))
                             .build();
                     scoreBackBoard = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)

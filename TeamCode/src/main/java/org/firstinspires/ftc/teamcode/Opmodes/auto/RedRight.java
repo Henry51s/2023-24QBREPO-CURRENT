@@ -61,6 +61,9 @@ public class RedRight extends LinearOpMode {
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
                 autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.RIGHT);
             }
+            if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_RIGHT, AutoTrajectories.SpikeMark.LEFT);
+            }
         }
 
         drive = autoTrajectories.drive;
