@@ -8,6 +8,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_MAX_POWER;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -23,7 +24,7 @@ public class Intake {
         }
         return instance;
     }
-    public DcMotor intake;
+    public DcMotorEx intake;
     public Servo intakeArm;
     private Hardware hardware = new Hardware();
     private ElapsedTime timer = new ElapsedTime();
@@ -32,7 +33,8 @@ public class Intake {
         STOP,
         NORMAL,
         REVERSED,
-        RUN_SET_TIME,
+        RUN_TO_POSITION
+
     }
 
     public enum IntakeArmState{
@@ -53,26 +55,54 @@ public class Intake {
         //setIntakeArmState(IntakeArmState.GROUND);
     }*/
 
+    int ticksPerRevolution = 145;
+    int currentPosition = 0;
+
+    public int targetPosition = 0;
+    int threshold = 3;
+
+    //getPosition % fullRevolution
+
+    Gamepad current = new Gamepad(), previous = new Gamepad();
+
     public void initIntake(HardwareMap hw){
         hardware.initIntake(hw);
         intake = hardware.intake;
+        intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intake.setTargetPosition(0);
+        intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intake.setPower(1);
+
         intakeArm = hardware.intakeArm;
     }
 
     public void setIntakeState(IntakeState state) {
+
         intakeState = state;
         switch(state){
             case STOP:
+                intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 intake.setPower(0);
                 break;
             case REVERSED:
-                intake.setPower(INTAKE_MAX_POWER);
-                break;
-            case NORMAL:
+                intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 intake.setPower(-INTAKE_MAX_POWER);
                 break;
-            case RUN_SET_TIME:
-                runIntakeSetTimeAsync(500, false);
+            case NORMAL:
+                intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                intake.setPower(INTAKE_MAX_POWER);
+                break;
+            case RUN_TO_POSITION:
+                targetPosition = (int) (Math.ceil(currentPosition / ticksPerRevolution) * ticksPerRevolution);
+                intake.setTargetPosition(targetPosition);
+                intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                intake.setPower(1);
+
+                while(Math.abs(targetPosition - intake.getCurrentPosition()) >= threshold){
+                    intake.setTargetPosition(targetPosition);
+                }
+                setIntakeState(IntakeState.STOP);
+                break;
 
         }
     }
@@ -131,18 +161,27 @@ public class Intake {
         intakeThread.start();
     }
     public void loopIntake(Gamepad gamepad){
+        previous.copy(current);
+        current.copy(gamepad);
+
         if(gamepad.left_bumper){
             setIntakeState(IntakeState.NORMAL);
         }
         if(gamepad.right_bumper){
             setIntakeState(IntakeState.REVERSED);
         }
-        if(gamepad.dpad_up){
-            setIntakeState(IntakeState.RUN_SET_TIME);
+        if (!gamepad.left_bumper && !gamepad.right_bumper) {
+            if(intakeState != IntakeState.RUN_TO_POSITION)
+                setIntakeState(IntakeState.STOP);
         }
-        if (!gamepad.right_bumper && !gamepad.left_bumper){
-            setIntakeState(IntakeState.STOP);
+        if (current.dpad_up && !previous.dpad_up){
+            currentPosition = intake.getCurrentPosition();
+            setIntakeState(IntakeState.RUN_TO_POSITION);
         }
+        //if(gamepad.back){
+        //    currentPosition = intake.getCurrentPosition();
+        //    setIntakeState(IntakeState.RUN_TO_POSITION);
+        //}
     }
     public void setArmPosition(double position){
         intakeArm.setPosition(position);

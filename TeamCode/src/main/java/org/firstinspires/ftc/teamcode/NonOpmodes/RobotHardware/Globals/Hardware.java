@@ -26,8 +26,8 @@ import java.util.List;
 
 public class Hardware{
     //Robot Hardware-------------
-    public DcMotor frontLeft, frontRight, backLeft, backRight, intake;
-    public DcMotorEx lift, extendoL, extendoR;
+    public DcMotor frontLeft, frontRight, backLeft, backRight;
+    public DcMotorEx lift, extendoL, extendoR, intake;
     public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm, climb1, climb2, drone;
     //---------------------------
     public Claw clawInstance;
@@ -93,6 +93,7 @@ public class Hardware{
         frontLeft = hw.get(DcMotorEx.class, CHMOTOR_3);
         backRight = hw.get(DcMotorEx.class, EXMOTOR_3);
 
+
         frontLeft .setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -100,7 +101,8 @@ public class Hardware{
 
     }
     public void initIntake(HardwareMap hw){
-        intake = hw.get(DcMotor.class, EXMOTOR_1);
+        intake = hw.get(DcMotorEx.class, EXMOTOR_1);
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeArm = hw.get(Servo.class, EXSERVO_5);
     }
     public void initExtension(HardwareMap hw){

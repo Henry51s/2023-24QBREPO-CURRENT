@@ -43,7 +43,7 @@ public class WebcamDashboardTest extends OpMode {
             @Override
             public void onOpened() {
                 try {
-                    webcam.setPipeline(goodPipeline);
+                    webcam.setPipeline(regPipeline);
                 }
                 catch(Exception exception){
                     telemetry.addLine("Error!");
