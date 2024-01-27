@@ -36,9 +36,9 @@ public class Commands {
         catch(Exception e){
             //Put stuff incase error happens here
             telemetry.addData("Command initalization error!!! ", e);
+            telemetry.update();
 
         }
-        toDeposit(Lift.LiftState.RETRACTED);
     }
 
     public void toPickup(){
