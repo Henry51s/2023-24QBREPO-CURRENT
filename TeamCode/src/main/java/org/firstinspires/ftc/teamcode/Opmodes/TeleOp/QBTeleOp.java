@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_LATCH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_RELEASE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
@@ -24,6 +25,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBa
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
+
 //Welcome to Hell
 @TeleOp(name="QBTeleOp")
 public class QBTeleOp extends OpMode {
@@ -36,6 +39,7 @@ public class QBTeleOp extends OpMode {
     Intake intake;
     Drive drive;
     Extension extendo;
+    SideObjective sideObjective;
 
     Servo climb1, climb2, drone;
 
@@ -56,6 +60,7 @@ public class QBTeleOp extends OpMode {
         drive = hw.driveInstance;
         lift = hw.liftInstance;
         extendo = hw.extensionInstance;
+        sideObjective = hw.sideObjectiveInstance;
 
         claw.setClawState(Claw.ClawState.CLOSE);
         differential.setDiffState(Differential.DiffState.INIT);
@@ -63,13 +68,10 @@ public class QBTeleOp extends OpMode {
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         drive.setDriveState(REVERSED);
         extendo.setTargetPosition(0);
+        sideObjective.latchClimb();
+        sideObjective.latchDrone();
 
-        hw.initClimbAndDrone(hardwareMap);
-        climb1 = hw.climb1;
-        climb2 = hw.climb2;
-        climb1.setPosition(CLIMB_LATCH);
-        climb2.setPosition(CLIMB_LATCH);
-        drone.setPosition(DRONE_LATCH);
+
 
         hw.initDrive(hardwareMap);
 
@@ -94,6 +96,7 @@ public class QBTeleOp extends OpMode {
         currentGamepad2.copy(gamepad2);
 
         intake.loopIntake(gamepad1);
+        drive.loopDrive(gamepad1);
         //differential.loopDifferential(gamepad2);
 
         if(gamepad2.left_bumper)
@@ -121,27 +124,17 @@ public class QBTeleOp extends OpMode {
             lift.setLiftState(Lift.LiftState.LOW);
         }
         if(gamepad1.dpad_left){
-            climb1.setPosition(CLIMB_RELEASE);
-            climb2.setPosition(CLIMB_RELEASE);
-
-            drone.setPosition(DRONE_RELEASE);
+            sideObjective.releaseClimb();
+            sideObjective.releaseDrone();
         }
         if(gamepad1.dpad_right){
             extendo.setTargetPosition(EXTENDO_CLIMB);
         }
-
-
-
-
-        double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-        double x = gamepad1.left_stick_x;
-        double rx = gamepad1.right_stick_x*0.5;
-
-
-
-        frontLeft.setPower(y + x + rx);
-        backLeft.setPower(y - x + rx);
-        frontRight.setPower(y - x - rx);
-        backRight.setPower(y + x - rx);
+        if(gamepad1.left_stick_button){
+            extendo.setExtensionState(Extension.ExtensionState.MED);
+        }
+        if(gamepad1.dpad_down){
+            extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
+        }
     }
 }

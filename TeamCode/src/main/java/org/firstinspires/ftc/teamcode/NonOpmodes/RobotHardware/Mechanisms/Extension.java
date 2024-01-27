@@ -85,6 +85,7 @@ public class Extension {
                 break;
             case FAR:
                 setTargetPosition(EXTENDO_FAR);
+                break;
         }
     }
     public int getCurrentPosition(){return extendoL.getCurrentPosition();}

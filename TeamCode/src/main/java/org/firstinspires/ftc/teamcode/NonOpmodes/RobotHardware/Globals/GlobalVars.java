@@ -21,7 +21,7 @@ public class GlobalVars {
     public static double EXTENDO_MAX_POWER = 0.30;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_SHORT = 0;
-    public static int EXTENDO_MED = 0;
+    public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
 
     public static double INTAKE_MAX_POWER = 0.65;

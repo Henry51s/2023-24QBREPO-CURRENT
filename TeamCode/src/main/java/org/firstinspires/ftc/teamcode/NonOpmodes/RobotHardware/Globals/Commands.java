@@ -30,12 +30,15 @@ public class Commands {
             claw = Claw.getInstance();
             fourBar = FourBar.getInstance();
             lift = Lift.getInstance();
+
+
         }
         catch(Exception e){
             //Put stuff incase error happens here
             telemetry.addData("Command initalization error!!! ", e);
 
         }
+        toDeposit(Lift.LiftState.RETRACTED);
     }
 
     public void toPickup(){
@@ -44,11 +47,6 @@ public class Commands {
             timer.reset();
             lift.setLiftState(Lift.LiftState.RETRACTED);
 
-            try {
-                Thread.sleep(pickupLiftRetractDelay);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             differential.setDiffState(Differential.DiffState.PICKUP);
             claw.setClawState(Claw.ClawState.OPEN);
             fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
