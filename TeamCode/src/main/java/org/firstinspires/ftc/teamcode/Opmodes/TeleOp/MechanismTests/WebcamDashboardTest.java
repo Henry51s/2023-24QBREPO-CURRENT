@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.dashboardStreamFps;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.xResolution;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.yResolution;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.Color.BLUE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.Color.RED;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -69,8 +68,8 @@ public class WebcamDashboardTest extends OpMode {
         telemetry.addData("Left Position: ", goodPipeline.getLeftTotal());
         telemetry.addData("Center Position: ", goodPipeline.getCenterTotal());
 
-        telemetry.addData("Center Rows: ", goodPipeline.getMatInfo()[0]);
-        telemetry.addData("Center Col: ", goodPipeline.getMatInfo()[1]);
+        telemetry.addData("Center Rows: ", goodPipeline.getCenterMatInfo()[0]);
+        telemetry.addData("Center Col: ", goodPipeline.getCenterMatInfo()[1]);
         //telemetry.addData("Left Rows: ", goodPipeline.getMatInfo()[2]);
         //telemetry.addData("Left Col: ", goodPipeline.getMatInfo()[3]);
     }

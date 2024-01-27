@@ -7,8 +7,6 @@ import com.acmerobotics.dashboard.config.Config;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Range;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -133,8 +131,12 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
     public ItemLocation getLocation() {
         return location;
     }
-    public double[] getMatInfo(){
+    public double[] getCenterMatInfo(){
         double[] matInfo = {matCenter.rows(), matCenter.cols()};
+        return matInfo;
+    }
+    public double[] getLeftMatInfo(){
+        double[] matInfo = {matLeft.rows(), matLeft.cols()};
         return matInfo;
     }
 

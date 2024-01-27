@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extens
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Hardware{
     public FourBar fourBarInstance;
     public Intake intakeInstance;
     public Lift liftInstance;
+    public SideObjective sideObjectiveInstance;
 
 
     private void getInstances(){
@@ -47,6 +49,7 @@ public class Hardware{
         fourBarInstance = FourBar.getInstance();
         intakeInstance = Intake.getInstance();
         liftInstance = Lift.getInstance();
+        sideObjectiveInstance = SideObjective.getInstance();
     }
     public void initAll(HardwareMap hw){
         getInstances();
@@ -57,10 +60,9 @@ public class Hardware{
         fourBarInstance.initFourBar(hw);
         intakeInstance.initIntake(hw);
         liftInstance.initLift(hw);
+        sideObjectiveInstance.initSideQuest(hw);
 
-        initClimbAndDrone(hw);
-        climb1.setPosition(climbLatch);
-        climb2.setPosition(climbLatch);
+
 
     }
     public void initAuto(HardwareMap hw){
@@ -71,10 +73,7 @@ public class Hardware{
         fourBarInstance.initFourBar(hw);
         intakeInstance.initIntake(hw);
         liftInstance.initLift(hw);
-
-        initClimbAndDrone(hw);
-        climb1.setPosition(climbLatch);
-        climb2.setPosition(climbLatch);
+        sideObjectiveInstance.initSideQuest(hw);
     }
 
     //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms

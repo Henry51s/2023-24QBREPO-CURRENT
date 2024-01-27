@@ -5,9 +5,9 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.climbLatch;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.climbRelease;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.extendoClimb;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLIMB_LATCH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLIMB_RELEASE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_CLIMB;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive.DriveState.REVERSED;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -67,8 +67,8 @@ public class QBTeleOp extends OpMode {
         hw.initClimbAndDrone(hardwareMap);
         climb1 = hw.climb1;
         climb2 = hw.climb2;
-        climb1.setPosition(climbLatch);
-        climb2.setPosition(climbLatch);
+        climb1.setPosition(CLIMB_LATCH);
+        climb2.setPosition(CLIMB_LATCH);
         drone.setPosition(DRONE_LATCH);
 
         hw.initDrive(hardwareMap);
@@ -121,13 +121,13 @@ public class QBTeleOp extends OpMode {
             lift.setLiftState(Lift.LiftState.LOW);
         }
         if(gamepad1.dpad_left){
-            climb1.setPosition(climbRelease);
-            climb2.setPosition(climbRelease);
+            climb1.setPosition(CLIMB_RELEASE);
+            climb2.setPosition(CLIMB_RELEASE);
 
             drone.setPosition(DRONE_RELEASE);
         }
         if(gamepad1.dpad_right){
-            extendo.setTargetPosition(extendoClimb);
+            extendo.setTargetPosition(EXTENDO_CLIMB);
         }
 
 

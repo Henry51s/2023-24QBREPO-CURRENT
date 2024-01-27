@@ -2,61 +2,104 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
 
 @TeleOp(name="ClimbTest")
 public class ClimbAndDroneTest extends OpMode {
-    Servo climb1, climb2, drone;
-    Hardware hw = new Hardware();
     double climbPosition = 0.5, dronePosition = 0.5;
-    enum TuningMode{
+    enum Objective {
         CLIMB,
         DRONE
     }
-    TuningMode tuningMode = TuningMode.CLIMB;
+
+    enum TuningMode{
+        FINE_TUNE,
+        OPERATIONAL
+    }
+    TuningMode tuningMode = TuningMode.FINE_TUNE;
+    SideObjective sideObjective;
+
+    Objective activeObjective = Objective.CLIMB;
+
+    Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
     @Override
     public void init() {
-        hw.initClimbAndDrone(hardwareMap);
-        climb1 = hw.climb1;
-        climb2 = hw.climb2;
-        drone = hw.drone;
+        sideObjective = SideObjective.getInstance();
+        sideObjective.initSideQuest(hardwareMap);
+
     }
+
+    int climbPressedCounter = 0;
+    int dronePressedCounter = 0;
 
     @Override
     public void loop() {
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad1);
         switch(tuningMode){
-            case CLIMB:
-                climb1.setPosition(climbPosition);
-                climb2.setPosition(climbPosition);
-                if(gamepad1.dpad_up){
-                    climbPosition += 0.001;
-                }
-                if(gamepad1.dpad_down){
-                    climbPosition -= 0.001;
+            case FINE_TUNE:
+                switch(activeObjective){
+                    case CLIMB:
+                        sideObjective.setClimbPosition(climbPosition);
+                        if(gamepad1.dpad_up){
+                            climbPosition += 0.001;
+                        }
+                        if(gamepad1.dpad_down){
+                            climbPosition -= 0.001;
+                        }
+                        if(gamepad1.left_bumper){
+                            activeObjective = Objective.DRONE;
+                        }
+
+                        break;
+                    case DRONE:
+                        sideObjective.setDronePosition(dronePosition);
+                        if(gamepad1.dpad_up){
+                            dronePosition += 0.001;
+                        }
+                        if(gamepad1.dpad_down){
+                            dronePosition -= 0.001;
+                        }
+                        if(gamepad1.right_bumper){
+                            activeObjective = Objective.CLIMB;
+                        }
+
+                        break;
                 }
                 if(gamepad1.left_stick_button){
-                    tuningMode = TuningMode.DRONE;
+                    tuningMode = TuningMode.OPERATIONAL;
+                }
+                break;
+            case OPERATIONAL:
+
+                if(currentGamepad.dpad_up && !previousGamepad.dpad_up){
+                    climbPressedCounter += 1;
+                }
+                if(currentGamepad.dpad_down && !previousGamepad.dpad_up){
+                    dronePressedCounter += 1;
                 }
 
-                break;
-            case DRONE:
-                drone.setPosition(dronePosition);
-                if(gamepad1.dpad_up){
-                    dronePosition += 0.001;
+                if ((climbPressedCounter % 2 == 1)) {
+                    sideObjective.latchClimb();
+                } else {
+                    sideObjective.releaseClimb();
                 }
-                if(gamepad1.dpad_down){
-                    dronePosition -= 0.001;
+
+                if(dronePressedCounter % 2 == 1){
+                    sideObjective.latchDrone();
+                }
+                else{
+                    sideObjective.releaseDrone();
                 }
                 if(gamepad1.right_stick_button){
-                    tuningMode = TuningMode.CLIMB;
-                }
+                    tuningMode = TuningMode.FINE_TUNE;
 
-                break;
+                }                break;
         }
 
-        telemetry.addData("TuningMode: ", tuningMode);
+        telemetry.addData("TuningMode: ", activeObjective);
         telemetry.addData("climbPosition: ", climbPosition);
         telemetry.addData("dronePosition: ", dronePosition);
 

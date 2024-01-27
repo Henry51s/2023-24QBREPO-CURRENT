@@ -10,10 +10,13 @@ public class GlobalVars {
 
 
 
-    public static double climbRelease = 0.370;
-    public static double climbLatch = 0.739;
+    public static double CLIMB_RELEASE = 0.370;
+    public static double CLIMB_LATCH = 0.739;
 
-    public static int extendoClimb = 85;
+    public static double DRONE_LATCH = 0.571;
+    public static double DRONE_RELEASE = 0.038;
+
+    public static int EXTENDO_CLIMB = 85;
 
     public static double EXTENDO_MAX_POWER = 0.30;
     public static int EXTENDO_RETRACTED = 0;
@@ -36,28 +39,27 @@ public class GlobalVars {
 
 
     public static double FOURBAR_INIT = 0.523;
-    public static double FOURBAR_PICKUP = 0.731;
-    public static double FOURBAR_DEPOSIT = 0.3629;
+    public static double FOURBAR_PICKUP = 0.730;
+    public static double FOURBAR_DEPOSIT = 0.32399;
     public static double FOURBAR_INTERMEDIATE = 0.6;
 
-    public static double DIFFL_PICKUP = 0.1789;
-    public static double DIFFL_DEPOSIT = 0.723;
+    public static double DIFFL_PICKUP = 0.09399;
+    public static double DIFFL_DEPOSIT = 0.878;
     public static double DIFFL_INTERMEDIATE = 0.1349;
     public static double DIFFL_INIT = 0.3899;
 
     public static double DIFFR_INTERMEDIATE = 0.1109;
-    public static double DIFFR_PICKUP = 0.24099;
-    public static double DIFFR_DEPOSIT = 0.785;
+    public static double DIFFR_PICKUP = 0.347999;
+    public static double DIFFR_DEPOSIT = 0.602;
     public static double DIFFR_INIT = 0.3699;
 
 
 
-    public static double CLAW_RELEASE = 0.032;
-    public static double CLAW_LATCH = 0.41;
-    public static double CLAW_LATCH_ONE_PIXEL = 0.5;
+    public static double CLAW_RELEASE = 0.439;
+    public static double CLAW_LATCH = 0.739;
+    public static double CLAW_LATCH_ONE_PIXEL = 0.832;
 
-    public static double DRONE_LATCH = 0.571;
-    public static double DRONE_RELEASE = 0.038;
+
 
     //Config Names-----------------
 

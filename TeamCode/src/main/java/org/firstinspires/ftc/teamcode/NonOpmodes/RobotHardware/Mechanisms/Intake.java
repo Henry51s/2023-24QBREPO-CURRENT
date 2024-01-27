@@ -7,6 +7,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_THIRD;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_MAX_POWER;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -16,6 +17,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
+@Config
 public class Intake {
     private static Intake instance;
     public static Intake getInstance(){
@@ -48,20 +50,9 @@ public class Intake {
     IntakeArmState intakeArmState = IntakeArmState.GROUND;
     IntakeState intakeState = IntakeState.NORMAL;
 
-    /*public Intake(HardwareMap hw){
-        hardware.initIntake(hw);
-        intake = hardware.intake;
-        intakeArm = hardware.intakeArm;
-        //setIntakeArmState(IntakeArmState.GROUND);
-    }*/
-
     int ticksPerRevolution = 145;
-    int currentPosition = 0;
 
-    public int targetPosition = 0;
-    int threshold = 3;
 
-    //getPosition % fullRevolution
 
     Gamepad current = new Gamepad(), previous = new Gamepad();
 
@@ -71,7 +62,7 @@ public class Intake {
         intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         intake.setTargetPosition(0);
         intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        intake.setPower(1);
+        intake.setPower(INTAKE_MAX_POWER);
 
         intakeArm = hardware.intakeArm;
     }
@@ -93,15 +84,7 @@ public class Intake {
                 intake.setPower(INTAKE_MAX_POWER);
                 break;
             case RUN_TO_POSITION:
-                targetPosition = (int) (Math.ceil(currentPosition / ticksPerRevolution) * ticksPerRevolution);
-                intake.setTargetPosition(targetPosition);
-                intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                intake.setPower(1);
 
-                while(Math.abs(targetPosition - intake.getCurrentPosition()) >= threshold){
-                    intake.setTargetPosition(targetPosition);
-                }
-                setIntakeState(IntakeState.STOP);
                 break;
 
         }
@@ -160,28 +143,44 @@ public class Intake {
         });
         intakeThread.start();
     }
+
+    public double rollCounter = 0;
+    public double roundedRollCounter = 0;
+    public static double increment = 0.1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public double targetPosition = 0;
     public void loopIntake(Gamepad gamepad){
+
         previous.copy(current);
         current.copy(gamepad);
 
         if(gamepad.left_bumper){
-            setIntakeState(IntakeState.NORMAL);
+            rollCounter = rollCounter + increment;
         }
-        if(gamepad.right_bumper){
-            setIntakeState(IntakeState.REVERSED);
+        else if(gamepad.right_bumper){
+            rollCounter = rollCounter - increment;
         }
-        if (!gamepad.left_bumper && !gamepad.right_bumper) {
-            if(intakeState != IntakeState.RUN_TO_POSITION)
-                setIntakeState(IntakeState.STOP);
+        else{
+            rollCounter = Math.round(rollCounter/increment)*increment;
         }
-        if (current.dpad_up && !previous.dpad_up){
-            currentPosition = intake.getCurrentPosition();
-            setIntakeState(IntakeState.RUN_TO_POSITION);
-        }
-        //if(gamepad.back){
-        //    currentPosition = intake.getCurrentPosition();
-        //    setIntakeState(IntakeState.RUN_TO_POSITION);
-        //}
+        roundedRollCounter = Math.ceil(rollCounter);
+        targetPosition = roundedRollCounter*ticksPerRevolution;
+
+        intake.setTargetPosition((int) targetPosition);
     }
     public void setArmPosition(double position){
         intakeArm.setPosition(position);
@@ -194,5 +193,8 @@ public class Intake {
     }
     public double getIntakeArmPosition(){
         return intakeArm.getPosition();
+    }
+    public int getIntakePosition(){
+        return intake.getCurrentPosition();
     }
 }
