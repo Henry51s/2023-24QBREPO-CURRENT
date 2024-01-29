@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
@@ -46,6 +47,9 @@ public class QBTeleOp extends OpMode {
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
 
     DcMotor frontLeft, frontRight, backLeft, backRight;
+
+    ElapsedTime timer = new ElapsedTime();
+    private int depositDelay = 500;
 
 
 
@@ -104,8 +108,17 @@ public class QBTeleOp extends OpMode {
         if(gamepad2.right_bumper)
             claw.setClawState(Claw.ClawState.CLOSE);
         if(currentGamepad2.dpad_up && !previousGamepad2.dpad_up){
+            Thread depositThread = new Thread(() -> {
+                timer.reset();
+                fourBar.setFourBarPositionSlow(FOURBAR_DEPOSIT);
+                while(timer.milliseconds() < depositDelay){
+
+                }
+                differential.setDiffState(Differential.DiffState.DEPOSIT);
+            });
+            depositThread.start();
             //Deposit sequence
-            fourBar.setFourBarPositionSlow(FOURBAR_DEPOSIT);
+
 
         }
         if(currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button){

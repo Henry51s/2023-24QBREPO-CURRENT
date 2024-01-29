@@ -76,8 +76,8 @@ public class FourBar {
 
 
 
-    public double[] setFourBarPositionSlow(double targetPosition){
-        Thread fourBarThread = new Thread(() -> {
+    public synchronized void setFourBarPositionSlow(double targetPosition){
+
             int delayCounter = 0;
 
             double currentPosition = getPosition();
@@ -99,9 +99,6 @@ public class FourBar {
                 }
                 setFourBarPosition(intermediatePositions[i]);
             }
-        });
-        fourBarThread.start();
-        return intermediatePositions;
         }
     public double getPosition(){
         return v4bL.getPosition();

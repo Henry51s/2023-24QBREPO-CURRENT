@@ -39,7 +39,7 @@ public class GlobalVars {
 
 
     public static double FOURBAR_INIT = 0.523;
-    public static double FOURBAR_PICKUP = 0.730;
+    public static double FOURBAR_PICKUP = 0.738;
     public static double FOURBAR_DEPOSIT = 0.32399;
     public static double FOURBAR_INTERMEDIATE = 0.6;
 

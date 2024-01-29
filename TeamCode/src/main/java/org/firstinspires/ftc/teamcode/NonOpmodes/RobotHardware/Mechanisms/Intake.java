@@ -51,6 +51,10 @@ public class Intake {
     IntakeState intakeState = IntakeState.NORMAL;
 
     int ticksPerRevolution = 145;
+    public double rollCounter = 0;
+    public double roundedRollCounter = 0;
+    public static double increment = 0.1;
+    public double targetPosition = 0;
 
 
 
@@ -63,6 +67,10 @@ public class Intake {
         intake.setTargetPosition(0);
         intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intake.setPower(INTAKE_MAX_POWER);
+
+        targetPosition = 0;
+        rollCounter = 0;
+        roundedRollCounter = 0;
 
         intakeArm = hardware.intakeArm;
     }
@@ -144,25 +152,7 @@ public class Intake {
         intakeThread.start();
     }
 
-    public double rollCounter = 0;
-    public double roundedRollCounter = 0;
-    public static double increment = 0.1;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public double targetPosition = 0;
     public void loopIntake(Gamepad gamepad){
 
         previous.copy(current);

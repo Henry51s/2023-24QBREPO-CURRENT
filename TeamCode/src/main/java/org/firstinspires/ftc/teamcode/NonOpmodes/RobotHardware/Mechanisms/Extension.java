@@ -50,6 +50,7 @@ public class Extension {
         extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         setPower(power);
     }*/
+    int counter = 0;
 
     public void initExtension(HardwareMap hw){
 
@@ -63,9 +64,10 @@ public class Extension {
         extendoL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         setPower(EXTENDO_MAX_POWER);
+
+        counter = 0;
     }
     public void initExtension(HardwareMap hw, boolean debug){
-
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
@@ -97,7 +99,7 @@ public class Extension {
     }
 
     Gamepad current = new Gamepad(), previous = new Gamepad();
-    int counter = 0;
+
 
     public void loopExtension(Gamepad gamepad){
         previous.copy(current);

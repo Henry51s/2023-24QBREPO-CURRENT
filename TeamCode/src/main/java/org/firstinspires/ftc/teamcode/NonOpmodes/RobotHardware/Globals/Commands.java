@@ -20,8 +20,9 @@ public class Commands {
     Telemetry telemetry;
 
 
-    private int pickupLiftRetractDelay = 5000;
-    private int depositLiftExtendDelay = 5000;
+    private int pickupLiftRetractDelay = 1000;
+    private int depositClawDelay = 500;
+    private int depositDifferentialDelay = 1000;
 
     public void initCommands(Telemetry telemetry){
         this.telemetry = telemetry;
@@ -30,8 +31,6 @@ public class Commands {
             claw = Claw.getInstance();
             fourBar = FourBar.getInstance();
             lift = Lift.getInstance();
-
-
         }
         catch(Exception e){
             //Put stuff incase error happens here
@@ -40,33 +39,41 @@ public class Commands {
 
         }
     }
-
-    public void toPickup(){
+    public synchronized void toPickup(){
         //Pickup code here
         Thread pickupThread = new Thread(() -> {
             timer.reset();
             lift.setLiftState(Lift.LiftState.RETRACTED);
+            while(timer.milliseconds() < pickupLiftRetractDelay){
 
+            }
             differential.setDiffState(Differential.DiffState.PICKUP);
-            claw.setClawState(Claw.ClawState.OPEN);
             fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
+            claw.setClawState(Claw.ClawState.OPEN);
+
         });
         pickupThread.start();
     }
 
-    public void toDeposit(Lift.LiftState liftState){
+    public synchronized void toDeposit(Lift.LiftState liftState){
         //Deposit code here
         Thread depositThread = new Thread(() -> {
-            differential.setDiffState(Differential.DiffState.DEPOSIT);
-            fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
+            timer.reset();
+            claw.setClawState(Claw.ClawState.CLOSE);
+            while(timer.milliseconds() < depositClawDelay){
 
+            }
+            fourBar.setFourBarState(FourBar.FourBarState.DEPOSIT);
+            while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
+
+            }
+            differential.setDiffState(Differential.DiffState.DEPOSIT);
             lift.setLiftState(liftState);
         });
         depositThread.start();
-
     }
 
-    public void releasePixels(){
+    public synchronized void releasePixels(){
         claw.setClawState(Claw.ClawState.OPEN);
     }
 }
