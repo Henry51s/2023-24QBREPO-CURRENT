@@ -13,7 +13,6 @@ public class ExtendoTest extends OpMode {
     FtcDashboard dashboard;
 
     Extension extendo;
-    public static int targetPosition = 0;
     enum TuningMode {
         FINE_TUNE,
         OPERATIONAL
@@ -28,12 +27,19 @@ public class ExtendoTest extends OpMode {
     @Override
     public void loop() {
         switch (tuningMode){
+            case FINE_TUNE:
+                if(gamepad1.left_stick_button){
+                    tuningMode = TuningMode.OPERATIONAL;
+                }
+                break;
 
             case OPERATIONAL:
                 //insert target position code
                 //extendo.setTargetPosition(targetPosition);
-
-
+                extendo.loopExtension(gamepad1);
+                if(gamepad1.right_stick_button){
+                    tuningMode = TuningMode.FINE_TUNE;
+                }
                 break;
         }
         telemetry.addData("Tuning Mode: ", tuningMode);
