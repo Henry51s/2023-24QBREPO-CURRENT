@@ -10,6 +10,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
@@ -63,6 +64,12 @@ public class Extension {
         extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         setPower(EXTENDO_MAX_POWER);
     }
+    public void initExtension(HardwareMap hw, boolean debug){
+
+        hardware.initExtension(hw);
+        extendoL = hardware.extendoL;
+        extendoR = hardware.extendoR;
+    }
     public void setPower(double power){
         extendoL.setPower(power);
         extendoR.setPower(power);
@@ -86,6 +93,41 @@ public class Extension {
             case FAR:
                 setTargetPosition(EXTENDO_FAR);
                 break;
+        }
+    }
+
+    Gamepad current = new Gamepad(), previous = new Gamepad();
+    int counter = 0;
+
+    public void loopExtension(Gamepad gamepad){
+        previous.copy(current);
+        current.copy(gamepad);
+
+        if(current.dpad_right && !previous.dpad_right){
+            counter++;
+        }
+        if(current.dpad_left && !previous.dpad_left){
+            counter--;
+        }
+
+        if(counter > 3){
+            counter = 3;
+        }
+        else if(counter < 0){
+            counter = 0;
+        }
+
+        if(counter == 0){
+            setExtensionState(ExtensionState.RETRACTED);
+        }
+        else if (counter == 1) {
+            setExtensionState(ExtensionState.SHORT);
+        }
+        else if(counter == 2){
+            setExtensionState(ExtensionState.MED);
+        }
+        else if(counter == 3){
+            setExtensionState(ExtensionState.FAR);
         }
     }
     public int getCurrentPosition(){return extendoL.getCurrentPosition();}
