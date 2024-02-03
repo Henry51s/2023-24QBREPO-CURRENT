@@ -58,7 +58,7 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
     }
 
     // Coordinate Locations for bounding boxes of each of the three individual "subviews" of the camera (left, center, right)
-    private int threshold = 600000;
+    public static int threshold = 900000;
 
     double leftTotal;
     double centerTotal;

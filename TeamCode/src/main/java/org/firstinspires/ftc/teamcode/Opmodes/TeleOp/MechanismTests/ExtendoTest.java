@@ -22,7 +22,7 @@ public class ExtendoTest extends OpMode {
     public void init() {
         dashboard = FtcDashboard.getInstance();
         extendo = Extension.getInstance();
-        extendo.initExtension(hardwareMap);
+        extendo.initExtension(hardwareMap, true);
     }
     @Override
     public void loop() {

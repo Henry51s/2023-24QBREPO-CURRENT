@@ -35,7 +35,7 @@ public class FourBar {
 
 
     ElapsedTime servoTime = new ElapsedTime();
-    public double[] intermediatePositions;
+    public double[] intermediatePositions = {0};
     public static int delay = 25;
     public static int stepRatio = 150;
 

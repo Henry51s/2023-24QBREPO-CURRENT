@@ -29,7 +29,7 @@ public class CommandTest extends OpMode {
             commands.toPickup();
         }
         if(current.b && !previous.b){
-            commands.toDeposit(Lift.LiftState.RETRACTED);
+            commands.toDeposit();
         }
         if(current.x && !previous.x){
             commands.releasePixels();

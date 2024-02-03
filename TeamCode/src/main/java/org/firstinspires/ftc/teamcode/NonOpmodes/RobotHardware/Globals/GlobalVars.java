@@ -10,13 +10,16 @@ public class GlobalVars {
 
 
 
-    public static double CLIMB_RELEASE = 0.370;
-    public static double CLIMB_LATCH = 0.739;
+    public static double CLIMBL_RELEASE = 0.709;
+    public static double CLIMBR_RELEASE = 0.648;
+
+    public static double CLIMBL_LATCH = 0.875;
+    public static double CLIMBR_LATCH = 0.891;
 
     public static double DRONE_LATCH = 0.571;
     public static double DRONE_RELEASE = 0.038;
 
-    public static int EXTENDO_CLIMB = 85;
+    public static int EXTENDO_CLIMB = 142;
 
     public static double EXTENDO_MAX_POWER = 0.30;
     public static int EXTENDO_RETRACTED = 0;
@@ -25,11 +28,17 @@ public class GlobalVars {
     public static int EXTENDO_FAR = 900;
 
     public static double INTAKE_MAX_POWER = 0.65;
-    public static double INTAKE_ARM_GROUND = 0.245;
+
+
+    public static double INTAKE_ARM_GROUND = 0.266;
+    public static double INTAKE_ARM_SPIKEMARK = 0.145;
+
+    //public static double INTAKE_ARM_SPIKEMARK = 0.145; //0.145
     public static double INTAKE_ARM_SECOND = 0.282;
     public static double INTAKE_ARM_THIRD = 0.357;
     public static double INTAKE_ARM_FOURTH = 0.366;
     public static double INTAKE_ARM_FIFTH = 0.462;
+    public static double INTAKE_ARM_INIT = 0.993;
 
     public static double LIFT_MAX_POWER = 0.30;
     public static int LIFT_RETRACTED = 1;
@@ -37,27 +46,29 @@ public class GlobalVars {
     public static int LIFT_MED = 1166;
     public static int LIFT_HIGH = 1750;
 
+    public static int LIFT_AUTO_LOW = 400;
 
-    public static double FOURBAR_INIT = 0.523;
-    public static double FOURBAR_PICKUP = 0.738;
+
+    public static double FOURBAR_INIT = 0.623;
+    public static double FOURBAR_PICKUP = 0.784;
     public static double FOURBAR_DEPOSIT = 0.32399;
     public static double FOURBAR_INTERMEDIATE = 0.6;
 
-    public static double DIFFL_PICKUP = 0.09399;
-    public static double DIFFL_DEPOSIT = 0.878;
+    public static double DIFFL_PICKUP = 0.0839;
+    public static double DIFFL_DEPOSIT = 0.613;
     public static double DIFFL_INTERMEDIATE = 0.1349;
-    public static double DIFFL_INIT = 0.3899;
+    public static double DIFFL_INIT = 0.304;
 
     public static double DIFFR_INTERMEDIATE = 0.1109;
-    public static double DIFFR_PICKUP = 0.347999;
-    public static double DIFFR_DEPOSIT = 0.602;
-    public static double DIFFR_INIT = 0.3699;
+    public static double DIFFR_PICKUP = 0.09;
+    public static double DIFFR_DEPOSIT = 0.621;
+    public static double DIFFR_INIT = 0.312;
 
 
 
-    public static double CLAW_RELEASE = 0.439;
+    public static double CLAW_RELEASE = 0.338;
     public static double CLAW_LATCH = 0.739;
-    public static double CLAW_LATCH_ONE_PIXEL = 0.832;
+    public static double CLAW_LATCH_ONE_PIXEL = 0.772;
 
 
 

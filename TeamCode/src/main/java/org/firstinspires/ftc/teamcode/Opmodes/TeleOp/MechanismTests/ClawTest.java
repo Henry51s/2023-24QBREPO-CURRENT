@@ -14,6 +14,7 @@ public class ClawTest extends OpMode {
         FINE_TUNE,
         OPERATIONAL
     }
+
     ClawStates clawStates = ClawStates.FINE_TUNE;
     @Override
     public void init() {

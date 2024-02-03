@@ -42,7 +42,7 @@ public class ClimbAndDroneTest extends OpMode {
             case FINE_TUNE:
                 switch(activeObjective){
                     case CLIMB:
-                        sideObjective.setClimbPosition(climbPosition);
+                        sideObjective.setClimbPosition(climbPosition, climbPosition);
                         if(gamepad1.dpad_up){
                             climbPosition += 0.001;
                         }

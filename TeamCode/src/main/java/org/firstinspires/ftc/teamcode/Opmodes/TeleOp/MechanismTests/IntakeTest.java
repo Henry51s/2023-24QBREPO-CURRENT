@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 
@@ -16,6 +17,8 @@ public class IntakeTest extends OpMode {
     }
     double pos = 0.5;
     TuningMode tuningMode = TuningMode.FINE_TUNE;
+
+    Gamepad current = new Gamepad(), previous = new Gamepad();
     @Override
     public void init() {
         intake = Intake.getInstance();
@@ -25,9 +28,13 @@ public class IntakeTest extends OpMode {
 
     @Override
     public void loop() {
-        intake.loopIntake(gamepad1);
+        previous.copy(current);
+        current.copy(gamepad1);
+
         switch(tuningMode){
+
             case FINE_TUNE:
+                intake.loopIntake(gamepad1);
 
                 if(gamepad1.dpad_up){
                     pos += 0.001;
@@ -58,6 +65,10 @@ public class IntakeTest extends OpMode {
                 if(gamepad1.y)
                     intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
 
+                if(current.left_bumper && !previous.left_bumper){
+                    intake.runIntakeSetTime(5, true, 0.5);
+                }
+
                 if(gamepad1.right_stick_button)
                     tuningMode = TuningMode.FINE_TUNE;
                 break;
@@ -70,7 +81,7 @@ public class IntakeTest extends OpMode {
         telemetry.addData("Intake Arm Position: ", intake.getIntakeArmPosition());
         telemetry.addData("Intake Motor Position: ", intake.getIntakePosition());
         telemetry.addData("Target Position: ", intake.targetPosition);
-        telemetry.addData("Roll Counter: ", intake.rollCounter);
+        telemetry.addData("Roll Counter: ", intake.roundedRollCounter);
 
     }
 }

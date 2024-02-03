@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_CLIMB;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_FAR;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MAX_POWER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MED;
@@ -34,7 +35,8 @@ public class Extension {
         RETRACTED,
         SHORT,
         MED,
-        FAR
+        FAR,
+        CLIMB
     }
     ExtensionState extensionState = ExtensionState.RETRACTED;
 
@@ -95,6 +97,9 @@ public class Extension {
             case FAR:
                 setTargetPosition(EXTENDO_FAR);
                 break;
+            case CLIMB:
+                setTargetPosition(EXTENDO_CLIMB);
+                break;
         }
     }
 
@@ -106,30 +111,27 @@ public class Extension {
         current.copy(gamepad);
 
         if(current.dpad_right && !previous.dpad_right){
-            counter++;
+            counter ++;
         }
         if(current.dpad_left && !previous.dpad_left){
-            counter--;
-        }
+            counter --;
 
-        if(counter > 3){
-            counter = 3;
         }
-        else if(counter < 0){
-            counter = 0;
-        }
+        counter = Math.max(0, Math.min(3, counter));
 
-        if(counter == 0){
-            setExtensionState(ExtensionState.RETRACTED);
-        }
-        else if (counter == 1) {
-            setExtensionState(ExtensionState.SHORT);
-        }
-        else if(counter == 2){
-            setExtensionState(ExtensionState.MED);
-        }
-        else if(counter == 3){
-            setExtensionState(ExtensionState.FAR);
+        switch (counter) {
+            case 0:
+                setExtensionState(ExtensionState.RETRACTED);
+                break;
+            case 1:
+                setExtensionState(ExtensionState.SHORT);
+                break;
+            case 2:
+                setExtensionState(ExtensionState.MED);
+                break;
+            case 3:
+                setExtensionState(ExtensionState.FAR);
+                break;
         }
     }
     public int getCurrentPosition(){return extendoL.getCurrentPosition();}

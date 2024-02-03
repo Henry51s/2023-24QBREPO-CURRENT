@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_FIFTH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_FOURTH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_GROUND;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_INIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_SECOND;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_SPIKEMARK;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_ARM_THIRD;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.INTAKE_MAX_POWER;
 
@@ -44,7 +46,9 @@ public class Intake {
         SECOND,
         THIRD,
         FOURTH,
-        FIFTH
+        FIFTH,
+        INIT,
+        SPIKEMARK
     }
 
     IntakeArmState intakeArmState = IntakeArmState.GROUND;
@@ -91,9 +95,6 @@ public class Intake {
                 intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 intake.setPower(INTAKE_MAX_POWER);
                 break;
-            case RUN_TO_POSITION:
-
-                break;
 
         }
     }
@@ -115,10 +116,17 @@ public class Intake {
             case FIFTH:
                 intakeArm.setPosition(INTAKE_ARM_FIFTH);
                 break;
+            case INIT:
+                intakeArm.setPosition(INTAKE_ARM_INIT);
+                break;
+            case SPIKEMARK:
+                intakeArm.setPosition(INTAKE_ARM_SPIKEMARK);
+                break;
         }
     }
 
-    public void runIntakeSetTime(int milliseconds, boolean reversed){
+    /*public void runIntakeSetTime(int milliseconds, boolean reversed){
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         int directionConstant = 1;
         if(reversed){
             directionConstant = -1;
@@ -128,9 +136,21 @@ public class Intake {
         while(timer.milliseconds() < milliseconds){
             intake.setPower(-INTAKE_MAX_POWER*directionConstant);
         }
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         setIntakeState(IntakeState.STOP);
-    }
-    public void runIntakeSetTimeAsync(int milliseconds, boolean reversed){
+    }*/
+    public void runIntakeSetTime(int numberOfSpins, boolean reversed, double power){
+        int motorDirection = 1;
+        if(reversed){
+            motorDirection = -1;
+        }
+        targetPosition += motorDirection * ticksPerRevolution * numberOfSpins;
+        roundedRollCounter += motorDirection * numberOfSpins;
+        rollCounter = roundedRollCounter;
+        intake.setPower(power);
+        intake.setTargetPosition((int) targetPosition);
+
+    }    public void runIntakeSetTimeAsync(int milliseconds, boolean reversed){
         int motorDirection = 1;
         if(reversed)
             motorDirection = -1;

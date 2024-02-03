@@ -2,19 +2,22 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.apache.commons.math3.geometry.partitioning.Side;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
 
 public class Commands {
     Differential differential;
     Claw claw;
     FourBar fourBar;
     Lift lift;
-
-    Hardware hardware = new Hardware();
+    Extension extension;
+    SideObjective sideObjective;
 
     ElapsedTime timer = new ElapsedTime();
     Telemetry telemetry;
@@ -31,13 +34,48 @@ public class Commands {
             claw = Claw.getInstance();
             fourBar = FourBar.getInstance();
             lift = Lift.getInstance();
+            extension = Extension.getInstance();
+            sideObjective = SideObjective.getInstance();
         }
         catch(Exception e){
             //Put stuff incase error happens here
             telemetry.addData("Command initalization error!!! ", e);
             telemetry.update();
-
         }
+    }
+    public synchronized void latchClimbAndDrone(){
+        sideObjective.latchClimb();
+        sideObjective.latchDrone();
+
+    }
+    public synchronized void releaseClimbAndDrone(int delay){
+        Thread sideThread = new Thread(() -> {
+            timer.reset();
+            sideObjective.releaseClimb();
+            while(timer.milliseconds() < delay){
+
+            }
+            sideObjective.releaseDrone();
+        });
+        sideThread.start();
+    }
+    public synchronized void extendLift(Lift.LiftState liftState){
+        lift.setLiftState(liftState);
+    }
+    public synchronized void toInit(){
+        Thread initThread = new Thread(() -> {
+            timer.reset();
+            latchClimbAndDrone();
+            claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
+            while(timer.milliseconds() < 3000){
+
+            }
+            differential.setDiffState(Differential.DiffState.INIT);
+            fourBar.setFourBarState(FourBar.FourBarState.INIT);
+            lift.setLiftState(Lift.LiftState.RETRACTED);
+        });
+        initThread.start();
+
     }
     public synchronized void toPickup(){
         //Pickup code here
@@ -47,15 +85,15 @@ public class Commands {
             while(timer.milliseconds() < pickupLiftRetractDelay){
 
             }
+            claw.setClawState(Claw.ClawState.OPEN);
             differential.setDiffState(Differential.DiffState.PICKUP);
             fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
-            claw.setClawState(Claw.ClawState.OPEN);
 
         });
         pickupThread.start();
     }
 
-    public synchronized void toDeposit(Lift.LiftState liftState){
+    public synchronized void toDeposit(){
         //Deposit code here
         Thread depositThread = new Thread(() -> {
             timer.reset();
@@ -68,7 +106,7 @@ public class Commands {
 
             }
             differential.setDiffState(Differential.DiffState.DEPOSIT);
-            lift.setLiftState(liftState);
+
         });
         depositThread.start();
     }

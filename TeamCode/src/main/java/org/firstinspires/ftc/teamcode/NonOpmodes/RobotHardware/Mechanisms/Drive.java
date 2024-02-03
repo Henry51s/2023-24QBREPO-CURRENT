@@ -22,8 +22,9 @@ public class Drive {
     private Hardware hardware = new Hardware();
 
     private int flipMultiplier = 1;
-    public static double frontStrafeMultiplier = 0.5;
-    public static double backStrafeMultiplier = 0.5;
+    public static double frontStrafeMultiplier = 0.7;
+    public static double backStrafeMultiplier = 1;
+    public static double driveMultiplier = 0.8;
 
 
     public enum DriveState{
@@ -61,9 +62,9 @@ public class Drive {
     }
     public void loopDrive(Gamepad gamepad){
 
-        double y = -gamepad.left_stick_y * flipMultiplier; // Remember, Y stick is reversed!
-        double x = gamepad.left_stick_x * flipMultiplier;
-        double rx = gamepad.right_stick_x*0.5;
+        double y = -gamepad.left_stick_y * flipMultiplier * driveMultiplier; // Remember, Y stick is reversed!
+        double x = gamepad.left_stick_x * flipMultiplier * driveMultiplier;
+        double rx = gamepad.right_stick_x*0.75 * driveMultiplier;
 
 
 

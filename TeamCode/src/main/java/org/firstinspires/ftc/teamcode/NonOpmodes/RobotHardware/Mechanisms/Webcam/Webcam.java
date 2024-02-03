@@ -50,8 +50,10 @@ public class Webcam {
     public PrimaryDetectionPipeline.ItemLocation getLocation(){
         return pipeline.getLocation();
     }
+    public void stopStreaming(){
+        camera.stopStreaming();
 
-
+    }
 
 
 

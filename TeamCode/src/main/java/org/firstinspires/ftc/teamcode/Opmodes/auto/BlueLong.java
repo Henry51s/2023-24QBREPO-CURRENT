@@ -1,34 +1,119 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
 
+@Config
 @Autonomous(name="BlueLong")
 public class BlueLong extends LinearOpMode {
-
     AutoTrajectories autoTrajectories;
     SampleMecanumDrive drive;
-    Hardware hardware = new Hardware();
+    Commands commands = new Commands();
+
+    Hardware hw = new Hardware();
+
+    Intake intake;
+    Extension extendo;
+
+    Webcam webcam = new Webcam();
+
+    public TrajectorySequence scoreSpikeMark, scoreBackDrop, toNeutral1;
+    public static double power = 0.25;
+
+    ElapsedTime timer = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+
+        hw.initAuto(hardwareMap);
+        intake = hw.intakeInstance;
+        extendo = hw.extensionInstance;
+
+        commands.initCommands(telemetry);
+        commands.toInit();
+        commands.latchClimbAndDrone();
+        intake.setIntakeArmState(Intake.IntakeArmState.INIT);
+        extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
+
+        webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.BLUE);
         autoTrajectories = new AutoTrajectories(hardwareMap);
         drive = autoTrajectories.drive;
 
-        autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.RIGHT);
 
-        hardware.initAuto(hardwareMap);
+        while(opModeInInit()){
+            telemetry.addData("Location: ", webcam.getLocation());
+            telemetry.update();
+            if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.MIDDLE);
+            }
+            else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.RIGHT);
+            }
+            else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
+                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.LEFT);
+            }
+        }
+
+
 
         waitForStart();
         if(isStopRequested()){
+
             return;
         }
-        drive.followTrajectorySequence(autoTrajectories.scoreSpikeMark);
-        drive.followTrajectorySequence(autoTrajectories.scoreBackDrop);
+        webcam.stopStreaming();
 
+        scoreSpikeMark = autoTrajectories.scoreSpikeMark;
+        scoreBackDrop = autoTrajectories.scoreBackDrop;
+        toNeutral1 = autoTrajectories.toNeutral;
+
+        intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
+
+        drive.followTrajectorySequence(scoreSpikeMark);
+        //commands.toPickup();
+
+        //intake.runIntakeSetTime(1, true,power);
+        intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
+        commands.toDeposit();
+        drive.followTrajectorySequence(autoTrajectories.backupSpikeMark);
+
+        drive.followTrajectorySequence(toNeutral1);
+        drive.followTrajectorySequence(scoreBackDrop);
+        commands.extendLift(Lift.LiftState.AUTO_LOW);
+
+        timer.reset();
+        while(timer.milliseconds() < 3000){
+        }
+        commands.releasePixels();
+        commands.extendLift(Lift.LiftState.RETRACTED);
+
+
+        /*drive.followTrajectorySequence(scoreBackDrop);
+        commands.toDeposit();
+        commands.extendLift(Lift.LiftState.LOW);
+        commands.releasePixels();*/
+
+
+
+        //drive.followTrajectorySequence(park);
+
+
+
+        while(opModeIsActive()){
+
+        }
     }
 }

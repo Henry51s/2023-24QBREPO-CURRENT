@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_HIGH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MAX_POWER;
@@ -32,7 +33,8 @@ public class Lift {
         RETRACTED,
         LOW,
         MED,
-        HIGH
+        HIGH,
+        AUTO_LOW,
     }
     LiftState liftState = LiftState.RETRACTED;
     /*public Lift(HardwareMap hw){
@@ -72,6 +74,9 @@ public class Lift {
                 break;
             case HIGH:
                 setTargetPosition(LIFT_HIGH);
+                break;
+            case AUTO_LOW:
+                setTargetPosition(LIFT_AUTO_LOW);
                 break;
         }
     }

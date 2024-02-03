@@ -17,7 +17,8 @@ public class AutoTrajectories {
     public TrajectorySequence scoreSpikeMark;
     public TrajectorySequence scoreBackDrop;
     public TrajectorySequence park;
-
+    public TrajectorySequence backupSpikeMark;
+    public TrajectorySequence toNeutral;
 
 
     public enum AutoLocation {
@@ -36,57 +37,95 @@ public class AutoTrajectories {
 
     public AutoTrajectories(HardwareMap hw){
         drive = new SampleMecanumDrive(hw);
+
         }
-    public static double x1 = 22, y1 = 40, heading1 = 0;
+    public static double x1 = 49, y1 = -45, heading1 = 10;
+
+    public Vector2d  poseToVector(Pose2d pose){
+        Vector2d result = new Vector2d(pose.getX(), pose.getY());
+        return result;
+}
+    public double getPoseHeading(Pose2d pose){
+        return pose.getHeading();
+    }
 
 
-    public static double x2 = -16, y2 = -31, heading2 = -90;
+    public static double neutral1X = -37.5, neutral1Y = 57, neutral1Heading = 0;
+    public static double scoringX = 52.5, scoringY = 18.175  , scoringHeading = 0;
+
+    public Pose2d neutralPose1 = new Pose2d(neutral1X, neutral1Y, Math.toRadians(neutral1Heading));
+    public Pose2d scoringPose = new Pose2d(scoringX, scoringY, Math.toRadians(scoringHeading));
 
 
-    public static SpikeMark spikeMark = SpikeMark.MIDDLE;
+
+
     public void setPath(AutoLocation autoLocation, SpikeMark spikeMark){
         switch(autoLocation){
             case BLUE_LONG:
 
-
-
                 startPose = new Pose2d(-37.5, 61, Math.toRadians(90));
-                if(spikeMark == SpikeMark.LEFT){
+
+                if(spikeMark == SpikeMark.RIGHT){
 
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(-37.5,31, Math.toRadians(90)))
-                            .turn(Math.toRadians(-90))
-                            .lineTo(new Vector2d(-16, 31))
+                            .lineTo(new Vector2d(-47 ,42))
                             .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(51,31, Math.toRadians(0)))
+                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-47,49))
                             .build();
+
+                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
+                            //.lineToLinearHeading(neutralPose1)
+                            .lineToConstantHeading(new Vector2d(-40, 54))
+                            .turn(Math.toRadians(-(90 + 7)))
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-40, 54, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(53, 50))
+                            .lineToConstantHeading(poseToVector(scoringPose))
+                            .build();
+
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(-37.5,31, Math.toRadians(90)))
+                            .lineTo(new Vector2d(-37.5,33))
                             .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .setReversed(true)
-                            .turn(Math.toRadians(-90))
-                            .lineToLinearHeading(new Pose2d(51,31, Math.toRadians(0)))
+                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-37.5, 38))
+                            .build();
+
+                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-37.5, 57))
+                            .turn(Math.toRadians(-(90 + 7)))
+                            .build();
+
+                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-40, 54, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(53, 50))
+                            .waitSeconds(3)
+                            .lineToConstantHeading(new Vector2d(52.5,23))
                             .build();
 
                 }
-                else if(spikeMark == SpikeMark.RIGHT){
+                else if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(-37.5,31, Math.toRadians(90)))
-                            .turn(Math.toRadians(-90))
-                            .lineTo(new Vector2d(-20, 31))
+                            .lineToConstantHeading(new Vector2d(-34.8,29))
+                            .turn(Math.toRadians(90))
                             .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(51,31, Math.toRadians(0)))
+                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-45, 29))
+                            .build();
+
+                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-40, 54))
+                            .turn(Math.toRadians(-(180 + neutral1Heading)))
+                            .build();
+
+                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-40, 54, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(53, 50))
+                            .lineToConstantHeading(new Vector2d(50.5, 33))
                             .build();
 
                 }
@@ -95,48 +134,75 @@ public class AutoTrajectories {
 
 
 
+
                 startPose = new Pose2d(-37.5, -61, Math.toRadians(-90));
+
+
                 if(spikeMark == SpikeMark.LEFT){
 
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(-37.5,-31, Math.toRadians(-90)))
+                            .lineTo(new Vector2d(-47 ,-42))
                             .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .setReversed(true)
-                            .turn(Math.toRadians(90))
-                            .lineToLinearHeading(new Pose2d(51,-31, Math.toRadians(0)))
+                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-47,-49))
+                            .build();
+
+                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
+                            //.lineToLinearHeading(neutralPose1)
+                            .lineToConstantHeading(poseToVector(neutralPose1))
+                            .turn(Math.toRadians(90 + 7))
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-37.5, -57, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(53, -50))
+                            .lineToConstantHeading(new Vector2d(52, -18.175))
                             .build();
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(-37.5,-31, Math.toRadians(-90)))
-                            .turn(Math.toRadians(90))
-                            .lineTo(new Vector2d(-27, -31))
+                            .lineTo(new Vector2d(-37.5,-33))
                             .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(51,-31, Math.toRadians(0)))
+                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-37.5, -38))
                             .build();
+
+                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-37.5, -57))
+                            .turn(Math.toRadians(90 + 7))
+                            .build();
+
+                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-37.5, -57, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(53, -50))
+                            .lineToConstantHeading(new Vector2d(52,-27.5))
+                            .build();
+
 
                 }
                 else if(spikeMark == SpikeMark.RIGHT){
 
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(-37.5,-31, Math.toRadians(-90)))
-                            .turn(Math.toRadians(90))
-                            .lineTo(new Vector2d(x2, -31))
+                            .lineToConstantHeading(new Vector2d(-34.8,-29))
+                            .turn(Math.toRadians(-90))
                             .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(51,-31, Math.toRadians(0)))
+                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .lineToConstantHeading(new Vector2d(-45, -29))
                             .build();
+
+                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
+                            .lineToConstantHeading(poseToVector(neutralPose1))
+                            .turn(Math.toRadians(180 + neutral1Heading))
+                            .build();
+
+                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-37.5, -57, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(53, -50))
+                            .lineToConstantHeading(new Vector2d(50.5, -33))
+                            .build();
+
 
                 }
-
 
 
                 break;
@@ -147,37 +213,56 @@ public class AutoTrajectories {
 
 
 
-                startPose = new Pose2d(9,61,Math.toRadians(90));
+                startPose = new Pose2d(16,61,Math.toRadians(90));
+
+
                 if(spikeMark == SpikeMark.LEFT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    /*scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(22,45, Math.toRadians(90)))
+                            .lineToLinearHeading(new Pose2d(20,30, Math.toRadians(0)))
+                            .back(5)
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(56,35, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(55, 22))
+                            .waitSeconds(0.5)
+                            .build();*/
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                            .setReversed(true)
+                            //.lineToLinearHeading(new Pose2d(34, -40, Math.toRadians(-90)))
+                            //.splineToConstantHeading(new Vector2d(28,-40), Math.toRadians(-90))
+                            //.splineTo(new Vector2d(32,-40), Math.toRadians(-90))
+                            //.splineToLinearHeading(new Pose2d(32,-40, Math.toRadians(-90)), Math.toRadians(-90))
+                            .splineToConstantHeading(new Vector2d(28, 40), Math.toRadians(0))
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(new Pose2d(55.5,37, Math.toRadians(0)))
+                            .waitSeconds(0.5)
                             .build();
                 }
                 else if (spikeMark == SpikeMark.MIDDLE){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(12,35, Math.toRadians(90)))
+                            .lineToLinearHeading(new Pose2d(12,32, Math.toRadians(90)))
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(56,29, Math.toRadians(0)))
+                            .lineToLinearHeading(new Pose2d(56.5,31, Math.toRadians(0)))
+                            .waitSeconds(0.5)
                             .build();
                 }
                 else if (spikeMark == SpikeMark.RIGHT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(22,45, Math.toRadians(90)))
+                            .lineToLinearHeading(new Pose2d(20,30, Math.toRadians(0)))
+                            .back(7)
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(55.5,22, Math.toRadians(0)))
+                            .lineToConstantHeading(new Vector2d(55, 22))
+                            .waitSeconds(0.5)
                             .build();
-
                 }
                 break;
 
@@ -189,31 +274,35 @@ public class AutoTrajectories {
 
 
                 startPose = new Pose2d(16, -61, Math.toRadians(-90));
+
                 if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .strafeRight(2)
-                            .lineToLinearHeading(new Pose2d(x1,-30, Math.toRadians(0)))
+                            .lineToLinearHeading(new Pose2d(20,-30, Math.toRadians(0)))
+                            .back(5)
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-                            .lineToConstantHeading(new Vector2d(55,-20))
+                            .lineToConstantHeading(new Vector2d(55, -22))
                             .waitSeconds(0.5)
-                            .back(1)
+                            .build();
+                    park = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .lineToConstantHeading(new Vector2d(x1, -11))
                             .build();
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .strafeRight(2)
-                            .lineToLinearHeading(new Pose2d(12,-35, Math.toRadians(-90)))
+                            .lineToLinearHeading(new Pose2d(12,-32, Math.toRadians(-90)))
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(56.5,-30, Math.toRadians(0)))
+                            .lineToLinearHeading(new Pose2d(56.5,-31, Math.toRadians(0)))
                             .waitSeconds(0.5)
-                            .back(1)
+                            .build();
+                    park = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .lineToConstantHeading(new Vector2d(x1, -55))
                             .build();
 
 
@@ -221,22 +310,22 @@ public class AutoTrajectories {
                 else if(spikeMark == SpikeMark.RIGHT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .strafeRight(2)
-                            .lineToLinearHeading(new Pose2d(22,-45, Math.toRadians(-90)))
+                            //.lineToLinearHeading(new Pose2d(34, -40, Math.toRadians(-90)))
+                            //.splineToConstantHeading(new Vector2d(28,-40), Math.toRadians(-90))
+                            //.splineTo(new Vector2d(32,-40), Math.toRadians(-90))
+                            //.splineToLinearHeading(new Pose2d(32,-40, Math.toRadians(-90)), Math.toRadians(-90))
+                            .splineToConstantHeading(new Vector2d(28, -40), Math.toRadians(0))
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(56,-33, Math.toRadians(0)))
+                            .lineToLinearHeading(new Pose2d(55.5,-37, Math.toRadians(0)))
                             .waitSeconds(0.5)
-                            .back(1)
                             .build();
-
+                    park = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .lineToConstantHeading(new Vector2d(x1, -55))
+                            .build();
                 }
                 break;
-
-
-
-
         }
         drive.setPoseEstimate(startPose);
     }

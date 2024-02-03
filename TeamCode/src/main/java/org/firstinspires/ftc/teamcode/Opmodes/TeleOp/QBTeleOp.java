@@ -1,23 +1,14 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_LATCH;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DRONE_RELEASE;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MED;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLIMB_LATCH;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.CLIMB_RELEASE;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_CLIMB;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive.DriveState.REVERSED;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive;
@@ -42,11 +33,12 @@ public class QBTeleOp extends OpMode {
     Extension extendo;
     SideObjective sideObjective;
 
-    Servo climb1, climb2, drone;
 
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
 
     DcMotor frontLeft, frontRight, backLeft, backRight;
+
+    Commands commands = new Commands();
 
     ElapsedTime timer = new ElapsedTime();
     private int depositDelay = 500;
@@ -56,33 +48,17 @@ public class QBTeleOp extends OpMode {
     @Override
     public void init() {
         hw.initAll(hardwareMap);
-        claw = hw.clawInstance;
-        drone = hw.drone;
-        differential = hw.differentialInstance;
-        fourBar = hw.fourBarInstance;
+        commands.initCommands(telemetry);
+        commands.toDeposit();
+        commands.latchClimbAndDrone();
         intake = hw.intakeInstance;
         drive = hw.driveInstance;
-        lift = hw.liftInstance;
         extendo = hw.extensionInstance;
-        sideObjective = hw.sideObjectiveInstance;
 
-        claw.setClawState(Claw.ClawState.CLOSE);
-        differential.setDiffState(Differential.DiffState.INIT);
-        fourBar.setFourBarPosition(FOURBAR_INIT);
+
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         drive.setDriveState(REVERSED);
         extendo.setTargetPosition(0);
-        sideObjective.latchClimb();
-        sideObjective.latchDrone();
-
-
-
-        hw.initDrive(hardwareMap);
-
-        frontLeft = hw.frontLeft;
-        frontRight = hw.frontRight;
-        backLeft = hw.backLeft;
-        backRight = hw.backRight;
     }
 
 
@@ -101,50 +77,40 @@ public class QBTeleOp extends OpMode {
 
         intake.loopIntake(gamepad1);
         drive.loopDrive(gamepad1);
-        //differential.loopDifferential(gamepad2);
-
-        if(gamepad2.left_bumper)
-            claw.setClawState(Claw.ClawState.OPEN);
-        if(gamepad2.right_bumper)
-            claw.setClawState(Claw.ClawState.CLOSE);
-        if(currentGamepad2.dpad_up && !previousGamepad2.dpad_up){
-            Thread depositThread = new Thread(() -> {
-                timer.reset();
-                fourBar.setFourBarPositionSlow(FOURBAR_DEPOSIT);
-                while(timer.milliseconds() < depositDelay){
-
-                }
-                differential.setDiffState(Differential.DiffState.DEPOSIT);
-            });
-            depositThread.start();
-            //Deposit sequence
+        //extendo.loopExtension(gamepad1);
 
 
+        if(currentGamepad2.left_bumper && !previousGamepad2.left_bumper){
+            commands.releasePixels();
         }
-        if(currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button){
-            differential.setDiffState(Differential.DiffState.DEPOSIT);
-        }
-        if(currentGamepad2.dpad_down && !previousGamepad2.dpad_down){
-            //pickup sequence
-            claw.setClawState(Claw.ClawState.OPEN);
-            differential.setDiffState(Differential.DiffState.PICKUP);
-            fourBar.setFourBarPositionSlow(FOURBAR_PICKUP);
-        }
+
         if(currentGamepad2.a && !previousGamepad2.a){
-            lift.setLiftState(Lift.LiftState.RETRACTED);
+            commands.extendLift(Lift.LiftState.RETRACTED);
         }
         if(currentGamepad2.b && !previousGamepad2.b){
-            lift.setLiftState(Lift.LiftState.LOW);
+            commands.extendLift(Lift.LiftState.LOW);
+        }
+        if(currentGamepad2.x && !previousGamepad2.x){
+            commands.extendLift(Lift.LiftState.MED);
+        }
+        if(currentGamepad2.y && !previousGamepad2.y){
+            commands.extendLift(Lift.LiftState.HIGH);
+        }
+
+        if(currentGamepad2.dpad_up && !previousGamepad2.dpad_up){
+            commands.toDeposit();
+        }
+
+        if(currentGamepad2.dpad_down && !previousGamepad2.dpad_down){
+            //pickup sequence
+            commands.toPickup();
         }
         if(gamepad1.dpad_left){
-            sideObjective.releaseClimb();
-            sideObjective.releaseDrone();
+            commands.releaseClimbAndDrone(1000);
         }
-        if(gamepad1.dpad_right){
-            extendo.setTargetPosition(EXTENDO_CLIMB);
-        }
-        if(gamepad1.left_stick_button){
-            extendo.setExtensionState(Extension.ExtensionState.MED);
+
+        if(gamepad1.dpad_up){
+            extendo.setExtensionState(Extension.ExtensionState.CLIMB);
         }
         if(gamepad1.dpad_down){
             extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
