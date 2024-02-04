@@ -82,6 +82,7 @@ public class BlueShort extends LinearOpMode {
         webcam.stopStreaming();
         intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
         drive.followTrajectorySequence(scoreSpikeMark);
+        intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
         commands.extendLift(Lift.LiftState.LOW);
         commands.toDeposit();
 

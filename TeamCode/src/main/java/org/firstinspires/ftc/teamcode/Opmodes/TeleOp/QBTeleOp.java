@@ -24,24 +24,17 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideOb
 public class QBTeleOp extends OpMode {
     Hardware hw = new Hardware();
 
-    Claw claw;
-    Differential differential;
-    FourBar fourBar;
-    Lift lift;
+
     Intake intake;
     Drive drive;
     Extension extendo;
-    SideObjective sideObjective;
 
 
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
 
-    DcMotor frontLeft, frontRight, backLeft, backRight;
 
     Commands commands = new Commands();
 
-    ElapsedTime timer = new ElapsedTime();
-    private int depositDelay = 500;
 
 
 
@@ -49,7 +42,7 @@ public class QBTeleOp extends OpMode {
     public void init() {
         hw.initAll(hardwareMap);
         commands.initCommands(telemetry);
-        commands.toDeposit();
+        commands.toInit();
         commands.latchClimbAndDrone();
         intake = hw.intakeInstance;
         drive = hw.driveInstance;
@@ -105,7 +98,7 @@ public class QBTeleOp extends OpMode {
             //pickup sequence
             commands.toPickup();
         }
-        if(gamepad1.dpad_left){
+        if(gamepad1.back){
             commands.releaseClimbAndDrone(1000);
         }
 

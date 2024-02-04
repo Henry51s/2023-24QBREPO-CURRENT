@@ -10,11 +10,11 @@ public class GlobalVars {
 
 
 
-    public static double CLIMBL_RELEASE = 0.709;
-    public static double CLIMBR_RELEASE = 0.648;
+    public static double CLIMBL_RELEASE = 0.68;
+    public static double CLIMBR_RELEASE = 0.2;
 
-    public static double CLIMBL_LATCH = 0.875;
-    public static double CLIMBR_LATCH = 0.891;
+    public static double CLIMBL_LATCH = 0.787;
+    public static double CLIMBR_LATCH = 0.381;
 
     public static double DRONE_LATCH = 0.571;
     public static double DRONE_RELEASE = 0.038;
@@ -27,7 +27,7 @@ public class GlobalVars {
     public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
 
-    public static double INTAKE_MAX_POWER = 0.65;
+    public static double INTAKE_MAX_POWER = 0.4;
 
 
     public static double INTAKE_ARM_GROUND = 0.266;
@@ -50,18 +50,18 @@ public class GlobalVars {
 
 
     public static double FOURBAR_INIT = 0.623;
-    public static double FOURBAR_PICKUP = 0.784;
-    public static double FOURBAR_DEPOSIT = 0.32399;
-    public static double FOURBAR_INTERMEDIATE = 0.6;
+    public static double FOURBAR_PICKUP = 0.751;
+    public static double FOURBAR_DEPOSIT = 0.328;
+    public static double FOURBAR_INTERMEDIATE = 0.513;
 
-    public static double DIFFL_PICKUP = 0.0839;
-    public static double DIFFL_DEPOSIT = 0.613;
-    public static double DIFFL_INTERMEDIATE = 0.1349;
+    public static double DIFFL_PICKUP = 0.2109;
+    public static double DIFFL_DEPOSIT = 0.738;
+    public static double DIFFL_INTERMEDIATE = 0.287;
     public static double DIFFL_INIT = 0.304;
 
-    public static double DIFFR_INTERMEDIATE = 0.1109;
-    public static double DIFFR_PICKUP = 0.09;
-    public static double DIFFR_DEPOSIT = 0.621;
+    public static double DIFFR_INTERMEDIATE = 0.255;
+    public static double DIFFR_PICKUP = 0.164;
+    public static double DIFFR_DEPOSIT = 0.692;
     public static double DIFFR_INIT = 0.312;
 
 
