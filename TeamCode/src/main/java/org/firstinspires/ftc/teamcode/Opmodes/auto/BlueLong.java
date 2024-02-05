@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -14,11 +13,12 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.Autonomous;
 
 @Config
-@Autonomous(name="BlueLong")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueLong")
 public class BlueLong extends LinearOpMode {
-    AutoTrajectories autoTrajectories;
+    Autonomous autonomous;
     SampleMecanumDrive drive;
     Commands commands = new Commands();
 
@@ -49,21 +49,21 @@ public class BlueLong extends LinearOpMode {
         extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
 
         webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.BLUE);
-        autoTrajectories = new AutoTrajectories(hardwareMap);
-        drive = autoTrajectories.drive;
+        autonomous = new Autonomous(hardwareMap);
+        drive = autonomous.drive;
 
 
         while(opModeInInit()){
             telemetry.addData("Location: ", webcam.getLocation());
             telemetry.update();
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.MIDDLE);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_LONG, Autonomous.SpikeMark.MIDDLE);
             }
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.RIGHT);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_LONG, Autonomous.SpikeMark.RIGHT);
             }
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_LONG, AutoTrajectories.SpikeMark.LEFT);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_LONG, Autonomous.SpikeMark.LEFT);
             }
         }
 
@@ -76,9 +76,9 @@ public class BlueLong extends LinearOpMode {
         }
         webcam.stopStreaming();
 
-        scoreSpikeMark = autoTrajectories.scoreSpikeMark;
-        scoreBackDrop = autoTrajectories.scoreBackDrop;
-        toNeutral1 = autoTrajectories.toNeutral;
+        scoreSpikeMark = autonomous.scoreSpikeMark;
+        scoreBackDrop = autonomous.scoreBackDrop;
+        toNeutral1 = autonomous.toNeutral;
 
         intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
 
@@ -88,7 +88,7 @@ public class BlueLong extends LinearOpMode {
         //intake.runIntakeSetTime(1, true,power);
         intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
         commands.toDeposit();
-        drive.followTrajectorySequence(autoTrajectories.backupSpikeMark);
+        drive.followTrajectorySequence(autonomous.backupSpikeMark);
 
         drive.followTrajectorySequence(toNeutral1);
         drive.followTrajectorySequence(scoreBackDrop);

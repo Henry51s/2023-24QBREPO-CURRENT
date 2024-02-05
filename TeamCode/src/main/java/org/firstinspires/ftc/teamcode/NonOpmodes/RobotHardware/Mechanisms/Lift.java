@@ -28,7 +28,7 @@ public class Lift {
 
 
 
-    public static int targetPosition = 0;
+    public int targetPosition = 0;
     public enum LiftState{
         RETRACTED,
         LOW,
@@ -64,23 +64,31 @@ public class Lift {
         liftState = state;
         switch(state){
             case RETRACTED:
+                targetPosition = LIFT_RETRACTED;
                 setTargetPosition(LIFT_RETRACTED);
                 break;
             case LOW:
+                targetPosition = LIFT_LOW;
                 setTargetPosition(LIFT_LOW);
                 break;
             case MED:
+                targetPosition = LIFT_MED;
                 setTargetPosition(LIFT_MED);
                 break;
             case HIGH:
+                targetPosition = LIFT_HIGH;
                 setTargetPosition(LIFT_HIGH);
                 break;
             case AUTO_LOW:
+                targetPosition = LIFT_AUTO_LOW;
                 setTargetPosition(LIFT_AUTO_LOW);
                 break;
         }
     }
 
+    public int getTargetPosition(){
+        return targetPosition;
+    }
     public int getCurrentPosition(){
         return lift.getCurrentPosition();
     }

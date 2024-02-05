@@ -1,30 +1,23 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
-
-import android.nfc.NfcAdapter;
-
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.Autonomous;
 
 @Config
-@Autonomous(name="RedShort")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="RedShort")
 public class RedShort extends LinearOpMode {
-    AutoTrajectories autoTrajectories;
+    Autonomous autonomous;
     SampleMecanumDrive drive;
     Commands commands = new Commands();
 
@@ -52,20 +45,20 @@ public class RedShort extends LinearOpMode {
         extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
 
         webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.RED);
-        autoTrajectories = new AutoTrajectories(hardwareMap);
-        drive = autoTrajectories.drive;
+        autonomous = new Autonomous(hardwareMap);
+        drive = autonomous.drive;
 
         while(opModeInInit()){
             telemetry.addData("Location: ", webcam.getLocation());
             telemetry.update();
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_SHORT, AutoTrajectories.SpikeMark.MIDDLE);
+                autonomous.setPath(Autonomous.AutoLocation.RED_SHORT, Autonomous.SpikeMark.MIDDLE);
             }
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_SHORT, AutoTrajectories.SpikeMark.RIGHT);
+                autonomous.setPath(Autonomous.AutoLocation.RED_SHORT, Autonomous.SpikeMark.RIGHT);
             }
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.RED_SHORT, AutoTrajectories.SpikeMark.LEFT);
+                autonomous.setPath(Autonomous.AutoLocation.RED_SHORT, Autonomous.SpikeMark.LEFT);
             }
         }
 
@@ -78,9 +71,9 @@ public class RedShort extends LinearOpMode {
         }
         webcam.stopStreaming();
 
-        scoreSpikeMark = autoTrajectories.scoreSpikeMark;
-        scoreBackDrop = autoTrajectories.scoreBackDrop;
-        park = autoTrajectories.park;
+        scoreSpikeMark = autonomous.scoreSpikeMark;
+        scoreBackDrop = autonomous.scoreBackDrop;
+        park = autonomous.park;
 
         intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
 

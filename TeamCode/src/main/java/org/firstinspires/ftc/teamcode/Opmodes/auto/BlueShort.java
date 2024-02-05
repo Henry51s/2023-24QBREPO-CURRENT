@@ -3,23 +3,20 @@ package org.firstinspires.ftc.teamcode.Opmodes.auto;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.ItemLocation.CENTER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.ItemLocation.RIGHT;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.Autonomous;
 
-@Autonomous(name="BlueShort")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueShort")
 public class BlueShort extends LinearOpMode {
 
     Hardware hardware = new Hardware();
@@ -30,15 +27,15 @@ public class BlueShort extends LinearOpMode {
     Webcam webcam = new Webcam();
 
 
-    AutoTrajectories autoTrajectories;
+    Autonomous autonomous;
     SampleMecanumDrive drive;
     TrajectorySequence scoreSpikeMark, scoreBackBoard, park;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
-        autoTrajectories = new AutoTrajectories(hardwareMap);
-        drive = autoTrajectories.drive;
+        autonomous = new Autonomous(hardwareMap);
+        drive = autonomous.drive;
 
 
         hardware.initAuto(hardwareMap);
@@ -56,22 +53,22 @@ public class BlueShort extends LinearOpMode {
             telemetry.addData("Location: ", webcam.getLocation());
             telemetry.update();
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_SHORT, AutoTrajectories.SpikeMark.LEFT);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.LEFT);
             }
             else if(webcam.getLocation() == CENTER){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_SHORT, AutoTrajectories.SpikeMark.MIDDLE);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.MIDDLE);
             }
             else if(webcam.getLocation() == RIGHT){
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_SHORT, AutoTrajectories.SpikeMark.RIGHT);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.RIGHT);
             }
             else{
-                autoTrajectories.setPath(AutoTrajectories.AutoLocation.BLUE_SHORT, AutoTrajectories.SpikeMark.MIDDLE);
+                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.MIDDLE);
             }
 
         }
-        scoreSpikeMark = autoTrajectories.scoreSpikeMark;
-        scoreBackBoard = autoTrajectories.scoreBackDrop;
-        park = autoTrajectories.park;
+        scoreSpikeMark = autonomous.scoreSpikeMark;
+        scoreBackBoard = autonomous.scoreBackDrop;
+        park = autonomous.park;
 
 
         waitForStart();

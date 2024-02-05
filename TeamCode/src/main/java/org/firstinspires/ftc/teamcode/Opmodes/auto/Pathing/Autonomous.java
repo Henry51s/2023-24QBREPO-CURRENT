@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmodes.auto;
+package org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumD
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
 
 @Config
-public class AutoTrajectories {
+public class Autonomous {
 
     public SampleMecanumDrive drive;
 
@@ -19,6 +19,7 @@ public class AutoTrajectories {
     public TrajectorySequence park;
     public TrajectorySequence backupSpikeMark;
     public TrajectorySequence toNeutral;
+    PointsOfInterest pointsOfInterest = new PointsOfInterest();
 
 
     public enum AutoLocation {
@@ -35,7 +36,7 @@ public class AutoTrajectories {
     }
 
 
-    public AutoTrajectories(HardwareMap hw){
+    public Autonomous(HardwareMap hw){
         drive = new SampleMecanumDrive(hw);
 
     }
@@ -49,42 +50,6 @@ public class AutoTrajectories {
     public static double scoringX = 52.5, scoringY = 18.175  , scoringHeading = 0;
 
 
-    public static double spikeMarkLX = 0, spikeMarkLY = 0, spikeMarkLHeading = 0;
-    public static double spikeMarkMX = 0, spikeMarkMY = 0, spikeMarkMHeading = 0;
-    public static double spikeMarkRX = 0, spikeMarkRY = 0, spikeMarkRHeading = 0;
-
-    public static double backDropLX = 0, backDropLY = 0, backDropLHeading = 0;
-    public static double backDropMX = 0, backDropMY = 0, backDropMHeading = 0;
-    public static double backDropRX = 0, backDropRY = 0, backDropRHeading = 0;
-
-    Pose2d spikeMarkL = new Pose2d(spikeMarkLX, spikeMarkLY, spikeMarkLHeading);
-    Pose2d spikeMarkM = new Pose2d(spikeMarkMX, spikeMarkMY, spikeMarkMHeading);
-    Pose2d spikeMarkR = new Pose2d(spikeMarkRX, spikeMarkRY, spikeMarkRHeading);
-
-    Pose2d backDropL = new Pose2d(backDropLX, backDropLY, backDropLHeading);
-    Pose2d backDropM = new Pose2d(backDropMX, backDropMY, backDropMHeading);
-    Pose2d backDropR = new Pose2d(backDropRX, backDropRY, backDropRHeading);
-
-
-
-    /*public static double[] spikeMarkL = {0,0,0};
-    public static double[] spikeMarkM = {0,0,0};
-    public static double[] spikeMarkR = {0,0,0};
-
-    public static double[] backDropL = {0,0,0};
-    public static double[] backDropM = {0,0,0};
-    public static double[] backDropR = {0,0,0};
-
-    Pose2d poseSpikeMarkL = new Pose2d(spikeMarkL[0], spikeMarkL[1], Math.toRadians(spikeMarkL[2]));
-    Pose2d poseSpikeMarkM = new Pose2d(spikeMarkM[0], spikeMarkL[1], Math.toRadians(spikeMarkM[2]));
-    Pose2d poseSpikemarkR = new Pose2d(spikeMarkR[0], spikeMarkR[1], Math.toRadians(spikeMarkR[2]));
-
-    Pose2d poseBackDropL = new Pose2d(backDropL[0], backDropL[1], Math.toRadians(backDropL[2]));
-    Pose2d poseBackDropM = new Pose2d(backDropM[0], backDropM[1], Math.toRadians(backDropM[2]));
-    Pose2d poseBackDropR = new Pose2d(backDropR[0], backDropR[1], Math.toRadians(backDropR[2]));*/
-
-
-
     Pose2d neutralPose1 = new Pose2d(neutral1X, neutral1Y, Math.toRadians(neutral1Heading));
     Pose2d scoringPose = new Pose2d(scoringX, scoringY, Math.toRadians(scoringHeading));
 
@@ -96,7 +61,7 @@ public class AutoTrajectories {
         switch(autoLocation){
             case BLUE_LONG:
 
-                startPose = new Pose2d(-37.5, 61, Math.toRadians(90));
+                startPose = pointsOfInterest.poseBlueLongStart;
 
                 if(spikeMark == SpikeMark.RIGHT){
 
@@ -168,7 +133,7 @@ public class AutoTrajectories {
 
 
 
-                startPose = new Pose2d(-37.5, -61, Math.toRadians(-90));
+                startPose = pointsOfInterest.poseRedLongStart;
 
 
                 if(spikeMark == SpikeMark.LEFT){
@@ -246,7 +211,7 @@ public class AutoTrajectories {
 
 
 
-                startPose = new Pose2d(16,61,Math.toRadians(90));
+                startPose = pointsOfInterest.poseBlueShortStart;
 
 
                 if(spikeMark == SpikeMark.LEFT){
@@ -292,7 +257,7 @@ public class AutoTrajectories {
 
 
 
-                startPose = new Pose2d(16, -61, Math.toRadians(-90));
+                startPose = pointsOfInterest.poseRedShortStart;
 
                 if(spikeMark == SpikeMark.LEFT){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)

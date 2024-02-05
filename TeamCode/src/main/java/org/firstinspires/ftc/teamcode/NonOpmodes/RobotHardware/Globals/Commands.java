@@ -26,6 +26,7 @@ public class Commands {
     private int pickupLiftRetractDelay = 1000;
     private int depositClawDelay = 500;
     private int depositDifferentialDelay = 1000;
+    private int liftThreshold = 1;
 
     public void initCommands(Telemetry telemetry){
         this.telemetry = telemetry;
@@ -82,8 +83,7 @@ public class Commands {
         Thread pickupThread = new Thread(() -> {
             timer.reset();
             lift.setLiftState(Lift.LiftState.RETRACTED);
-            while(timer.milliseconds() < pickupLiftRetractDelay){
-
+            while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) != liftThreshold){
             }
             claw.setClawState(Claw.ClawState.OPEN);
             differential.setDiffState(Differential.DiffState.PICKUP);
