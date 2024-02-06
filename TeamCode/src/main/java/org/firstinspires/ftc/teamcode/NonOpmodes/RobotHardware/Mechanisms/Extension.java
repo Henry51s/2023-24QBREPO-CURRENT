@@ -28,7 +28,6 @@ public class Extension {
     }
     public int targetPosition = 0;
     private int joystickCounter = 0;
-    private int roundedJoystickCounter = 0;
 
     private DcMotorEx extendoL, extendoR;
     private Hardware hardware = new Hardware();
@@ -41,20 +40,6 @@ public class Extension {
         CLIMB
     }
     ExtensionState extensionState = ExtensionState.RETRACTED;
-
-    /*public Extension(HardwareMap hw){
-        hardware.initExtension(hw);
-        extendoL = hardware.extendoL;
-        extendoR = hardware.extendoR;
-
-        extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setTargetPosition(0);
-        extendoL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        setPower(power);
-    }*/
-    int counter = 0;
 
     public void initExtension(HardwareMap hw){
 
@@ -113,7 +98,6 @@ public class Extension {
         previous.copy(current);
         current.copy(gamepad);
         joystickCounter += -gamepad.left_stick_y*5 ;
-        //roundedJoystickCounter = Math.round(joystickCounter);
         joystickCounter = Math.max(0, Math.min(joystickCounter, EXTENDO_FAR));
 
         if(current.left_stick_button && !previous.left_stick_button){
@@ -122,33 +106,6 @@ public class Extension {
 
         setTargetPosition(joystickCounter);
 
-
-
-        /*
-
-        if(current.dpad_right && !previous.dpad_right){
-            counter ++;
-        }
-        if(current.dpad_left && !previous.dpad_left){
-            counter --;
-
-        }
-        counter = Math.max(0, Math.min(3, counter));
-
-        switch (counter) {
-            case 0:
-                setExtensionState(ExtensionState.RETRACTED);
-                break;
-            case 1:
-                setExtensionState(ExtensionState.SHORT);
-                break;
-            case 2:
-                setExtensionState(ExtensionState.MED);
-                break;
-            case 3:
-                setExtensionState(ExtensionState.FAR);
-                break;
-        }*/
     }
     public int getMotorLCurrentPosition(){return extendoL.getCurrentPosition();}
     public int getMotorRCurrentPosition(){
