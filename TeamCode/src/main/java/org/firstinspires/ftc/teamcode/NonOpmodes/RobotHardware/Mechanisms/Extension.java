@@ -26,8 +26,7 @@ public class Extension {
         }
         return instance;
     }
-    public int targetPosition = 0;
-    private int joystickCounter = 0;
+    private int targetPosition = 0;
 
     private DcMotorEx extendoL, extendoR;
     private Hardware hardware = new Hardware();
@@ -54,7 +53,7 @@ public class Extension {
         extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         setPower(EXTENDO_MAX_POWER);
 
-        joystickCounter = 0;
+        targetPosition = 0;
     }
     public void initExtension(HardwareMap hw, boolean debug){
         hardware.initExtension(hw);
@@ -97,19 +96,22 @@ public class Extension {
 
         previous.copy(current);
         current.copy(gamepad);
-        joystickCounter += -gamepad.left_stick_y*5 ;
-        joystickCounter = Math.max(0, Math.min(joystickCounter, EXTENDO_FAR));
+        targetPosition += -gamepad.left_stick_y*5 ;
+        targetPosition = Math.max(0, Math.min(targetPosition, EXTENDO_FAR));
 
         if(current.left_stick_button && !previous.left_stick_button){
-            joystickCounter = 0;
+            targetPosition = 0;
         }
 
-        setTargetPosition(joystickCounter);
+        setTargetPosition(targetPosition);
 
     }
     public int getMotorLCurrentPosition(){return extendoL.getCurrentPosition();}
     public int getMotorRCurrentPosition(){
         return extendoR.getCurrentPosition();
+    }
+    public int getTargetPosition(){
+        return targetPosition;
     }
 
 }
