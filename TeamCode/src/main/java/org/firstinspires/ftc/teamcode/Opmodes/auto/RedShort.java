@@ -80,15 +80,15 @@ public class RedShort extends LinearOpMode {
         intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
 
         drive.followTrajectorySequence(scoreSpikeMark);
-        commands.toDeposit();
+        //commands.toDeposit();
         //intake.runIntakeSetTime(1, true,power);
-        intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
+        //intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
 
-        commands.extendLift(Lift.LiftState.LOW);
-        drive.followTrajectorySequence(scoreBackDrop);
-        commands.releasePixels();
-        drive.followTrajectorySequence(park);
-        commands.extendLift(Lift.LiftState.RETRACTED);
+        //commands.extendLift(Lift.LiftState.LOW);
+        //drive.followTrajectorySequence(scoreBackDrop);
+        //commands.releasePixels();
+        //drive.followTrajectorySequence(park);
+        //commands.extendLift(Lift.LiftState.RETRACTED);
 
 
 

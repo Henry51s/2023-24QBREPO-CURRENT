@@ -57,12 +57,7 @@ public class Intake {
     int ticksPerRevolution = 145;
     public double rollCounter = 0;
     public double roundedRollCounter = 0;
-    public static double increment = 0.1;
     public double targetPosition = 0;
-
-
-
-    Gamepad current = new Gamepad(), previous = new Gamepad();
 
     public void initIntake(HardwareMap hw){
         hardware.initIntake(hw);
@@ -71,10 +66,6 @@ public class Intake {
         intake.setTargetPosition(0);
         intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intake.setPower(INTAKE_MAX_POWER);
-
-        targetPosition = 0;
-        rollCounter = 0;
-        roundedRollCounter = 0;
 
         intakeArm = hardware.intakeArm;
     }
@@ -125,20 +116,6 @@ public class Intake {
         }
     }
 
-    /*public void runIntakeSetTime(int milliseconds, boolean reversed){
-        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        int directionConstant = 1;
-        if(reversed){
-            directionConstant = -1;
-        }
-
-        timer.reset();
-        while(timer.milliseconds() < milliseconds){
-            intake.setPower(-INTAKE_MAX_POWER*directionConstant);
-        }
-        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        setIntakeState(IntakeState.STOP);
-    }*/
     public void runIntakeSetTime(int numberOfSpins, boolean reversed, double power){
         int motorDirection = 1;
         if(reversed){
@@ -175,22 +152,6 @@ public class Intake {
 
     public void loopIntake(Gamepad gamepad){
 
-        /*previous.copy(current);
-        current.copy(gamepad);
-
-        if(gamepad.left_bumper){
-            rollCounter = rollCounter + increment;
-        }
-        else if(gamepad.right_bumper){
-            rollCounter = rollCounter - increment;
-        }
-        else{
-            rollCounter = Math.round(rollCounter/increment)*increment;
-        }
-        roundedRollCounter = Math.ceil(rollCounter);
-        targetPosition = roundedRollCounter*ticksPerRevolution;
-
-        intake.setTargetPosition((int) targetPosition);*/
         if(gamepad.left_bumper){
             setIntakeState(IntakeState.NORMAL);
         }

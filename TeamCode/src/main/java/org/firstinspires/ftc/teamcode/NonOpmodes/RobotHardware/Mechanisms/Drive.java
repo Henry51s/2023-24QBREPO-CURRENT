@@ -33,13 +33,6 @@ public class Drive {
     }
     DriveState driveState = DriveState.NORMAL;
 
-    /*public Drive(HardwareMap hw){
-        hardware.initDrive(hw);
-        frontLeft = hardware.frontLeft;
-        frontRight = hardware.frontRight;
-        backLeft = hardware.backLeft;
-        backRight = hardware.backRight;
-    }*/
 
     public void initDrive(HardwareMap hw){
         hardware.initDrive(hw);

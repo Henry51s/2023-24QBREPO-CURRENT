@@ -51,7 +51,6 @@ public class QBTeleOp extends OpMode {
 
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         drive.setDriveState(REVERSED);
-        extendo.setTargetPosition(0);
     }
 
 
@@ -102,13 +101,10 @@ public class QBTeleOp extends OpMode {
             commands.releaseClimbAndDrone(1000);
         }
 
-        /*if(gamepad1.dpad_up){
-            extendo.setExtensionState(Extension.ExtensionState.FAR);
-        }
-        if(gamepad1.dpad_down){
-            extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
-        }*/
 
-        telemetry.addData("Extendo error: ", commands.getExtensionError());
+        telemetry.addData("Extendo Error: ", Math.abs(extendo.getTargetPosition() - ((extendo.getMotorLCurrentPosition() + extendo.getMotorRCurrentPosition())/2)));
+        telemetry.addData("ExtendoL Position: ", extendo.getMotorLCurrentPosition());
+        telemetry.addData("ExtendoR Position: ", extendo.getMotorRCurrentPosition());
+        telemetry.addData("Target Position: ", extendo.getTargetPosition());
     }
 }

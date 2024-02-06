@@ -26,10 +26,6 @@ public class Claw {
         CLOSE_ONE_PIXEL
     }
     ClawState clawState = ClawState.CLOSE;
-    /*public Claw(HardwareMap hw){
-        hardware.initClaw(hw);
-        claw = hardware.claw;
-    }*/
     private Claw(){
 
     }

@@ -113,9 +113,4 @@ public class Commands {
     public synchronized void releasePixels(){
         claw.setClawState(Claw.ClawState.OPEN);
     }
-
-
-    public double getExtensionError(){
-        return Math.abs(extension.getMotorLCurrentPosition() - extension.targetPosition);
-    }
 }

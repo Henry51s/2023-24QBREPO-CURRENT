@@ -268,7 +268,13 @@ public class Autonomous {
                 else if(spikeMark == SpikeMark.MIDDLE){
                     scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
                             .setReversed(true)
-                            .lineToLinearHeading(new Pose2d(12,-32, Math.toRadians(-90)))
+                            .lineToLinearHeading(new Pose2d(20,-30, Math.toRadians(0)))
+                            .back(5)
+                            .lineToConstantHeading(new Vector2d(55, -22))
+                            .waitSeconds(0.5)
+                            .lineToConstantHeading(new Vector2d(40,-12))
+                            .lineToConstantHeading(new Vector2d(-10,-12))
+                            .lineToConstantHeading(new Vector2d(40,-12))
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)

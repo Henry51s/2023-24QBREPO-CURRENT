@@ -78,23 +78,6 @@ public class Differential {
         diffPositions[1] = diffR.getPosition();
         return diffPositions;
     }
-    /*public void loopDifferential(Gamepad gamepad){
-        previousGamepad.copy(currentGamepad);
-        currentGamepad.copy(gamepad);
-        if(diffState == DiffState.DEPOSIT){
-            if(currentGamepad.dpad_left && !previousGamepad.dpad_left){
-                turns++;
-            }
-            else if (currentGamepad.dpad_right && !previousGamepad.dpad_right){
-                turns--;
-            }
-            if(Math.abs(turns) >= maxTurns){
-                turns = (int) Math.signum(turns)*maxTurns;
-            }
-        }
-        else
-            turns = 0;
-    }*/
     public DiffState getDiffState(){
         return diffState;
     }

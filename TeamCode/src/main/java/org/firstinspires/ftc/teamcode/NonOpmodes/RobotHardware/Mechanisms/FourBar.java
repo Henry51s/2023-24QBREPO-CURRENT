@@ -40,12 +40,6 @@ public class FourBar {
     public static int stepRatio = 150;
 
 
-    /*public FourBar(HardwareMap hw){
-        hardware.initFourBar(hw);
-        v4bL = hardware.fourBarL;
-        v4bR = hardware.fourBarR;
-    }*/
-
     public void initFourBar(HardwareMap hw){
 
         hardware.initFourBar(hw);

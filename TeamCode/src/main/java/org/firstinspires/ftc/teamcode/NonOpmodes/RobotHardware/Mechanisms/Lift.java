@@ -37,15 +37,7 @@ public class Lift {
         AUTO_LOW,
     }
     LiftState liftState = LiftState.RETRACTED;
-    /*public Lift(HardwareMap hw){
-        hardware.initLift(hw);
-        lift = hardware.lift;
 
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setTargetPosition(0);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(power);
-    }*/
 
     public void initLift(HardwareMap hw){
         hardware.initLift(hw);
