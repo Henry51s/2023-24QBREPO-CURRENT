@@ -24,7 +24,7 @@ public class LiftTest extends OpMode {
     @Override
     public void init() {
         lift = Lift.getInstance();
-        lift.initLift(hardwareMap);
+        lift.initLift(hardwareMap, false);
 
 
         dashboard = FtcDashboard.getInstance();

@@ -50,11 +50,25 @@ public class Lift {
     public void initLift(HardwareMap hw){
         hardware.initLift(hw);
         lift = hardware.lift;
-
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setTargetPosition(0);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(LIFT_MAX_POWER);
+
+
+    }
+    public void initLift(HardwareMap hw, boolean debug){
+        hardware.initLift(hw);
+        lift = hardware.lift;
+
+        if(!debug){
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setTargetPosition(0);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(LIFT_MAX_POWER);
+        }
+
+
     }
 
     public void setTargetPosition(int targetPosition){

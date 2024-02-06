@@ -14,7 +14,9 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.AutoLocation;
 import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.Autonomous;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.SpikeMark;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueShort")
 public class BlueShort extends LinearOpMode {
@@ -35,7 +37,7 @@ public class BlueShort extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         autonomous = new Autonomous(hardwareMap);
-        drive = autonomous.drive;
+        drive = autonomous.getDrive();
 
 
         hardware.initAuto(hardwareMap);
@@ -53,16 +55,16 @@ public class BlueShort extends LinearOpMode {
             telemetry.addData("Location: ", webcam.getLocation());
             telemetry.update();
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.LEFT);
+                autonomous.setPath(AutoLocation.BLUE_SHORT, SpikeMark.LEFT);
             }
             else if(webcam.getLocation() == CENTER){
-                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.MIDDLE);
+                autonomous.setPath(AutoLocation.BLUE_SHORT, SpikeMark.MIDDLE);
             }
             else if(webcam.getLocation() == RIGHT){
-                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.RIGHT);
+                autonomous.setPath(AutoLocation.BLUE_SHORT, SpikeMark.RIGHT);
             }
             else{
-                autonomous.setPath(Autonomous.AutoLocation.BLUE_SHORT, Autonomous.SpikeMark.MIDDLE);
+                autonomous.setPath(AutoLocation.BLUE_SHORT, SpikeMark.MIDDLE);
             }
 
         }

@@ -21,16 +21,16 @@ public class GlobalVars {
 
     public static int EXTENDO_CLIMB = 142;
 
-    public static double EXTENDO_MAX_POWER = 0.30;
+    public static double EXTENDO_MAX_POWER = 0.75;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_SHORT = 0;
     public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
 
-    public static double INTAKE_MAX_POWER = 0.4;
+    public static double INTAKE_MAX_POWER = 0.75;
 
 
-    public static double INTAKE_ARM_GROUND = 0.266;
+    public static double INTAKE_ARM_GROUND = 0.215;
     public static double INTAKE_ARM_SPIKEMARK = 0.145;
 
     //public static double INTAKE_ARM_SPIKEMARK = 0.145; //0.145
@@ -51,17 +51,17 @@ public class GlobalVars {
 
     public static double FOURBAR_INIT = 0.623;
     public static double FOURBAR_PICKUP = 0.751;
-    public static double FOURBAR_DEPOSIT = 0.328;
+    public static double FOURBAR_DEPOSIT = 0.36;
     public static double FOURBAR_INTERMEDIATE = 0.513;
 
     public static double DIFFL_PICKUP = 0.2109;
-    public static double DIFFL_DEPOSIT = 0.738;
+    public static double DIFFL_DEPOSIT = 0.4479;
     public static double DIFFL_INTERMEDIATE = 0.287;
     public static double DIFFL_INIT = 0.304;
 
     public static double DIFFR_INTERMEDIATE = 0.255;
     public static double DIFFR_PICKUP = 0.164;
-    public static double DIFFR_DEPOSIT = 0.692;
+    public static double DIFFR_DEPOSIT = 0.982;
     public static double DIFFR_INIT = 0.312;
 
 

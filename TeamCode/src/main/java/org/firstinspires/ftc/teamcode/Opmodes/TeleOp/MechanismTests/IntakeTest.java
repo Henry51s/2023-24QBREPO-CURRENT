@@ -11,12 +11,9 @@ public class IntakeTest extends OpMode {
 
     Intake intake;
 
-    enum TuningMode{
-        FINE_TUNE,
-        OPERATIONAL
-    }
+
     double pos = 0.5;
-    TuningMode tuningMode = TuningMode.FINE_TUNE;
+    TuningModes tuningMode = TuningModes.FINE_TUNE;
 
     Gamepad current = new Gamepad(), previous = new Gamepad();
     @Override
@@ -51,7 +48,7 @@ public class IntakeTest extends OpMode {
                 intake.setArmPosition(pos);
 
                 if(gamepad1.left_stick_button)
-                    tuningMode = TuningMode.OPERATIONAL;
+                    tuningMode = TuningModes.OPERATIONAL;
                 break;
             case OPERATIONAL:
                 if(gamepad1.start)
@@ -70,7 +67,7 @@ public class IntakeTest extends OpMode {
                 }
 
                 if(gamepad1.right_stick_button)
-                    tuningMode = TuningMode.FINE_TUNE;
+                    tuningMode = TuningModes.FINE_TUNE;
                 break;
         }
 

@@ -13,23 +13,20 @@ public class ExtendoTest extends OpMode {
     FtcDashboard dashboard;
 
     Extension extendo;
-    enum TuningMode {
-        FINE_TUNE,
-        OPERATIONAL
-    }
-    TuningMode tuningMode = TuningMode.OPERATIONAL;
+
+    TuningModes tuningMode = TuningModes.OPERATIONAL;
     @Override
     public void init() {
         dashboard = FtcDashboard.getInstance();
         extendo = Extension.getInstance();
-        extendo.initExtension(hardwareMap, true);
+        extendo.initExtension(hardwareMap);
     }
     @Override
     public void loop() {
         switch (tuningMode){
             case FINE_TUNE:
                 if(gamepad1.left_stick_button){
-                    tuningMode = TuningMode.OPERATIONAL;
+                    tuningMode = TuningModes.OPERATIONAL;
                 }
                 break;
 
@@ -38,14 +35,15 @@ public class ExtendoTest extends OpMode {
                 //extendo.setTargetPosition(targetPosition);
                 extendo.loopExtension(gamepad1);
                 if(gamepad1.right_stick_button){
-                    tuningMode = TuningMode.FINE_TUNE;
+                    tuningMode = TuningModes.FINE_TUNE;
                 }
                 break;
         }
         telemetry.addData("Tuning Mode: ", tuningMode);
-        telemetry.addData("Current Position: ",extendo.getCurrentPosition());
-        telemetry.addData("Target Position: ", Extension.targetPosition);
-        telemetry.addData("Error: ", Extension.targetPosition - extendo.getCurrentPosition());
+        telemetry.addData("CurrentL Position: ",extendo.getMotorLCurrentPosition());
+        telemetry.addData("CurrentR Position: ", extendo.getMotorRCurrentPosition());
+        telemetry.addData("Target Position: ", extendo.targetPosition);
+        //telemetry.addData("Error: ", Extension.targetPosition - extendo.getCurrentPosition());
 
     }
 }

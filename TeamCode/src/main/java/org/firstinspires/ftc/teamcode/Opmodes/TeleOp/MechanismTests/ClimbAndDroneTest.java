@@ -14,11 +14,8 @@ public class ClimbAndDroneTest extends OpMode {
         DRONE
     }
 
-    enum TuningMode{
-        FINE_TUNE,
-        OPERATIONAL
-    }
-    TuningMode tuningMode = TuningMode.FINE_TUNE;
+
+    TuningModes tuningMode = TuningModes.FINE_TUNE;
     SideObjective sideObjective;
 
     Objective activeObjective = Objective.CLIMB;
@@ -69,7 +66,7 @@ public class ClimbAndDroneTest extends OpMode {
                         break;
                 }
                 if(gamepad1.left_stick_button){
-                    tuningMode = TuningMode.OPERATIONAL;
+                    tuningMode = TuningModes.OPERATIONAL;
                 }
                 break;
             case OPERATIONAL:
@@ -94,7 +91,7 @@ public class ClimbAndDroneTest extends OpMode {
                     sideObjective.releaseDrone();
                 }
                 if(gamepad1.right_stick_button){
-                    tuningMode = TuningMode.FINE_TUNE;
+                    tuningMode = TuningModes.FINE_TUNE;
 
                 }                break;
         }

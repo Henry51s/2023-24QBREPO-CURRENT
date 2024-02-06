@@ -10,11 +10,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differ
 public class DifferentialTest extends OpMode {
 
 
-    enum TuneStates{
-        FINE_TUNE,
-        OPERATIONAL
-    }
-    TuneStates tuneStates = TuneStates.FINE_TUNE;
+
+    TuningModes tuneStates = TuningModes.FINE_TUNE;
 
     Differential diff;
     double posL = 0.5;
@@ -73,7 +70,7 @@ public class DifferentialTest extends OpMode {
                 }
 
                 if(gamepad1.left_stick_button){
-                    tuneStates = TuneStates.OPERATIONAL;
+                    tuneStates = tuneStates.OPERATIONAL;
                 }
                 break;
             case OPERATIONAL:
@@ -94,7 +91,7 @@ public class DifferentialTest extends OpMode {
 
 
                 if(gamepad2.right_stick_button) {
-                    tuneStates = TuneStates.FINE_TUNE;
+                    tuneStates = tuneStates.FINE_TUNE;
                 }
                 break;
         }

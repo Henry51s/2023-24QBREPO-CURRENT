@@ -60,16 +60,16 @@ public class FourBar {
         fourBarState = state;
         switch (state){
             case INIT:
-                setFourBarPositionSlow(FOURBAR_INIT);
+                setFourBarPosition(FOURBAR_INIT);
                 break;
             case PICKUP:
                 setFourBarPositionSlow(FOURBAR_PICKUP);
                 break;
             case INTERMEDIATE:
-                setFourBarPositionSlow(FOURBAR_INTERMEDIATE);
+                setFourBarPosition(FOURBAR_INTERMEDIATE);
                 break;
             case DEPOSIT:
-                setFourBarPositionSlow(FOURBAR_DEPOSIT);
+                setFourBarPosition(FOURBAR_DEPOSIT);
                 break;
         }
     }

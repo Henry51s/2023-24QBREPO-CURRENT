@@ -11,11 +11,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBa
 
 @TeleOp(name="FourBarTest",group="Tests")
 public class FourBarTest extends OpMode {
-    enum TuneStates{
-        FINE_TUNE,
-        OPERATIONAL
-    }
-    TuneStates tuneStates = TuneStates.FINE_TUNE;
+
+    TuningModes tuneStates = TuningModes.FINE_TUNE;
 
     FourBar fourBar;
 
@@ -49,12 +46,12 @@ public class FourBarTest extends OpMode {
                     fourBar.setFourBarPosition(position);
 
                 if(gamepad1.left_stick_button)
-                    tuneStates = TuneStates.OPERATIONAL;
+                    tuneStates = TuningModes.OPERATIONAL;
                 break;
             case OPERATIONAL:
 
                 if(gamepad2.right_stick_button)
-                    tuneStates = TuneStates.FINE_TUNE;
+                    tuneStates = TuningModes.FINE_TUNE;
                 break;
 
         }

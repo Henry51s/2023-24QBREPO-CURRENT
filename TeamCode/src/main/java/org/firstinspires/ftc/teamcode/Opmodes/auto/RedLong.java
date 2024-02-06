@@ -13,7 +13,9 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.AutoLocation;
 import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.Autonomous;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.SpikeMark;
 
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="RedLong")
@@ -50,20 +52,20 @@ public class RedLong extends LinearOpMode {
 
         webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.RED);
         autonomous = new Autonomous(hardwareMap);
-        drive = autonomous.drive;
+        drive = autonomous.getDrive();
 
 
         while(opModeInInit()){
             telemetry.addData("Location: ", webcam.getLocation());
             telemetry.update();
             if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
-                autonomous.setPath(Autonomous.AutoLocation.RED_LONG, Autonomous.SpikeMark.MIDDLE);
+                autonomous.setPath(AutoLocation.RED_LONG, SpikeMark.MIDDLE);
             }
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
-                autonomous.setPath(Autonomous.AutoLocation.RED_LONG, Autonomous.SpikeMark.RIGHT);
+                autonomous.setPath(AutoLocation.RED_LONG, SpikeMark.RIGHT);
             }
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autonomous.setPath(Autonomous.AutoLocation.RED_LONG, Autonomous.SpikeMark.LEFT);
+                autonomous.setPath(AutoLocation.RED_LONG, SpikeMark.LEFT);
             }
         }
 

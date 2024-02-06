@@ -70,7 +70,7 @@ public class QBTeleOp extends OpMode {
 
         intake.loopIntake(gamepad1);
         drive.loopDrive(gamepad1);
-        //extendo.loopExtension(gamepad1);
+        extendo.loopExtension(gamepad2);
 
 
         if(currentGamepad2.left_bumper && !previousGamepad2.left_bumper){
@@ -102,11 +102,13 @@ public class QBTeleOp extends OpMode {
             commands.releaseClimbAndDrone(1000);
         }
 
-        if(gamepad1.dpad_up){
-            extendo.setExtensionState(Extension.ExtensionState.CLIMB);
+        /*if(gamepad1.dpad_up){
+            extendo.setExtensionState(Extension.ExtensionState.FAR);
         }
         if(gamepad1.dpad_down){
             extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
-        }
+        }*/
+
+        telemetry.addData("Extendo error: ", commands.getExtensionError());
     }
 }

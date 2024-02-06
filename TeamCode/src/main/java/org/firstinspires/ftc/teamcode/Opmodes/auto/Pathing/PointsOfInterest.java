@@ -44,13 +44,13 @@ public class PointsOfInterest {
 
 
 
-    public static double[] redBackDropL = {0,0,0};
-    public static double[] redBackDropM = {0,0,0};
-    public static double[] redBackDropR = {0,0,0};
+    public static double[] redBackDropL = {52,-18.175,0};
+    public static double[] redBackDropM = {52,-27.5,0};
+    public static double[] redBackDropR = {50.5,-33,0};
 
-    public static double[] blueBackDropL = {0,0,0};
-    public static double[] blueBackDropM = {0,0,0};
-    public static double[] blueBackDropR = {0,0,0};
+    public static double[] blueBackDropL = {48.5,33,0};
+    public static double[] blueBackDropM = {52.5,23,0};
+    public static double[] blueBackDropR = {52.5,18.175,0};
 
     //-------------------------------------------------------------
 

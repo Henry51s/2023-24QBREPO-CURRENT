@@ -61,8 +61,8 @@ public class Differential {
                 diffR.setPosition(DIFFR_INTERMEDIATE);
                 break;
             case DEPOSIT:
-                diffL.setPosition(DIFFL_DEPOSIT+offset);//+offset);
-                diffR.setPosition(DIFFR_DEPOSIT-offset);//-offset);
+                diffL.setPosition(DIFFL_DEPOSIT);//+offset);
+                diffR.setPosition(DIFFR_DEPOSIT);//-offset);
                 break;
             case INIT:
                 diffL.setPosition(DIFFL_INIT);

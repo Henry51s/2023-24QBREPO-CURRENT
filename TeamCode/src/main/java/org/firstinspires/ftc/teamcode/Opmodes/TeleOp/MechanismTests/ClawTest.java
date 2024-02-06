@@ -10,12 +10,8 @@ public class ClawTest extends OpMode {
 
     Claw claw;
     double pos = 0.5;
-    enum ClawStates{
-        FINE_TUNE,
-        OPERATIONAL
-    }
+   TuningModes tuningModes = TuningModes.FINE_TUNE;
 
-    ClawStates clawStates = ClawStates.FINE_TUNE;
     @Override
     public void init() {
         claw = Claw.getInstance();
@@ -24,7 +20,7 @@ public class ClawTest extends OpMode {
 
     @Override
     public void loop() {
-        switch(clawStates){
+        switch(tuningModes){
             case FINE_TUNE:
                 claw.setClawPosition(pos);
                 if(gamepad1.dpad_up){
@@ -40,7 +36,7 @@ public class ClawTest extends OpMode {
                     pos = 0;
                 }
                 if(gamepad1.left_stick_button){
-                    clawStates = ClawStates.OPERATIONAL;
+                    tuningModes = tuningModes.OPERATIONAL;
                 }
                 break;
             case OPERATIONAL:
@@ -52,7 +48,7 @@ public class ClawTest extends OpMode {
 
                 }
                 if(gamepad1.right_stick_button){
-                    clawStates = ClawStates.FINE_TUNE;
+                    tuningModes = tuningModes.FINE_TUNE;
                 }
                 break;
         }

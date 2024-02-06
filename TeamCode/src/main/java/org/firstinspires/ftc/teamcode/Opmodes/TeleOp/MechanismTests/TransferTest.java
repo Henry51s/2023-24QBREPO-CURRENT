@@ -1,6 +1,14 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFL_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFL_INIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFL_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFR_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFR_INIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFR_PICKUP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -22,12 +30,7 @@ public class TransferTest extends OpMode {
     double diffPosL = 0.5;
     double diffPosR = 0.5;
     double fourBarPos = 0.5;
-
-    enum TuningState{
-        FINE_TUNE,
-        OPERATIONAL
-    }
-    TuningState tuningState = TuningState.FINE_TUNE;
+    TuningModes tuningState = TuningModes.FINE_TUNE;
     Gamepad previousGamepad = new Gamepad();
     Gamepad currentGamepad = new Gamepad();
 
@@ -97,7 +100,7 @@ public class TransferTest extends OpMode {
 
 
                 if(gamepad1.left_stick_button)
-                    tuningState = TuningState.OPERATIONAL;
+                    tuningState = TuningModes.OPERATIONAL;
                 break;
             case OPERATIONAL:
                 intake.loopIntake(gamepad1);
@@ -107,12 +110,16 @@ public class TransferTest extends OpMode {
                     isRunning = true;
                     timer.reset();
                     fourBar.setFourBarPositionSlow(FOURBAR_DEPOSIT);
+                    fourBarPos = FOURBAR_DEPOSIT;
                     while(timer.milliseconds() < 1000){
                         counter ++;
                     }
 
                         diff.setDiffState(Differential.DiffState.DEPOSIT);
                         isRunning = false;
+                    diffPosR = DIFFR_DEPOSIT;
+                    diffPosL = DIFFL_DEPOSIT;
+
                     }
 
 
@@ -121,12 +128,18 @@ public class TransferTest extends OpMode {
 
                 if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
                     fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
+                    fourBarPos = FOURBAR_INTERMEDIATE;
                     diff.setDiffState(Differential.DiffState.INTERMEDIATE);
+                    diffPosR = DIFFR_INIT;
+                    diffPosL = DIFFL_INIT;
                 }
                 if(currentGamepad.dpad_left && !previousGamepad.dpad_left) {
                     claw.setClawState(Claw.ClawState.OPEN);
                     diff.setDiffState(Differential.DiffState.PICKUP);
+                    diffPosR = DIFFR_PICKUP;
+                    diffPosL = DIFFL_PICKUP;
                     fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
+                    fourBarPos = FOURBAR_PICKUP;
                 }
                 if(gamepad1.left_bumper)
                     claw.setClawState(Claw.ClawState.OPEN);
@@ -134,7 +147,7 @@ public class TransferTest extends OpMode {
                     claw.setClawState(Claw.ClawState.CLOSE);
 
                 if(gamepad1.right_stick_button)
-                    tuningState = TuningState.FINE_TUNE;
+                    tuningState = TuningModes.FINE_TUNE;
                 break;
         }
         telemetry.addData("FourBar Position: ", fourBar.getPosition());

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.apache.commons.math3.geometry.partitioning.Side;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
@@ -26,7 +25,7 @@ public class Commands {
     private int pickupLiftRetractDelay = 1000;
     private int depositClawDelay = 500;
     private int depositDifferentialDelay = 1000;
-    private int liftThreshold = 1;
+    private int liftThreshold = 50;
 
     public void initCommands(Telemetry telemetry){
         this.telemetry = telemetry;
@@ -83,7 +82,7 @@ public class Commands {
         Thread pickupThread = new Thread(() -> {
             timer.reset();
             lift.setLiftState(Lift.LiftState.RETRACTED);
-            while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) != liftThreshold){
+            while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
             }
             claw.setClawState(Claw.ClawState.OPEN);
             differential.setDiffState(Differential.DiffState.PICKUP);
@@ -113,5 +112,10 @@ public class Commands {
 
     public synchronized void releasePixels(){
         claw.setClawState(Claw.ClawState.OPEN);
+    }
+
+
+    public double getExtensionError(){
+        return Math.abs(extension.getMotorLCurrentPosition() - extension.targetPosition);
     }
 }

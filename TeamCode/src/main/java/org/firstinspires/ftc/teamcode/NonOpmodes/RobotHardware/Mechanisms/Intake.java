@@ -175,7 +175,7 @@ public class Intake {
 
     public void loopIntake(Gamepad gamepad){
 
-        previous.copy(current);
+        /*previous.copy(current);
         current.copy(gamepad);
 
         if(gamepad.left_bumper){
@@ -190,7 +190,16 @@ public class Intake {
         roundedRollCounter = Math.ceil(rollCounter);
         targetPosition = roundedRollCounter*ticksPerRevolution;
 
-        intake.setTargetPosition((int) targetPosition);
+        intake.setTargetPosition((int) targetPosition);*/
+        if(gamepad.left_bumper){
+            setIntakeState(IntakeState.NORMAL);
+        }
+        else if(gamepad.right_bumper){
+            setIntakeState(IntakeState.REVERSED);
+        }
+        else{
+            setIntakeState(IntakeState.STOP);
+        }
     }
     public void setArmPosition(double position){
         intakeArm.setPosition(position);
