@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing;
+package org.firstinspires.ftc.teamcode.NonOpmodes.Enums;
 
 public enum AutoLocation {
     BLUE_SHORT,

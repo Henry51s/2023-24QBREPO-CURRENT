@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
-import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.AutoLocation;
-import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.Autonomous;
-import org.firstinspires.ftc.teamcode.Opmodes.auto.Pathing.SpikeMark;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Pathing.Autonomous;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.SpikeMark;
 
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="RedLong")
