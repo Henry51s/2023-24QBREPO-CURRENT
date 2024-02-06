@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBa
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
 
+@Config
 public class Commands {
     Differential differential;
     Claw claw;
@@ -22,10 +24,11 @@ public class Commands {
     Telemetry telemetry;
 
 
-    private int pickupLiftRetractDelay = 1000;
-    private int depositClawDelay = 500;
-    private int depositDifferentialDelay = 1000;
-    private int liftThreshold = 50;
+    public static int pickupLiftRetractDelay = 1000;
+    public static int depositClawDelay = 100;
+    public static int depositDifferentialDelay = 250;
+    public static int liftThreshold = 50;
+    public static int initDelay = 1000;
 
     public void initCommands(Telemetry telemetry){
         this.telemetry = telemetry;
@@ -67,7 +70,7 @@ public class Commands {
             timer.reset();
             latchClimbAndDrone();
             claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
-            while(timer.milliseconds() < 3000){
+            while(timer.milliseconds() < initDelay){
 
             }
             differential.setDiffState(Differential.DiffState.INIT);
@@ -76,6 +79,12 @@ public class Commands {
         });
         initThread.start();
 
+    }
+    public synchronized void toIntermediate(){
+        Thread intermediateThread = new Thread(() -> {
+            fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
+            differential.setDiffState(Differential.DiffState.PICKUP);
+        });
     }
     public synchronized void toPickup(){
         //Pickup code here

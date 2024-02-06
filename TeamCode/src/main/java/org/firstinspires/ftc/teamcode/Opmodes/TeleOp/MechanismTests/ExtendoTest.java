@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.TuningModes;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
 
@@ -43,7 +44,11 @@ public class ExtendoTest extends OpMode {
         telemetry.addData("Tuning Mode: ", tuningMode);
         telemetry.addData("CurrentL Position: ",extendo.getMotorLCurrentPosition());
         telemetry.addData("CurrentR Position: ", extendo.getMotorRCurrentPosition());
-        telemetry.addData("Target Position: ", extendo.targetPosition);
+        telemetry.addData("Target Position: ", extendo.getTargetPosition());
+        telemetry.addData("OutputL: ", extendo.limitedOutputL);
+        telemetry.addData("OutputR: ", extendo.limitedOutputR);
+        telemetry.addData("Motor current: ", extendo.getAverageCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Home Position: ", extendo.homePosition);
         //telemetry.addData("Error: ", Extension.targetPosition - extendo.getCurrentPosition());
 
     }

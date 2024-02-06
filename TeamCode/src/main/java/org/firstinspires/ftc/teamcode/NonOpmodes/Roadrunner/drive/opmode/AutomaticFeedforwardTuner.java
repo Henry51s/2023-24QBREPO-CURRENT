@@ -18,6 +18,7 @@ import org.firstinspires.ftc.robotcore.internal.system.Misc;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.util.LoggingUtil;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.util.RegressionUtil;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,13 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
     public static double MAX_POWER = 0.7;
     public static double DISTANCE = 96; // in
 
+
     @Override
     public void runOpMode() throws InterruptedException {
+
+        Extension extendo = Extension.getInstance();
+        extendo.initExtension(hardwareMap);
+
         if (RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");

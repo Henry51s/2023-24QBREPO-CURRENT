@@ -59,6 +59,9 @@ public class Intake {
     public double roundedRollCounter = 0;
     public double targetPosition = 0;
 
+    private double armPosition = INTAKE_ARM_GROUND;
+    Gamepad current = new Gamepad(), previous = new Gamepad();
+
     public void initIntake(HardwareMap hw){
         hardware.initIntake(hw);
         intake = hardware.intake;
@@ -151,6 +154,18 @@ public class Intake {
 
 
     public void loopIntake(Gamepad gamepad){
+        previous.copy(current);
+        current.copy(gamepad);
+
+        if(gamepad.left_trigger > 0){
+            armPosition -= 0.05;
+        }
+        else if(gamepad.right_trigger>0){
+            armPosition += 0.05;
+        }
+        armPosition = Math.max(INTAKE_ARM_GROUND, Math.min(armPosition, INTAKE_ARM_FIFTH));
+        setArmPosition(armPosition);
+
 
         if(gamepad.left_bumper){
             setIntakeState(IntakeState.NORMAL);

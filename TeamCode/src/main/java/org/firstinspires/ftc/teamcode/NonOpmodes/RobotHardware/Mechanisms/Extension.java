@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_CLIMB;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_FAR;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MAX_POWER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_SHORT;
@@ -29,12 +28,18 @@ public class Extension {
         return instance;
     }
 
-    public static double p = 0;
+    public enum Mode{
+        HOMING,
+        OPERATIONAL
+    }
+    Mode mode = Mode.OPERATIONAL;
+
+    public static double p = 15;
     public static double i = 0;
     public static double d = 0;
-    public static double positionTolerance = 0;
-    public static double joystickMultiplier = 5;
-    PIDController pid = new PIDController(p,i,d);
+    public static double positionTolerance = 1;
+    public static double joystickMultiplier = 15;
+    private PIDController pid;
 
 
 
@@ -43,8 +48,16 @@ public class Extension {
 
 
     private int targetPosition = 0;
-    private double currentThreshold = 0;
-    private int homePosition = 0;
+    public static double currentThreshold = 3;
+    public int homePosition = 0;
+    public static double homingVelocity = 500;
+    public static double maxVelocity = 900;
+    public static int homePositionBuffer = 3;
+    double currentMaxVelocity = 0;
+    public double outputL = 0;
+    public double outputR = 0;
+    public double limitedOutputL = 0;
+    public double limitedOutputR = 0;
     private DcMotorEx extendoL, extendoR;
     private Hardware hardware = new Hardware();
 
@@ -58,23 +71,22 @@ public class Extension {
     ExtensionState extensionState = ExtensionState.RETRACTED;
 
     public void initExtension(HardwareMap hw){
+        pid = new PIDController(p,i,d);
 
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
 
-        /*extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setTargetPosition(0);
-        extendoL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        extendoR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        setPower(EXTENDO_MAX_POWER);*/
 
         extendoL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pid.setTolerance(positionTolerance);
 
         targetPosition = 0;
+        homePosition = 0;
     }
     public void initExtension(HardwareMap hw, boolean debug){
         hardware.initExtension(hw);
@@ -82,9 +94,9 @@ public class Extension {
         extendoR = hardware.extendoR;
     }
 
-    private double calculateVel(){
+    private double calculateVel(int currentPosition){
         double vel = pid.calculate(
-                getAveragePosition(), targetPosition
+                currentPosition, targetPosition
         );
         return vel;
     }
@@ -126,30 +138,67 @@ public class Extension {
 
     Gamepad current = new Gamepad(), previous = new Gamepad();
 
+    public double limitSpeed(double velocity, double maxVelocity){
+        return Math.max(-maxVelocity, Math.min(velocity, maxVelocity));
+    }
+    public void home(){
+        mode = Mode.HOMING;
+        homePosition = -999999;
+        setTargetPosition(homePosition);
+
+    }
+
 
     public void loopExtension(Gamepad gamepad){
 
+        switch(mode){
 
+            case OPERATIONAL:
+                currentMaxVelocity = maxVelocity;
+                break;
+            case HOMING:
+                currentMaxVelocity = homingVelocity;
+                break;
+        }
 
         previous.copy(current);
         current.copy(gamepad);
         targetPosition += -gamepad.left_stick_y*joystickMultiplier;
-        targetPosition = Math.max(0, Math.min(targetPosition, homePosition + EXTENDO_FAR));
+        targetPosition = Math.max(homePosition, Math.min(targetPosition, homePosition + EXTENDO_FAR));
 
         if(current.left_stick_button && !previous.left_stick_button){
             targetPosition = homePosition;
         }
+        if(current.right_stick_button && !previous.right_stick_button){
+            home();
+        }
 
         setTargetPosition(targetPosition);
-        double output = calculateVel();
-        setVelocity(output);
+        outputL = calculateVel(extendoL.getCurrentPosition());
+        outputR = calculateVel(extendoR.getCurrentPosition());
 
-        if(getAverageCurrent(CurrentUnit.AMPS) > currentThreshold && calculateVel() < 0){
+        limitedOutputL = limitSpeed(outputL, currentMaxVelocity);
+        limitedOutputR = limitSpeed(outputR, currentMaxVelocity);
+        extendoL.setVelocity(limitedOutputL);
+        extendoR.setVelocity(limitedOutputR);
+
+        if(getAverageCurrent(CurrentUnit.AMPS) > currentThreshold && calculateVel(extendoL.getCurrentPosition()) < 0 && mode == Mode.HOMING){
             setVelocity(0);
             homePosition = getAveragePosition();
-            targetPosition = homePosition;
+            targetPosition = homePosition + homePositionBuffer;
+            mode = Mode.OPERATIONAL;
 
         }
+
+    }
+    public void loopExtensionAuto(){
+        outputL = calculateVel(extendoL.getCurrentPosition());
+        outputR = calculateVel(extendoR.getCurrentPosition());
+
+        limitedOutputL = limitSpeed(outputL, maxVelocity);
+        limitedOutputR = limitSpeed(outputR, maxVelocity);
+        extendoL.setVelocity(limitedOutputL);
+        extendoR.setVelocity(limitedOutputR);
 
     }
     public int getMotorLCurrentPosition(){return extendoL.getCurrentPosition();}
@@ -166,5 +215,4 @@ public class Extension {
     public int getTargetPosition(){
         return targetPosition;
     }
-
 }
