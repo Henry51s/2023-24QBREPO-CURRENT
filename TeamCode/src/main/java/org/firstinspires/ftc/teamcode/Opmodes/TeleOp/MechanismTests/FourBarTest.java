@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import java.util.Arrays;
 
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.TuningModes;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
 
 @TeleOp(name="FourBarTest",group="Tests")

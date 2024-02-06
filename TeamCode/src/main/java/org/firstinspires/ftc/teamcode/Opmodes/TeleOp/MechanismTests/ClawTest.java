@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.TuningModes;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 
 @TeleOp(name="ClawTest", group="Tests")
