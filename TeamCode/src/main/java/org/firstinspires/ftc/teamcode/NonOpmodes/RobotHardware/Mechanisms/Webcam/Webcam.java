@@ -19,8 +19,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class Webcam {
 
-    OpenCvCamera camera;
-    PrimaryDetectionPipeline pipeline = new PrimaryDetectionPipeline();
+    private OpenCvCamera camera;
+    private PrimaryDetectionPipeline pipeline = new PrimaryDetectionPipeline();
 
     public void initCamera(HardwareMap hardwareMap, PrimaryDetectionPipeline.Color color){
 

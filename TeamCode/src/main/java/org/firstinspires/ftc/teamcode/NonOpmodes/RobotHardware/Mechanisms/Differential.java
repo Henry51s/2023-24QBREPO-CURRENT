@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.FourBarDifferentialStates;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.*;
 
@@ -22,16 +23,10 @@ public class Differential {
     private int turns = 0;
     private int maxTurns = 2;
 
-    public enum DiffState{
-        PICKUP,
-        INTERMEDIATE,
-        DEPOSIT,
-        INIT
-    }
-    DiffState diffState = DiffState.DEPOSIT;
+    private FourBarDifferentialStates state = FourBarDifferentialStates.DEPOSIT;
     double[] diffPositions = new double[2];
 
-    Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
+    private Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
 
     public void initDifferential(HardwareMap hw){
         hardware.initDifferential(hw);
@@ -45,8 +40,8 @@ public class Differential {
         diffR.setPosition(position);
     }
 
-    public void setDiffState(DiffState state){
-        diffState = state;
+    public void setState(FourBarDifferentialStates state){
+        this.state = state;
         switch(state){
             case PICKUP:
                 diffL.setPosition(DIFFL_PICKUP);
@@ -72,7 +67,7 @@ public class Differential {
 
         turns = Math.max(-maxTurns, Math.min(turns, maxTurns));
 
-        if(diffState == DiffState.DEPOSIT){
+        if(state == FourBarDifferentialStates.DEPOSIT){
             if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
                 turns++;
             }
@@ -90,7 +85,7 @@ public class Differential {
         diffPositions[1] = diffR.getPosition();
         return diffPositions;
     }
-    public DiffState getDiffState(){
-        return diffState;
+    public FourBarDifferentialStates getState(){
+        return state;
     }
 }

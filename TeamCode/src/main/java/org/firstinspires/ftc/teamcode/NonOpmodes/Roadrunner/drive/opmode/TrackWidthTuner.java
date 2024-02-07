@@ -85,6 +85,7 @@ public class TrackWidthTuner extends LinearOpMode {
         telemetry.update();
 
         while (!isStopRequested()) {
+            extendo.loopExtensionAuto();
             idle();
         }
     }

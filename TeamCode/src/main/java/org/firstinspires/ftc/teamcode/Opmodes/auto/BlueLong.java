@@ -32,7 +32,6 @@ public class BlueLong extends LinearOpMode {
     Webcam webcam = new Webcam();
 
     public TrajectorySequence scoreSpikeMark, scoreBackDrop, toNeutral1;
-    public static double power = 0.25;
 
     ElapsedTime timer = new ElapsedTime();
 

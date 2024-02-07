@@ -25,9 +25,8 @@ public class Claw {
         CLOSE,
         CLOSE_ONE_PIXEL
     }
-    ClawState clawState = ClawState.CLOSE;
+    private ClawState clawState = ClawState.CLOSE;
     private Claw(){
-
     }
 
     public void initClaw(HardwareMap hw){

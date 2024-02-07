@@ -21,7 +21,7 @@ public class IntakeTest extends OpMode {
     public void init() {
         intake = Intake.getInstance();
         intake.initIntake(hardwareMap);
-        intake.intakeArm.setPosition(pos);
+        intake.setArmPosition(pos);
     }
 
     @Override
@@ -78,8 +78,8 @@ public class IntakeTest extends OpMode {
 
         telemetry.addData("Intake Arm Position: ", intake.getIntakeArmPosition());
         telemetry.addData("Intake Motor Position: ", intake.getIntakePosition());
-        telemetry.addData("Target Position: ", intake.targetPosition);
-        telemetry.addData("Roll Counter: ", intake.roundedRollCounter);
+        telemetry.addData("Target Position: ", intake.getTargetPosition());
+        telemetry.addData("Roll Counter: ", intake.getRoundedRollCounter());
 
     }
 }

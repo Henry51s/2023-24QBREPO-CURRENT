@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.FourBarDifferentialStates;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.TuningModes;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
@@ -116,7 +117,7 @@ public class TransferTest extends OpMode {
                         counter ++;
                     }
 
-                        diff.setDiffState(Differential.DiffState.DEPOSIT);
+                        diff.setState(FourBarDifferentialStates.DEPOSIT);
                         isRunning = false;
                     diffPosR = DIFFR_DEPOSIT;
                     diffPosL = DIFFL_DEPOSIT;
@@ -128,18 +129,18 @@ public class TransferTest extends OpMode {
 
 
                 if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
-                    fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
+                    fourBar.setState(FourBarDifferentialStates.INTERMEDIATE);
                     fourBarPos = FOURBAR_INTERMEDIATE;
-                    diff.setDiffState(Differential.DiffState.INTERMEDIATE);
+                    diff.setState(FourBarDifferentialStates.INTERMEDIATE);
                     diffPosR = DIFFR_INIT;
                     diffPosL = DIFFL_INIT;
                 }
                 if(currentGamepad.dpad_left && !previousGamepad.dpad_left) {
                     claw.setClawState(Claw.ClawState.OPEN);
-                    diff.setDiffState(Differential.DiffState.PICKUP);
+                    diff.setState(FourBarDifferentialStates.PICKUP);
                     diffPosR = DIFFR_PICKUP;
                     diffPosL = DIFFL_PICKUP;
-                    fourBar.setFourBarState(FourBar.FourBarState.PICKUP);
+                    fourBar.setState(FourBarDifferentialStates.PICKUP);
                     fourBarPos = FOURBAR_PICKUP;
                 }
                 if(gamepad1.left_bumper)
@@ -156,8 +157,8 @@ public class TransferTest extends OpMode {
         telemetry.addData("DiffL Position: ", diff.getDiffPositions()[0]);
         telemetry.addData("DiffR Position: ", diff.getDiffPositions()[1]);
 
-        telemetry.addData("FourBar state: ", fourBar.getFourBarState());
-        telemetry.addData("Diff state: ", diff.getDiffState());
+        telemetry.addData("FourBar state: ", fourBar.getState());
+        telemetry.addData("Diff state: ", diff.getState());
         telemetry.addData("Claw State: ", claw.getClawState());
 
     }

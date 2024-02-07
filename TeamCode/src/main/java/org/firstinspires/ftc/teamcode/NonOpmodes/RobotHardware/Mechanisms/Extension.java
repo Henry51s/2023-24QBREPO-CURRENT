@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_CLIMB;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_FAR;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MAX_VELOCITY;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_SHORT;
@@ -28,17 +29,11 @@ public class Extension {
         return instance;
     }
 
-    public enum Mode{
-        HOMING,
-        OPERATIONAL
-    }
-    Mode mode = Mode.OPERATIONAL;
-
-    public static double p = 15;
-    public static double i = 0;
-    public static double d = 0;
+    public static double[] coefficients = {15,0,0};
     public static double positionTolerance = 1;
     public static double joystickMultiplier = 15;
+    public static double currentThreshold = 3;
+    public static int homePositionBuffer = 3;
     private PIDController pid;
 
 
@@ -47,19 +42,23 @@ public class Extension {
 
 
 
+
+
+
+
     private int targetPosition = 0;
-    public static double currentThreshold = 3;
-    public int homePosition = 0;
-    public static double homingVelocity = 500;
-    public static double maxVelocity = 900;
-    public static int homePositionBuffer = 3;
-    double currentMaxVelocity = 0;
-    public double outputL = 0;
-    public double outputR = 0;
-    public double limitedOutputL = 0;
-    public double limitedOutputR = 0;
+    private double homingVelocity = 0.75*EXTENDO_MAX_VELOCITY;
+    private int homePosition = 0;
+    private double currentMaxVelocity = 0;
+    private double outputL = 0;
+    private double outputR = 0;
+    private double limitedOutputL = 0;
+    private double limitedOutputR = 0;
+
+
     private DcMotorEx extendoL, extendoR;
     private Hardware hardware = new Hardware();
+    private Gamepad current = new Gamepad(), previous = new Gamepad();
 
     public enum ExtensionState{
         RETRACTED,
@@ -68,10 +67,16 @@ public class Extension {
         FAR,
         CLIMB
     }
-    ExtensionState extensionState = ExtensionState.RETRACTED;
+
+    public enum Mode{
+        HOMING,
+        OPERATIONAL
+    }
+    private Mode mode = Mode.OPERATIONAL;
+    private ExtensionState extensionState = ExtensionState.RETRACTED;
 
     public void initExtension(HardwareMap hw){
-        pid = new PIDController(p,i,d);
+        pid = new PIDController(coefficients[0], coefficients[1], coefficients[2]);
 
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
@@ -85,8 +90,9 @@ public class Extension {
         extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pid.setTolerance(positionTolerance);
 
-        targetPosition = 0;
+        setExtensionState(ExtensionState.RETRACTED);
         homePosition = 0;
+
     }
     public void initExtension(HardwareMap hw, boolean debug){
         hardware.initExtension(hw);
@@ -106,14 +112,8 @@ public class Extension {
         extendoR.setVelocity(velocity);
     }
 
-
-    public void setPower(double power){
-        extendoL.setPower(power);
-        extendoR.setPower(power);
-    }
-    public void setTargetPosition(int targetPosition){
-        extendoL.setTargetPosition(targetPosition);
-        extendoR.setTargetPosition(targetPosition);
+    private void setTargetPosition(int targetPosition){
+        this.targetPosition = targetPosition;
     }
     public void setExtensionState(ExtensionState extensionState){
         this.extensionState = extensionState;
@@ -136,7 +136,7 @@ public class Extension {
         }
     }
 
-    Gamepad current = new Gamepad(), previous = new Gamepad();
+
 
     public double limitSpeed(double velocity, double maxVelocity){
         return Math.max(-maxVelocity, Math.min(velocity, maxVelocity));
@@ -154,7 +154,7 @@ public class Extension {
         switch(mode){
 
             case OPERATIONAL:
-                currentMaxVelocity = maxVelocity;
+                currentMaxVelocity = EXTENDO_MAX_VELOCITY;
                 break;
             case HOMING:
                 currentMaxVelocity = homingVelocity;
@@ -195,15 +195,29 @@ public class Extension {
         outputL = calculateVel(extendoL.getCurrentPosition());
         outputR = calculateVel(extendoR.getCurrentPosition());
 
-        limitedOutputL = limitSpeed(outputL, maxVelocity);
-        limitedOutputR = limitSpeed(outputR, maxVelocity);
+        limitedOutputL = limitSpeed(outputL, EXTENDO_MAX_VELOCITY);
+        limitedOutputR = limitSpeed(outputR, EXTENDO_MAX_VELOCITY);
         extendoL.setVelocity(limitedOutputL);
         extendoR.setVelocity(limitedOutputR);
 
+
+    }
+
+
+
+
+    public int getTargetPosition(){
+        return targetPosition;
     }
     public int getMotorLCurrentPosition(){return extendoL.getCurrentPosition();}
     public int getMotorRCurrentPosition(){
         return extendoR.getCurrentPosition();
+    }
+    public double getMotorLCurrent(CurrentUnit currentUnit){
+        return extendoL.getCurrent(currentUnit);
+    }
+    public double getMotorRCurrent(CurrentUnit currentUnit){
+        return extendoR.getCurrent(currentUnit);
     }
     public int getAveragePosition(){
         return (getMotorLCurrentPosition() + getMotorRCurrentPosition())/2;
@@ -211,8 +225,15 @@ public class Extension {
     public double getAverageCurrent(CurrentUnit currentUnit){
         return (extendoL.getCurrent(currentUnit) + extendoR.getCurrent(currentUnit))/2;
     }
-
-    public int getTargetPosition(){
-        return targetPosition;
+    public double getLimitedOutputL(){
+        return limitedOutputL;
     }
+    public double getLimitedOutputR(){
+        return limitedOutputR;
+    }
+    public double getCurrentMaxVelocity(){
+        return currentMaxVelocity;
+    }
+
+
 }

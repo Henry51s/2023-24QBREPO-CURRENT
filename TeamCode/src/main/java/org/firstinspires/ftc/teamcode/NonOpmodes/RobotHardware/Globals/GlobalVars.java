@@ -19,10 +19,10 @@ public class GlobalVars {
     public static double DRONE_LATCH = 0.571;
     public static double DRONE_RELEASE = 0.038;
 
-    public static int EXTENDO_CLIMB = 142;
 
-    public static double EXTENDO_MAX_POWER = 0.75;
+    public static int EXTENDO_MAX_VELOCITY = 900;
     public static int EXTENDO_RETRACTED = 0;
+    public static int EXTENDO_CLIMB = 142;
     public static int EXTENDO_SHORT = 0;
     public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
@@ -105,26 +105,6 @@ public class GlobalVars {
 
     public static final int dashboardStreamFps = 5;
 
-    //Camera Orientation
-    public static final OpenCvCameraRotation cameraOrientation = OpenCvCameraRotation.UPRIGHT;
-
-
-    //Lower bound yCbCr values for desired color
-    public static int lowerY = 73;
-    public static int lowerCb = 160;
-    public static int lowerCr = 59;
-
-    //Upper bound yCbCr values for desired color
-    public static int upperY = 255;
-    public static int upperCb = 188;
-    public static int upperCr = 98;
-
-    //Dimensions for region of interest rectangle
-    public static int x1 = 0;
-    public static int y1 = 0;
-    public static int w = 800;
-    public static int h = 448;
-    //-----------------------------
 
 
 

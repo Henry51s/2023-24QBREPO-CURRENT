@@ -28,7 +28,7 @@ public class Lift {
 
 
 
-    public int targetPosition = 0;
+    private int targetPosition = 0;
     public enum LiftState{
         RETRACTED,
         LOW,
@@ -36,7 +36,7 @@ public class Lift {
         HIGH,
         AUTO_LOW,
     }
-    LiftState liftState = LiftState.RETRACTED;
+    private LiftState liftState = LiftState.RETRACTED;
 
 
     public void initLift(HardwareMap hw){

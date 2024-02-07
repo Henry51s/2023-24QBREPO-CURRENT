@@ -24,9 +24,9 @@ public class SideObjective {
     }
     private SideObjective(){
     }
-    Servo climbL, climbR, drone;
+    private Servo climbL, climbR, drone;
 
-    Hardware hardware = new Hardware();
+    private Hardware hardware = new Hardware();
     public void initSideQuest(HardwareMap hw){
         hardware.initClimbAndDrone(hw);
         climbL = hardware.climb1;

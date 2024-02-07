@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.FourBarDifferentialStates;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.TuningModes;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 
@@ -77,8 +78,7 @@ public class DifferentialTest extends OpMode {
             case OPERATIONAL:
                 previousGamepad1.copy(currentGamepad1);
                 currentGamepad1.copy(gamepad1);
-                diff.setDiffState(Differential.DiffState.DEPOSIT);
-                diff.setOffset(offset*n);
+                diff.setState(FourBarDifferentialStates.DEPOSIT);
                 if(gamepad1.dpad_left && !previousGamepad1.dpad_left){
                     n++;
                 }

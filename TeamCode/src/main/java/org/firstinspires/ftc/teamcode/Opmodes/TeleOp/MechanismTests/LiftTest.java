@@ -49,8 +49,8 @@ public class LiftTest extends OpMode {
                 telemetry.addData("Lift State: ", lift.getLiftState());
 
                 packet.put("Current Position: ", lift.getCurrentPosition());
-                packet.put("Target Position: ", lift.targetPosition);
-                packet.put("Error: ", lift.targetPosition - lift.getCurrentPosition());
+                packet.put("Target Position: ", lift.getTargetPosition());
+                packet.put("Error: ", lift.getTargetPosition() - lift.getCurrentPosition());
                 dashboard.sendTelemetryPacket(packet);
         }
 

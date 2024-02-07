@@ -97,6 +97,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
 
         while (!isStopRequested()) {
+            extendo.loopExtensionAuto();
             telemetry.addData("mode", mode);
 
             switch (mode) {

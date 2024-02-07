@@ -28,8 +28,8 @@ public class Intake {
         }
         return instance;
     }
-    public DcMotorEx intake;
-    public Servo intakeArm;
+    private DcMotorEx intake;
+    private Servo intakeArm;
     private Hardware hardware = new Hardware();
     private ElapsedTime timer = new ElapsedTime();
 
@@ -37,8 +37,6 @@ public class Intake {
         STOP,
         NORMAL,
         REVERSED,
-        RUN_TO_POSITION
-
     }
 
     public enum IntakeArmState{
@@ -51,16 +49,16 @@ public class Intake {
         SPIKEMARK
     }
 
-    IntakeArmState intakeArmState = IntakeArmState.GROUND;
-    IntakeState intakeState = IntakeState.NORMAL;
+    private IntakeArmState intakeArmState = IntakeArmState.GROUND;
+    private IntakeState intakeState = IntakeState.NORMAL;
 
-    int ticksPerRevolution = 145;
-    public double rollCounter = 0;
-    public double roundedRollCounter = 0;
-    public double targetPosition = 0;
+    private int ticksPerRevolution = 145;
+    private double rollCounter = 0;
+    private double roundedRollCounter = 0;
+    private double targetPosition = 0;
 
     private double armPosition = INTAKE_ARM_GROUND;
-    Gamepad current = new Gamepad(), previous = new Gamepad();
+    private Gamepad current = new Gamepad(), previous = new Gamepad();
 
     public void initIntake(HardwareMap hw){
         hardware.initIntake(hw);
@@ -191,5 +189,11 @@ public class Intake {
     }
     public int getIntakePosition(){
         return intake.getCurrentPosition();
+    }
+    public double getRoundedRollCounter(){
+        return roundedRollCounter;
+    }
+    public double getTargetPosition(){
+        return targetPosition;
     }
 }

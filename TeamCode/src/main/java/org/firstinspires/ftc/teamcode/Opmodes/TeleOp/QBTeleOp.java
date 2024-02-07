@@ -42,13 +42,7 @@ public class QBTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        /*
-        Controls:
-        -Claw -> gamepad2 bumpers
-        -Deposit sequence -> gamepad 2 dpad up
-        -Pickup sequence -> gamepad 2 dpad down
-        -Intake -> gamepad1 bumpers
-         */
+
         previousGamepad2.copy(currentGamepad2);
         currentGamepad2.copy(gamepad2);
 

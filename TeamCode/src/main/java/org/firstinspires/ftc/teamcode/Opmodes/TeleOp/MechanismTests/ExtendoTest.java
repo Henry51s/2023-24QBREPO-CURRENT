@@ -45,11 +45,10 @@ public class ExtendoTest extends OpMode {
         telemetry.addData("CurrentL Position: ",extendo.getMotorLCurrentPosition());
         telemetry.addData("CurrentR Position: ", extendo.getMotorRCurrentPosition());
         telemetry.addData("Target Position: ", extendo.getTargetPosition());
-        telemetry.addData("OutputL: ", extendo.limitedOutputL);
-        telemetry.addData("OutputR: ", extendo.limitedOutputR);
+        telemetry.addData("OutputL: ", extendo.getLimitedOutputL());
+        telemetry.addData("OutputR: ", extendo.getLimitedOutputR());
         telemetry.addData("Motor current: ", extendo.getAverageCurrent(CurrentUnit.AMPS));
-        telemetry.addData("Home Position: ", extendo.homePosition);
-        //telemetry.addData("Error: ", Extension.targetPosition - extendo.getCurrentPosition());
+
 
     }
 }

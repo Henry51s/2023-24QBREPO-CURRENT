@@ -31,7 +31,7 @@ public class RedShort extends LinearOpMode {
     Webcam webcam = new Webcam();
 
     public TrajectorySequence scoreSpikeMark, scoreBackDrop, park;
-    public static double power = 0.25;
+
 
     @Override
     public void runOpMode() throws InterruptedException {

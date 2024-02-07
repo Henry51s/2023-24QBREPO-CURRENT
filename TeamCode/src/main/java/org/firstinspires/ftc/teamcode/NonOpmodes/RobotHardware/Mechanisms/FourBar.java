@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.FourBarDifferentialStates;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
 
@@ -24,19 +25,13 @@ public class FourBar {
     }
     private Servo v4bL, v4bR;
     private Hardware hardware = new Hardware();
-    public enum FourBarState {
-        INIT,
-        PICKUP,
-        INTERMEDIATE,
-        DEPOSIT
-    }
 
-    FourBarState fourBarState = FourBarState.INIT;
+    private FourBarDifferentialStates state = FourBarDifferentialStates.INIT;
 
 
-    ElapsedTime servoTime = new ElapsedTime();
+    private ElapsedTime servoTime = new ElapsedTime();
     public double[] intermediatePositions = {0};
-    public static int delay = 7;
+    public static int delay = 3;
     public static int stepRatio = 150;
 
 
@@ -50,8 +45,8 @@ public class FourBar {
         v4bL.setPosition(position);
         v4bR.setPosition(position);
     }
-    public void setFourBarState(FourBarState state){
-        fourBarState = state;
+    public void setState(FourBarDifferentialStates state){
+        this.state = state;
         switch (state){
             case INIT:
                 setFourBarPosition(FOURBAR_INIT);
@@ -97,8 +92,8 @@ public class FourBar {
     public double getPosition(){
         return v4bL.getPosition();
     }
-    public FourBarState getFourBarState(){
-        return fourBarState;
+    public FourBarDifferentialStates getState(){
+        return state;
     }
 
     }

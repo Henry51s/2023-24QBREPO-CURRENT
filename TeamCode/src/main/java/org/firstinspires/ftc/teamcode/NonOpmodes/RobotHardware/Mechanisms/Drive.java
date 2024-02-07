@@ -31,7 +31,7 @@ public class Drive {
         NORMAL,
         REVERSED
     }
-    DriveState driveState = DriveState.NORMAL;
+    private DriveState driveState = DriveState.NORMAL;
 
 
     public void initDrive(HardwareMap hw){
