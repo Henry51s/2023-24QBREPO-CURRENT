@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 
-//Abandon all hope ye who enter here!
 @Config
 public class PointsOfInterest {
 
@@ -13,52 +12,51 @@ public class PointsOfInterest {
         Pose2d resultPose = new Pose2d(coordinates[0], coordinates[1], Math.toRadians(coordinates[2]));
         return resultPose;
     }
-
-    public static double[] redShortStart = {16,-61,-90};
-    public static double[] redShortSpikeMarkL = {20,-30,-90};
-    public static double[] redShortSpikeMarkM = {12,-32,-90};
-    public static double[] redShortSpikeMarkR = {28,-40,0};
-
+    public static double[] startPose = {0,0,0};
+    public static double[] redShortSpikeMarkL = {0,26,-90};
+    public static double[] redShortSpikeMarkM = {0,26,0};
+    public static double[] redShortSpikeMarkR = {0,26,90};
 
 
-
-    public static double[] redLongStart = {-37.5,-61,-90};
-    public static double[] redLongSpikeMarkL = {-47,-42,-90};
-    public static double[] redLongSpikeMarkM = {-37.5,-33,-90};
-    public static double[] redLongSpikeMarkR = {-34.8,-29,-90};
-    public static double[] preBackDropRedLong = {-37.5,-57,90};
+    public static double[] redLongSpikeMarkL = {0,0,0};
+    public static double[] redLongSpikeMarkM = {0,0,0};
+    public static double[] redLongSpikeMarkR = {0,0,0};
+    public static double[] preBackDropRedLong = {0,0,0};
 
 
 
-    public static double[] blueShortStart = {16,61,90};
-    public static double[] blueShortSpikeMarkL = {28,40,90};
-    public static double[] blueShortSpikeMarkM = {12,32,90};
-    public static double[] blueShortSpikeMarkR = {20,30,0};
+    public static double[] blueShortSpikeMarkL = {0,0,0};
+    public static double[] blueShortSpikeMarkM = {0,0,0};
+    public static double[] blueShortSpikeMarkR = {0,0,0};
 
 
 
-    public static double[] blueLongStart = {-37.5,61,90};
-    public static double[] blueLongSpikeMarkL = {-36.8,29,90};
-    public static double[] blueLongSpikeMarkM = {-37.5,33,90};
-    public static double[] blueLongSpikeMarkR = {-47,42,90};
+    public static double[] blueLongSpikeMarkL = {0,0,0};
+    public static double[] blueLongSpikeMarkM = {0,0,0};
+    public static double[] blueLongSpikeMarkR = {0,0,0};
     public static double[] preBackDropBlueLong = {0,0,0};
 
 
 
-    public static double[] redBackDropL = {52,-18.175,0};
-    public static double[] redBackDropM = {52,-27.5,0};
-    public static double[] redBackDropR = {50.5,-33,0};
+    public static double[] redShortBackDropL = {0,0,0};
+    public static double[] redShortBackDropM = {0,0,0};
+    public static double[] redShortBackDropR = {0,0,0};
 
-    public static double[] blueBackDropL = {48.5,33,0};
-    public static double[] blueBackDropM = {52.5,23,0};
-    public static double[] blueBackDropR = {52.5,18.175,0};
+    public static double[] redLongBackDropL = {0,0,0};
+    public static double[] redLongBackDropM = {0,0,0};
+    public static double[] redLongBackDropR = {0,0,0};
+
+    public static double[] blueShortBackDropL = {0,0,0};
+    public static double[] blueShortBackDropM = {0,0,0};
+    public static double[] blueShortBackDropR = {0,0,0};
+
+    public static double[] blueLongBackDropL = {0,0,0};
+    public static double[] blueLongBackDropM = {0,0,0};
+    public static double[] blueLongBackDropR = {0,0,0};
 
     //-------------------------------------------------------------
 
-    public Pose2d poseRedShortStart = arrayToPose(redShortStart);
-    public Pose2d poseRedLongStart = arrayToPose(redLongStart);
-    public Pose2d poseBlueShortStart = arrayToPose(blueShortStart);
-    public Pose2d poseBlueLongStart = arrayToPose(blueLongStart);
+    public Pose2d poseStartPose = arrayToPose(startPose);
 
     public Pose2d poseRedShortSpikeMarkL = arrayToPose(redShortSpikeMarkL);
     public Pose2d poseRedShortSpikeMarkM = arrayToPose(redShortSpikeMarkM);
@@ -76,13 +74,21 @@ public class PointsOfInterest {
     public Pose2d poseBlueLongSpikeMarkM = arrayToPose(blueLongSpikeMarkM);
     public Pose2d poseBlueLongSpikeMarkR = arrayToPose(blueLongSpikeMarkR);
 
-    public Pose2d poseRedBackDropL = arrayToPose(redBackDropL);
-    public Pose2d poseRedBackDropM = arrayToPose(redBackDropM);
-    public Pose2d poseRedBackDropR = arrayToPose(redBackDropR);
+    public Pose2d poseRedShortBackDropL = arrayToPose(redShortBackDropL);
+    public Pose2d poseRedShortBackDropM = arrayToPose(redShortBackDropM);
+    public Pose2d poseRedShortBackDropR = arrayToPose(redShortBackDropR);
 
-    public Pose2d poseBlueBackDropL = arrayToPose(blueBackDropL);
-    public Pose2d poseBlueBackDropM = arrayToPose(blueBackDropM);
-    public Pose2d poseBlueBackDropR = arrayToPose(blueBackDropR);
+    public Pose2d poseRedLongBackDropL = arrayToPose(redLongBackDropL);
+    public Pose2d poseRedLongBackDropM = arrayToPose(redLongBackDropM);
+    public Pose2d poseRedLongBackDropR = arrayToPose(redLongBackDropR);
+
+    public Pose2d poseBlueShortBackDropL = arrayToPose(blueShortBackDropL);
+    public Pose2d poseBlueShortBackDropM = arrayToPose(blueShortBackDropM);
+    public Pose2d poseBlueShortBackDropR = arrayToPose(blueShortBackDropR);
+
+    public Pose2d poseBlueLongBackDropL = arrayToPose(blueLongBackDropL);
+    public Pose2d poseBlueLongBackDropM = arrayToPose(blueLongBackDropM);
+    public Pose2d poseBlueLongBackDropR = arrayToPose(blueLongBackDropR);
 
     public Pose2d posePreBackDropBlueLong = arrayToPose(preBackDropBlueLong);
     public Pose2d posePreBackDropRedLong = arrayToPose(preBackDropRedLong);
