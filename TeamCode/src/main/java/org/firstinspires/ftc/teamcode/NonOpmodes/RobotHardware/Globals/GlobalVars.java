@@ -49,19 +49,19 @@ public class GlobalVars {
     public static int LIFT_AUTO_LOW = 400;
 
 
-    public static double FOURBAR_INIT = 0.623;
-    public static double FOURBAR_PICKUP = 0.751;
-    public static double FOURBAR_DEPOSIT = 0.36;
+    public static double FOURBAR_INIT = 0.8;
+    public static double FOURBAR_PICKUP = 0.913;
+    public static double FOURBAR_DEPOSIT = 0.508;
     public static double FOURBAR_INTERMEDIATE = 0.663;
 
-    public static double DIFFL_PICKUP = 0.2109;
-    public static double DIFFL_DEPOSIT = 0.4479;
+    public static double DIFFL_PICKUP = 0.152;
+    public static double DIFFL_DEPOSIT = 0.987;
     public static double DIFFL_INTERMEDIATE = 0.287;
     public static double DIFFL_INIT = 0.304;
 
     public static double DIFFR_INTERMEDIATE = 0.255;
-    public static double DIFFR_PICKUP = 0.164;
-    public static double DIFFR_DEPOSIT = 0.982;
+    public static double DIFFR_PICKUP = 0.152;
+    public static double DIFFR_DEPOSIT = 0.411999;
     public static double DIFFR_INIT = 0.312;
 
 

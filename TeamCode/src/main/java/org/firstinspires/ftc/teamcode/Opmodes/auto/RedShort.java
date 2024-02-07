@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_FAR;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.drive.SampleMecanumDrive;
@@ -30,7 +34,9 @@ public class RedShort extends LinearOpMode {
 
     Webcam webcam = new Webcam();
 
-    public TrajectorySequence scoreSpikeMark, scoreBackDrop, park;
+    public TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extendToBackDrop, park;
+    ElapsedTime timer = new ElapsedTime();
+    boolean retract = false;
 
 
     @Override
@@ -44,7 +50,7 @@ public class RedShort extends LinearOpMode {
         commands.initCommands(telemetry);
         commands.toInit();
         intake.setIntakeArmState(Intake.IntakeArmState.INIT);
-        extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
+        extendo.setExtensionState(RETRACTED);
 
         webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.RED);
         autonomous = new Autonomous(hardwareMap);
@@ -62,6 +68,8 @@ public class RedShort extends LinearOpMode {
             else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
                 autonomous.setPath(AutoLocation.RED_SHORT, SpikeMark.LEFT);
             }
+
+            extendo.loopExtensionAuto();
         }
 
 
@@ -69,12 +77,15 @@ public class RedShort extends LinearOpMode {
         waitForStart();
         if(isStopRequested()){
             commands.extendLift(Lift.LiftState.RETRACTED);
+            extendo.setExtensionState(RETRACTED);
             return;
         }
         webcam.stopStreaming();
 
         scoreSpikeMark = autonomous.scoreSpikeMark;
         scoreBackDrop = autonomous.scoreBackDrop;
+        toExtend = autonomous.toExtend;
+        extendToBackDrop =
         park = autonomous.park;
 
         intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
@@ -82,22 +93,29 @@ public class RedShort extends LinearOpMode {
         drive.followTrajectorySequence(scoreSpikeMark);
         //commands.toDeposit();
         //intake.runIntakeSetTime(1, true,power);
-        //intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
+        intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
 
         //commands.extendLift(Lift.LiftState.LOW);
-        //drive.followTrajectorySequence(scoreBackDrop);
-        //commands.releasePixels();
-        //drive.followTrajectorySequence(park);
-        //commands.extendLift(Lift.LiftState.RETRACTED);
+        drive.followTrajectorySequence(scoreBackDrop);
+        drive.followTrajectorySequence(toExtend);
+        extendo.setExtensionState(Extension.ExtensionState.FAR);
+        intake.setIntakeArmState(Intake.IntakeArmState.FOURTH);
+        intake.runIntakeSetTime(3000);
+        timer.reset();
+        retract = true;
 
 
 
-        //drive.followTrajectorySequence(park);
 
 
 
         while(opModeIsActive()){
-
+            extendo.loopExtensionAuto();
+            telemetry.addData("Error :", Math.abs(extendo.getAveragePosition() - extendo.getTargetPosition()));
+            telemetry.update();
+            if(retract){
+                extendo.setExtensionState(RETRACTED);
+            }
         }
     }
 }

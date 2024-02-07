@@ -12,10 +12,11 @@ public class PointsOfInterest {
         Pose2d resultPose = new Pose2d(coordinates[0], coordinates[1], Math.toRadians(coordinates[2]));
         return resultPose;
     }
-    public static double[] startPose = {0,0,0};
-    public static double[] redShortSpikeMarkL = {0,26,-90};
-    public static double[] redShortSpikeMarkM = {0,26,0};
-    public static double[] redShortSpikeMarkR = {0,26,90};
+    public static int extendingSpline = 225;
+    public static double[] startPose = {0,0,-180};
+    public static double[] redShortSpikeMarkL = {30,5,-90};
+    public static double[] redShortSpikeMarkM = {42,-16,-90};
+    public static double[] redShortSpikeMarkR = {26,0,90};
 
 
     public static double[] redLongSpikeMarkL = {0,0,0};
@@ -39,7 +40,7 @@ public class PointsOfInterest {
 
 
     public static double[] redShortBackDropL = {0,0,0};
-    public static double[] redShortBackDropM = {0,0,0};
+    public static double[] redShortBackDropM = {29,-42,-90};
     public static double[] redShortBackDropR = {0,0,0};
 
     public static double[] redLongBackDropL = {0,0,0};
@@ -53,6 +54,9 @@ public class PointsOfInterest {
     public static double[] blueLongBackDropL = {0,0,0};
     public static double[] blueLongBackDropM = {0,0,0};
     public static double[] blueLongBackDropR = {0,0,0};
+
+    public static double[] redShortExtending1 = {53,-30,-90};
+    public static double[] redShortExtending2 = {53,32,-115};
 
     //-------------------------------------------------------------
 
@@ -92,6 +96,9 @@ public class PointsOfInterest {
 
     public Pose2d posePreBackDropBlueLong = arrayToPose(preBackDropBlueLong);
     public Pose2d posePreBackDropRedLong = arrayToPose(preBackDropRedLong);
+
+    public Pose2d poseRedShortExtending1 = arrayToPose(redShortExtending1);
+    public Pose2d poseRedShortExtending2 = arrayToPose(redShortExtending2);
 
 
 

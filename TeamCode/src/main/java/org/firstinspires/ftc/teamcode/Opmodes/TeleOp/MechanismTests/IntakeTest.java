@@ -63,9 +63,6 @@ public class IntakeTest extends OpMode {
                 if(gamepad1.y)
                     intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
 
-                if(current.left_bumper && !previous.left_bumper){
-                    intake.runIntakeSetTime(5, true, 0.5);
-                }
 
                 if(gamepad1.right_stick_button)
                     tuningMode = TuningModes.FINE_TUNE;

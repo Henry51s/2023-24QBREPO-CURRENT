@@ -117,7 +117,7 @@ public class Intake {
         }
     }
 
-    public void runIntakeSetTime(int numberOfSpins, boolean reversed, double power){
+    /*public void runIntakeSetTime(int numberOfSpins, boolean reversed, double power){
         int motorDirection = 1;
         if(reversed){
             motorDirection = -1;
@@ -128,7 +128,25 @@ public class Intake {
         intake.setPower(power);
         intake.setTargetPosition((int) targetPosition);
 
-    }    public void runIntakeSetTimeAsync(int milliseconds, boolean reversed){
+    }    */
+    public void runIntakeSetTime(int milliseconds){
+        /*Thread intakeThread = new Thread(() -> {
+            timer.reset();
+            while(timer.milliseconds() < milliseconds){
+                setIntakeState(IntakeState.NORMAL);
+            }
+            setIntakeState(IntakeState.STOP);
+        });
+        intakeThread.start();*/
+        timer.reset();
+        while(timer.milliseconds() < milliseconds){
+            setIntakeState(IntakeState.NORMAL);
+        }
+        setIntakeState(IntakeState.STOP);
+
+
+    }
+    public void runIntakeSetTimeAsync(int milliseconds, boolean reversed){
         int motorDirection = 1;
         if(reversed)
             motorDirection = -1;

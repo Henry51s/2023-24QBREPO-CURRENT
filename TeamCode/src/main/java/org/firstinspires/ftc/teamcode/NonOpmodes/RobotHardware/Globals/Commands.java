@@ -137,6 +137,9 @@ public class Commands {
 
     public synchronized void releasePixels(){
         claw.setClawState(Claw.ClawState.OPEN);
+    }
+    public synchronized void releasePixelsToIntermediate(){
+        claw.setClawState(Claw.ClawState.OPEN);
         toIntermediate();
     }
 }

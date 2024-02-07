@@ -90,7 +90,7 @@ public class Extension {
         extendoR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pid.setTolerance(positionTolerance);
 
-        setExtensionState(ExtensionState.RETRACTED);
+        targetPosition = 0;
         homePosition = 0;
 
     }
@@ -192,6 +192,7 @@ public class Extension {
 
     }
     public void loopExtensionAuto(){
+        setTargetPosition(targetPosition);
         outputL = calculateVel(extendoL.getCurrentPosition());
         outputR = calculateVel(extendoR.getCurrentPosition());
 
