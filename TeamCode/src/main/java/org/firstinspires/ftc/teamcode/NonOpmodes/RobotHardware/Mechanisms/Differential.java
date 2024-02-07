@@ -18,6 +18,7 @@ public class Differential {
     private Servo diffL, diffR;
     private Hardware hardware = new Hardware();
     private double offset = 0.135;
+    private double multipliedOffset = 0;
     private int turns = 0;
     private int maxTurns = 2;
 
@@ -31,11 +32,6 @@ public class Differential {
     double[] diffPositions = new double[2];
 
     Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
-    /*public Differential(HardwareMap hw){
-        hardware.initDifferential(hw);
-        diffL = hardware.diffL;
-        diffR = hardware.diffR;
-    }*/
 
     public void initDifferential(HardwareMap hw){
         hardware.initDifferential(hw);
@@ -61,8 +57,8 @@ public class Differential {
                 diffR.setPosition(DIFFR_INTERMEDIATE);
                 break;
             case DEPOSIT:
-                diffL.setPosition(DIFFL_DEPOSIT);//+offset);
-                diffR.setPosition(DIFFR_DEPOSIT);//-offset);
+                diffL.setPosition(DIFFL_DEPOSIT + multipliedOffset);//+offset);
+                diffR.setPosition(DIFFR_DEPOSIT - multipliedOffset);//-offset);
                 break;
             case INIT:
                 diffL.setPosition(DIFFL_INIT);
@@ -70,8 +66,24 @@ public class Differential {
                 break;
         }
     }
-    public void setOffset(double offset){
-        this.offset = offset;
+    public void loopDifferential(Gamepad gamepad){
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad);
+
+        turns = Math.max(-maxTurns, Math.min(turns, maxTurns));
+
+        if(diffState == DiffState.DEPOSIT){
+            if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
+                turns++;
+            }
+            else if(currentGamepad.dpad_left && !previousGamepad.dpad_left){
+                turns--;
+            }
+        }
+        else{
+            turns = 0;
+        }
+        multipliedOffset = offset*turns;
     }
     public double[] getDiffPositions(){
         diffPositions[0] = diffL.getPosition();

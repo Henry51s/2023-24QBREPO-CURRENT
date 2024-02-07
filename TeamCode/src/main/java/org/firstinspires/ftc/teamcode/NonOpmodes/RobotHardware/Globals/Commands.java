@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.FourBar;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
 
@@ -18,6 +21,8 @@ public class Commands {
     FourBar fourBar;
     Lift lift;
     Extension extension;
+    Drive drive;
+    Intake intake;
     SideObjective sideObjective;
 
     ElapsedTime timer = new ElapsedTime();
@@ -38,6 +43,8 @@ public class Commands {
             fourBar = FourBar.getInstance();
             lift = Lift.getInstance();
             extension = Extension.getInstance();
+            drive = Drive.getInstance();
+            intake = Intake.getInstance();
             sideObjective = SideObjective.getInstance();
         }
         catch(Exception e){
@@ -45,6 +52,13 @@ public class Commands {
             telemetry.addData("Command initalization error!!! ", e);
             telemetry.update();
         }
+    }
+
+    public void loopRobot(Gamepad differentialGamepad, Gamepad extensionGamepad, Gamepad driveGamepad, Gamepad intakeGamepad){
+        differential.loopDifferential(differentialGamepad);
+        extension.loopExtension(extensionGamepad);
+        drive.loopDrive(driveGamepad);
+        intake.loopIntake(intakeGamepad);
     }
     public synchronized void latchClimbAndDrone(){
         sideObjective.latchClimb();
@@ -85,6 +99,7 @@ public class Commands {
             fourBar.setFourBarState(FourBar.FourBarState.INTERMEDIATE);
             differential.setDiffState(Differential.DiffState.PICKUP);
         });
+        intermediateThread.start();
     }
     public synchronized void toPickup(){
         //Pickup code here
@@ -121,5 +136,6 @@ public class Commands {
 
     public synchronized void releasePixels(){
         claw.setClawState(Claw.ClawState.OPEN);
+        toIntermediate();
     }
 }

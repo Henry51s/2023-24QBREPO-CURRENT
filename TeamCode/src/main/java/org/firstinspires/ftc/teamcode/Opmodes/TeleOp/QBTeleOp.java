@@ -23,16 +23,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideOb
 @TeleOp(name="QBTeleOp")
 public class QBTeleOp extends OpMode {
     Hardware hw = new Hardware();
-
-
-    Intake intake;
-    Drive drive;
-    Extension extendo;
-
-
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
-
-
     Commands commands = new Commands();
 
 
@@ -44,13 +35,7 @@ public class QBTeleOp extends OpMode {
         commands.initCommands(telemetry);
         commands.toInit();
         commands.latchClimbAndDrone();
-        intake = hw.intakeInstance;
-        drive = hw.driveInstance;
-        extendo = hw.extensionInstance;
 
-
-        intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
-        drive.setDriveState(REVERSED);
     }
 
 
@@ -67,15 +52,11 @@ public class QBTeleOp extends OpMode {
         previousGamepad2.copy(currentGamepad2);
         currentGamepad2.copy(gamepad2);
 
-        intake.loopIntake(gamepad1);
-        drive.loopDrive(gamepad1);
-        extendo.loopExtension(gamepad2);
-
+        commands.loopRobot(gamepad2, gamepad2, gamepad1, gamepad1);
 
         if(currentGamepad2.left_bumper && !previousGamepad2.left_bumper){
             commands.releasePixels();
         }
-
         if(currentGamepad2.a && !previousGamepad2.a){
             commands.extendLift(Lift.LiftState.RETRACTED);
         }
@@ -88,23 +69,14 @@ public class QBTeleOp extends OpMode {
         if(currentGamepad2.y && !previousGamepad2.y){
             commands.extendLift(Lift.LiftState.HIGH);
         }
-
         if(currentGamepad2.dpad_up && !previousGamepad2.dpad_up){
             commands.toDeposit();
         }
-
         if(currentGamepad2.dpad_down && !previousGamepad2.dpad_down){
-            //pickup sequence
             commands.toPickup();
         }
         if(gamepad1.back){
             commands.releaseClimbAndDrone(1000);
         }
-
-
-        telemetry.addData("Extendo Error: ", Math.abs(extendo.getTargetPosition() - ((extendo.getMotorLCurrentPosition() + extendo.getMotorRCurrentPosition())/2)));
-        telemetry.addData("ExtendoL Position: ", extendo.getMotorLCurrentPosition());
-        telemetry.addData("ExtendoR Position: ", extendo.getMotorRCurrentPosition());
-        telemetry.addData("Target Position: ", extendo.getTargetPosition());
     }
 }
