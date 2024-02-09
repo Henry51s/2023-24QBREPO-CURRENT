@@ -29,13 +29,11 @@ public class Commands {
     ElapsedTime timer = new ElapsedTime();
     Telemetry telemetry;
 
-
-    public static int pickupLiftRetractDelay = 1000;
     public static int depositClawDelay = 100;
     public static int depositDifferentialDelay = 250;
     public static int liftThreshold = 50;
-    public static int initDelay = 1000;
-    public static int pickupToDepositDelay = 1000;
+    public static int initDelay = 500;
+    public static int pickupToDepositDelay = 750;
 
     public void initCommands(Telemetry telemetry){
         this.telemetry = telemetry;
@@ -61,9 +59,6 @@ public class Commands {
         extension.loopExtension(extensionGamepad);
         drive.loopDrive(driveGamepad);
         intake.loopIntake(intakeGamepad);
-    }
-    public synchronized void setDifferential(Differential.State state){
-        differential.setState(state);
     }
     public synchronized void latchClimbAndDrone(){
         sideObjective.latchClimb();
@@ -106,6 +101,7 @@ public class Commands {
     }
     public synchronized void toIntermediate(){
         Thread intermediateThread = new Thread(() -> {
+            lift.setLiftState(Lift.LiftState.RETRACTED);
             fourBar.setState(FourBar.State.INTERMEDIATE_PTD);
             differential.setState(Differential.State.PICKUP);
         });
@@ -156,13 +152,14 @@ public class Commands {
             while(timer.milliseconds() < pickupToDepositDelay){
 
             }
-            timer.reset();
             claw.setClawState(Claw.ClawState.CLOSE);
+            timer.reset();
             while(timer.milliseconds() < depositClawDelay){
 
             }
             fourBar.setState(FourBar.State.DEPOSIT);
-            while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
+            timer.reset();
+            while(timer.milliseconds() < depositDifferentialDelay){
 
             }
             differential.setState(Differential.State.DEPOSIT);
@@ -179,12 +176,15 @@ public class Commands {
         Thread sequenceThread = new Thread(() -> {
             timer.reset();
             claw.setClawState(Claw.ClawState.OPEN);
-            while(timer.milliseconds() < 300){
+            while(timer.milliseconds() < 100){
 
             }
             toIntermediate();
         });
 
         sequenceThread.start();
+    }
+    public int getLiftPosition(){
+        return lift.getCurrentPosition();
     }
 }

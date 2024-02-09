@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FIFTH;
@@ -97,7 +98,6 @@ public class RedShortIterative extends OpMode {
             case PIXEL_DEPOSIT:
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
                 commands.toDeposit();
-                commands.extendLift(Lift.LiftState.AUTO_LOW);
                 drive.followTrajectorySequence(scoreBackDrop);
                 commands.releasePixels();
                 commands.extendLift(Lift.LiftState.RETRACTED);
@@ -123,7 +123,7 @@ public class RedShortIterative extends OpMode {
                 break;
 
             case INTAKE:
-                intake.runIntakeSetTime(1000, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTime(500, Intake.IntakeState.NORMAL);
                 intake.runIntakeSetTime(100, Intake.IntakeState.REVERSED);
                 autoState = AutoStages.RETRACT;
                 break;
@@ -138,19 +138,13 @@ public class RedShortIterative extends OpMode {
             case TRANSFER:
                 commands.runFullSequence();
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
-                autoState = AutoStages.DEPOSIT;
+                if(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) < 10){
+                    autoState = AutoStages.DEPOSIT;
+                }
                 break;
             case DEPOSIT:
-                commands.extendLift(Lift.LiftState.AUTO_LOW);
-                timer.reset();
-                while(timer.milliseconds() < 500){
-
-                }
-                timer.reset();
-                while(timer.milliseconds() < 200){
-                    commands.releasePixelsToIntermediate();
-                    commands.extendLift(Lift.LiftState.RETRACTED);
-                }
+                commands.releasePixelsToIntermediate();
+                commands.extendLift(Lift.LiftState.RETRACTED);
                 cycleCounter ++;
                 if(cycleCounter <= MAX_CYCLES){
                     drive.followTrajectorySequence(cycleToExtend);
