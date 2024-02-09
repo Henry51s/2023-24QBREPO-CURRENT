@@ -7,7 +7,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFR_INIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.DIFFR_PICKUP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE_PTD;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -117,7 +117,7 @@ public class TransferTest extends OpMode {
                         counter ++;
                     }
 
-                        diff.setState(FourBarDifferentialStates.DEPOSIT);
+                        diff.setState(Differential.State.DEPOSIT);
                         isRunning = false;
                     diffPosR = DIFFR_DEPOSIT;
                     diffPosL = DIFFL_DEPOSIT;
@@ -129,18 +129,18 @@ public class TransferTest extends OpMode {
 
 
                 if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
-                    fourBar.setState(FourBarDifferentialStates.INTERMEDIATE);
-                    fourBarPos = FOURBAR_INTERMEDIATE;
-                    diff.setState(FourBarDifferentialStates.INTERMEDIATE);
+                    fourBar.setState(FourBar.State.INTERMEDIATE_PTD);
+                    fourBarPos = FOURBAR_INTERMEDIATE_PTD;
+                    diff.setState(Differential.State.INTERMEDIATE_PTD);
                     diffPosR = DIFFR_INIT;
                     diffPosL = DIFFL_INIT;
                 }
                 if(currentGamepad.dpad_left && !previousGamepad.dpad_left) {
                     claw.setClawState(Claw.ClawState.OPEN);
-                    diff.setState(FourBarDifferentialStates.PICKUP);
+                    diff.setState(Differential.State.PICKUP);
                     diffPosR = DIFFR_PICKUP;
                     diffPosL = DIFFL_PICKUP;
-                    fourBar.setState(FourBarDifferentialStates.PICKUP);
+                    fourBar.setState(FourBar.State.PICKUP);
                     fourBarPos = FOURBAR_PICKUP;
                 }
                 if(gamepad1.left_bumper)

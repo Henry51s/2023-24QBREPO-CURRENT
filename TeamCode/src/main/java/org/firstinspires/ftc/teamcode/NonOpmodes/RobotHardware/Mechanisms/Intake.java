@@ -129,7 +129,7 @@ public class Intake {
         intake.setTargetPosition((int) targetPosition);
 
     }    */
-    public void runIntakeSetTime(int milliseconds){
+    public void runIntakeSetTime(int milliseconds, IntakeState intakeState){
         /*Thread intakeThread = new Thread(() -> {
             timer.reset();
             while(timer.milliseconds() < milliseconds){
@@ -138,24 +138,21 @@ public class Intake {
             setIntakeState(IntakeState.STOP);
         });
         intakeThread.start();*/
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         timer.reset();
         while(timer.milliseconds() < milliseconds){
-            setIntakeState(IntakeState.NORMAL);
+            setIntakeState(intakeState);
         }
         setIntakeState(IntakeState.STOP);
 
 
     }
-    public void runIntakeSetTimeAsync(int milliseconds, boolean reversed){
-        int motorDirection = 1;
-        if(reversed)
-            motorDirection = -1;
-        int finalMotorDirection = motorDirection;
+    public void runIntakeSetTimeAsync(int milliseconds, IntakeState intakeStateA){
         Thread intakeThread = new Thread(() -> {
 
             timer.reset();
             while (timer.milliseconds() <= milliseconds) {
-                intake.setPower(-INTAKE_MAX_POWER/2* finalMotorDirection);
+                setIntakeState(intakeStateA);
                 // You might want to add a small delay here to avoid busy waiting
                 try {
                     Thread.sleep(10);
@@ -163,7 +160,7 @@ public class Intake {
                     e.printStackTrace();
                 }
             }
-            intakeState = IntakeState.STOP;
+            setIntakeState(IntakeState.STOP);
         });
         intakeThread.start();
     }

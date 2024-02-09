@@ -2,7 +2,8 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INIT;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE_DTP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE_PTD;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -23,10 +24,17 @@ public class FourBar {
         }
         return instance;
     }
+
+    public enum State{
+        INIT,
+        DEPOSIT,
+        PICKUP,
+        INTERMEDIATE_PTD,
+        INTERMEDIATE_DTP
+    }
+    private State state = State.INIT;
     private Servo v4bL, v4bR;
     private Hardware hardware = new Hardware();
-
-    private FourBarDifferentialStates state = FourBarDifferentialStates.INIT;
 
 
     private ElapsedTime servoTime = new ElapsedTime();
@@ -45,7 +53,7 @@ public class FourBar {
         v4bL.setPosition(position);
         v4bR.setPosition(position);
     }
-    public void setState(FourBarDifferentialStates state){
+    public void setState(State state){
         this.state = state;
         switch (state){
             case INIT:
@@ -54,8 +62,11 @@ public class FourBar {
             case PICKUP:
                 setFourBarPositionSlow(FOURBAR_PICKUP);
                 break;
-            case INTERMEDIATE:
-                setFourBarPosition(FOURBAR_INTERMEDIATE);
+            case INTERMEDIATE_PTD:
+                setFourBarPosition(FOURBAR_INTERMEDIATE_PTD);
+                break;
+            case INTERMEDIATE_DTP:
+                setFourBarPosition(FOURBAR_INTERMEDIATE_DTP);
                 break;
             case DEPOSIT:
                 setFourBarPosition(FOURBAR_DEPOSIT);
@@ -92,7 +103,7 @@ public class FourBar {
     public double getPosition(){
         return v4bL.getPosition();
     }
-    public FourBarDifferentialStates getState(){
+    public State getState(){
         return state;
     }
 

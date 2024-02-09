@@ -54,6 +54,7 @@ public class Extension {
     private double outputR = 0;
     private double limitedOutputL = 0;
     private double limitedOutputR = 0;
+    private boolean threadRunning = false;
 
 
     private DcMotorEx extendoL, extendoR;
@@ -81,7 +82,6 @@ public class Extension {
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
         extendoR = hardware.extendoR;
-
 
         extendoL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendoR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -192,7 +192,7 @@ public class Extension {
 
     }
     public void loopExtensionAuto(){
-        setTargetPosition(targetPosition);
+        //setTargetPosition(targetPosition);
         outputL = calculateVel(extendoL.getCurrentPosition());
         outputR = calculateVel(extendoR.getCurrentPosition());
 
@@ -200,10 +200,23 @@ public class Extension {
         limitedOutputR = limitSpeed(outputR, EXTENDO_MAX_VELOCITY);
         extendoL.setVelocity(limitedOutputL);
         extendoR.setVelocity(limitedOutputR);
-
-
     }
 
+    public void startLoopExtensionAutoAsync(){
+        if(!threadRunning){
+            threadRunning = true;
+            Thread loopingThread = new Thread(() -> {
+                while(threadRunning){
+                    loopExtensionAuto();
+                }
+            });
+            loopingThread.start();
+
+        }
+    }
+    public void stopLoopExtenstionAutoAsync(){
+        threadRunning = false;
+    }
 
 
 

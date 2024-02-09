@@ -8,6 +8,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class GlobalVars {
 
 
+    public static int MAX_CYCLES = 1;
 
 
     public static double CLIMBL_RELEASE = 0.68;
@@ -20,7 +21,7 @@ public class GlobalVars {
     public static double DRONE_RELEASE = 0.038;
 
 
-    public static int EXTENDO_MAX_VELOCITY = 900;
+    public static int EXTENDO_MAX_VELOCITY = 1100;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_CLIMB = 142;
     public static int EXTENDO_SHORT = 0;
@@ -40,7 +41,7 @@ public class GlobalVars {
     public static double INTAKE_ARM_FIFTH = 0.462;
     public static double INTAKE_ARM_INIT = 0.993;
 
-    public static double LIFT_MAX_POWER = 0.30;
+    public static double LIFT_MAX_POWER = 0.75;
     public static int LIFT_RETRACTED = 1;
     public static int LIFT_LOW = 583;
     public static int LIFT_MED = 1166;
@@ -50,18 +51,23 @@ public class GlobalVars {
 
 
     public static double FOURBAR_INIT = 0.8;
-    public static double FOURBAR_PICKUP = 0.913;
-    public static double FOURBAR_DEPOSIT = 0.508;
-    public static double FOURBAR_INTERMEDIATE = 0.663;
+    public static double FOURBAR_PICKUP = 0.938;
+    public static double FOURBAR_DEPOSIT = 0.469;
+    public static double FOURBAR_INTERMEDIATE_PTD = 0.86;
+    public static double FOURBAR_INTERMEDIATE_DTP = 0.88;
 
-    public static double DIFFL_PICKUP = 0.152;
-    public static double DIFFL_DEPOSIT = 0.987;
-    public static double DIFFL_INTERMEDIATE = 0.287;
+    public static double DIFFL_PICKUP = 0.035;
+    public static double DIFFL_DEPOSIT = 0.812;
+    public static double DIFFL_DEPOSIT_45_L = 1;
+    public static double DIFFL_DEPOSIT_45_R = 0.646;
+    public static double DIFFL_INTERMEDIATE_PTD = 0.59;
     public static double DIFFL_INIT = 0.304;
 
-    public static double DIFFR_INTERMEDIATE = 0.255;
-    public static double DIFFR_PICKUP = 0.152;
-    public static double DIFFR_DEPOSIT = 0.411999;
+    public static double DIFFR_INTERMEDIATE_PTD = 0.03;
+    public static double DIFFR_PICKUP = 0.0489;
+    public static double DIFFR_DEPOSIT = 0.27;
+    public static double DIFFR_DEPOSIT_45_L = 0.086;
+    public static double DIFFR_DEPOSIT_45_R = 0.438;
     public static double DIFFR_INIT = 0.312;
 
 

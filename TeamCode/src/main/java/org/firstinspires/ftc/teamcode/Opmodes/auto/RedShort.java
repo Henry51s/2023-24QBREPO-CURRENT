@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.Pathing.Autonomous;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.SpikeMark;
 
 @Config
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="RedShort")
 public class RedShort extends LinearOpMode {
     Autonomous autonomous;
@@ -48,7 +50,7 @@ public class RedShort extends LinearOpMode {
         extendo = hw.extensionInstance;
 
         commands.initCommands(telemetry);
-        commands.toInit();
+        commands.toInit(true);
         intake.setIntakeArmState(Intake.IntakeArmState.INIT);
         extendo.setExtensionState(RETRACTED);
 
@@ -100,7 +102,7 @@ public class RedShort extends LinearOpMode {
         drive.followTrajectorySequence(toExtend);
         extendo.setExtensionState(Extension.ExtensionState.FAR);
         intake.setIntakeArmState(Intake.IntakeArmState.FOURTH);
-        intake.runIntakeSetTime(3000);
+        intake.runIntakeSetTime(3000, Intake.IntakeState.NORMAL);
         timer.reset();
         retract = true;
 

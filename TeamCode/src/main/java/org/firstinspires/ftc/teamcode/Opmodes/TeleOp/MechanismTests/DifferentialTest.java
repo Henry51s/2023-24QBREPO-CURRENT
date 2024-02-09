@@ -78,7 +78,7 @@ public class DifferentialTest extends OpMode {
             case OPERATIONAL:
                 previousGamepad1.copy(currentGamepad1);
                 currentGamepad1.copy(gamepad1);
-                diff.setState(FourBarDifferentialStates.DEPOSIT);
+                diff.setState(Differential.State.DEPOSIT);
                 if(gamepad1.dpad_left && !previousGamepad1.dpad_left){
                     n++;
                 }

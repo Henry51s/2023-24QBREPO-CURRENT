@@ -118,7 +118,7 @@ public class Hardware{
         diffL = hw.get(Servo.class, EXSERVO_2);
         diffR = hw.get(Servo.class, EXSERVO_3);
         diffL.setDirection(REVERSE);
-        diffR.setDirection(REVERSE);
+        //diffR.setDirection(REVERSE);
     }
     public void initFourBar(HardwareMap hw){
         fourBarL = hw.get(Servo.class, EXSERVO_0);

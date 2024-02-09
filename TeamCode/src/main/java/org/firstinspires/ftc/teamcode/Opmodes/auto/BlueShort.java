@@ -42,7 +42,7 @@ public class BlueShort extends LinearOpMode {
 
         hardware.initAuto(hardwareMap);
         commands.initCommands(telemetry);
-        commands.toInit();
+        commands.toInit(true);
 
         intake = hardware.intakeInstance;
         extendo = hardware.extensionInstance;

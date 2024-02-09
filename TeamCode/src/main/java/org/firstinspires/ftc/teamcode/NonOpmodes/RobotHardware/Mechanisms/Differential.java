@@ -16,14 +16,23 @@ public class Differential {
         }
         return instance;
     }
+    public enum State{
+        INIT,
+        DEPOSIT,
+        PICKUP,
+        INTERMEDIATE_PTD,
+        TILT_LEFT,
+        TILT_RIGHT
+    }
+    State state = State.INIT;
     private Servo diffL, diffR;
     private Hardware hardware = new Hardware();
-    private double offset = 0.135;
+    private double offset = 0.166;
     private double multipliedOffset = 0;
     private int turns = 0;
-    private int maxTurns = 2;
+    private int maxTurns = 1;
 
-    private FourBarDifferentialStates state = FourBarDifferentialStates.DEPOSIT;
+
     double[] diffPositions = new double[2];
 
     private Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
@@ -40,24 +49,32 @@ public class Differential {
         diffR.setPosition(position);
     }
 
-    public void setState(FourBarDifferentialStates state){
+    public void setState(State state){
         this.state = state;
         switch(state){
             case PICKUP:
                 diffL.setPosition(DIFFL_PICKUP);
                 diffR.setPosition(DIFFR_PICKUP);
                 break;
-            case INTERMEDIATE:
-                diffL.setPosition(DIFFL_INTERMEDIATE);
-                diffR.setPosition(DIFFR_INTERMEDIATE);
+            case INTERMEDIATE_PTD:
+                diffL.setPosition(DIFFL_INTERMEDIATE_PTD);
+                diffR.setPosition(DIFFR_INTERMEDIATE_PTD);
                 break;
             case DEPOSIT:
-                diffL.setPosition(DIFFL_DEPOSIT + multipliedOffset);//+offset);
-                diffR.setPosition(DIFFR_DEPOSIT - multipliedOffset);//-offset);
+                diffL.setPosition(DIFFL_DEPOSIT + (offset * turns));//+offset);
+                diffR.setPosition(DIFFR_DEPOSIT - (offset * turns));//-offset);
                 break;
             case INIT:
                 diffL.setPosition(DIFFL_INIT);
                 diffR.setPosition(DIFFR_INIT);
+                break;
+            case TILT_LEFT:
+                diffL.setPosition(DIFFL_DEPOSIT_45_L);
+                diffR.setPosition(DIFFR_DEPOSIT_45_L);
+                break;
+            case TILT_RIGHT:
+                diffL.setPosition(DIFFL_DEPOSIT_45_R);
+                diffR.setPosition(DIFFR_DEPOSIT_45_R);
                 break;
         }
     }
@@ -67,16 +84,16 @@ public class Differential {
 
         turns = Math.max(-maxTurns, Math.min(turns, maxTurns));
 
-        if(state == FourBarDifferentialStates.DEPOSIT){
+
+        if(state == State.DEPOSIT){
             if(currentGamepad.dpad_right && !previousGamepad.dpad_right){
                 turns++;
+                setState(State.DEPOSIT);
             }
-            else if(currentGamepad.dpad_left && !previousGamepad.dpad_left){
+            if(currentGamepad.dpad_left && !previousGamepad.dpad_left){
                 turns--;
+                setState(State.DEPOSIT);
             }
-        }
-        else{
-            turns = 0;
         }
         multipliedOffset = offset*turns;
     }
@@ -85,7 +102,7 @@ public class Differential {
         diffPositions[1] = diffR.getPosition();
         return diffPositions;
     }
-    public FourBarDifferentialStates getState(){
+    public State getState(){
         return state;
     }
 }

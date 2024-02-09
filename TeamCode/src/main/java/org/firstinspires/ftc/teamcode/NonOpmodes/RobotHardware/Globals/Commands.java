@@ -35,6 +35,7 @@ public class Commands {
     public static int depositDifferentialDelay = 250;
     public static int liftThreshold = 50;
     public static int initDelay = 1000;
+    public static int pickupToDepositDelay = 1000;
 
     public void initCommands(Telemetry telemetry){
         this.telemetry = telemetry;
@@ -61,6 +62,9 @@ public class Commands {
         drive.loopDrive(driveGamepad);
         intake.loopIntake(intakeGamepad);
     }
+    public synchronized void setDifferential(Differential.State state){
+        differential.setState(state);
+    }
     public synchronized void latchClimbAndDrone(){
         sideObjective.latchClimb();
         sideObjective.latchDrone();
@@ -80,16 +84,21 @@ public class Commands {
     public synchronized void extendLift(Lift.LiftState liftState){
         lift.setLiftState(liftState);
     }
-    public synchronized void toInit(){
+    public synchronized void toInit(boolean grab){
         Thread initThread = new Thread(() -> {
             timer.reset();
             latchClimbAndDrone();
-            claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
+            if(grab){
+                claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
+            }
+            else{
+                claw.setClawState(Claw.ClawState.OPEN);
+            }
             while(timer.milliseconds() < initDelay){
 
             }
-            differential.setState(FourBarDifferentialStates.INIT);
-            fourBar.setState(FourBarDifferentialStates.INIT);
+            differential.setState(Differential.State.INIT);
+            fourBar.setState(FourBar.State.INIT);
             lift.setLiftState(Lift.LiftState.RETRACTED);
         });
         initThread.start();
@@ -97,21 +106,20 @@ public class Commands {
     }
     public synchronized void toIntermediate(){
         Thread intermediateThread = new Thread(() -> {
-            fourBar.setState(FourBarDifferentialStates.INTERMEDIATE);
-            differential.setState(FourBarDifferentialStates.PICKUP);
+            fourBar.setState(FourBar.State.INTERMEDIATE_PTD);
+            differential.setState(Differential.State.PICKUP);
         });
         intermediateThread.start();
     }
     public synchronized void toPickup(){
         //Pickup code here
         Thread pickupThread = new Thread(() -> {
-            timer.reset();
             lift.setLiftState(Lift.LiftState.RETRACTED);
             while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
             }
             claw.setClawState(Claw.ClawState.OPEN);
-            differential.setState(FourBarDifferentialStates.PICKUP);
-            fourBar.setState(FourBarDifferentialStates.PICKUP);
+            differential.setState(Differential.State.PICKUP);
+            fourBar.setState(FourBar.State.PICKUP);
 
         });
         pickupThread.start();
@@ -125,21 +133,58 @@ public class Commands {
             while(timer.milliseconds() < depositClawDelay){
 
             }
-            fourBar.setState(FourBarDifferentialStates.DEPOSIT);
+            fourBar.setState(FourBar.State.DEPOSIT);
             while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
 
             }
-            differential.setState(FourBarDifferentialStates.DEPOSIT);
+            differential.setState(Differential.State.DEPOSIT);
 
         });
         depositThread.start();
+    }
+
+    public synchronized void runFullSequence(){
+        Thread sequenceThread = new Thread(() -> {
+            lift.setLiftState(Lift.LiftState.RETRACTED);
+            while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
+            }
+            claw.setClawState(Claw.ClawState.OPEN);
+            differential.setState(Differential.State.PICKUP);
+            fourBar.setState(FourBar.State.PICKUP);
+
+            timer.reset();
+            while(timer.milliseconds() < pickupToDepositDelay){
+
+            }
+            timer.reset();
+            claw.setClawState(Claw.ClawState.CLOSE);
+            while(timer.milliseconds() < depositClawDelay){
+
+            }
+            fourBar.setState(FourBar.State.DEPOSIT);
+            while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
+
+            }
+            differential.setState(Differential.State.DEPOSIT);
+
+
+        });
+        sequenceThread.start();
     }
 
     public synchronized void releasePixels(){
         claw.setClawState(Claw.ClawState.OPEN);
     }
     public synchronized void releasePixelsToIntermediate(){
-        claw.setClawState(Claw.ClawState.OPEN);
-        toIntermediate();
+        Thread sequenceThread = new Thread(() -> {
+            timer.reset();
+            claw.setClawState(Claw.ClawState.OPEN);
+            while(timer.milliseconds() < 300){
+
+            }
+            toIntermediate();
+        });
+
+        sequenceThread.start();
     }
 }

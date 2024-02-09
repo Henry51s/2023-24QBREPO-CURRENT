@@ -44,7 +44,7 @@ public class BlueLong extends LinearOpMode {
         extendo = hw.extensionInstance;
 
         commands.initCommands(telemetry);
-        commands.toInit();
+        commands.toInit(true);
         commands.latchClimbAndDrone();
         intake.setIntakeArmState(Intake.IntakeArmState.INIT);
         extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
