@@ -29,20 +29,11 @@ public class Extension {
         return instance;
     }
 
-    public static double[] coefficients = {15,0,0};
+
     public static double positionTolerance = 1;
     public static double joystickMultiplier = 15;
-    public static double currentThreshold = 3;
+    public static double ampThreshold = 3;
     public static int homePositionBuffer = 3;
-    private PIDController pid;
-
-
-
-
-
-
-
-
 
 
 
@@ -57,8 +48,15 @@ public class Extension {
     private boolean threadRunning = false;
 
 
-    private DcMotorEx extendoL, extendoR;
+
+
+
+    public static double[] coefficients = {15,0,0};
+    private PIDController pid = new PIDController(coefficients[0], coefficients[1], coefficients[2]);
+
+
     private Hardware hardware = new Hardware();
+    private DcMotorEx extendoL, extendoR;
     private Gamepad current = new Gamepad(), previous = new Gamepad();
 
     public enum ExtensionState{
@@ -77,7 +75,7 @@ public class Extension {
     private ExtensionState extensionState = ExtensionState.RETRACTED;
 
     public void initExtension(HardwareMap hw){
-        pid = new PIDController(coefficients[0], coefficients[1], coefficients[2]);
+
 
         hardware.initExtension(hw);
         extendoL = hardware.extendoL;
@@ -182,7 +180,7 @@ public class Extension {
         extendoL.setVelocity(limitedOutputL);
         extendoR.setVelocity(limitedOutputR);
 
-        if(getAverageCurrent(CurrentUnit.AMPS) > currentThreshold && calculateVel(extendoL.getCurrentPosition()) < 0 && mode == Mode.HOMING){
+        if(getAverageCurrent(CurrentUnit.AMPS) > ampThreshold && calculateVel(extendoL.getCurrentPosition()) < 0 && mode == Mode.HOMING){
             setVelocity(0);
             homePosition = getAveragePosition();
             targetPosition = homePosition + homePositionBuffer;
@@ -191,7 +189,7 @@ public class Extension {
         }
 
     }
-    public void loopExtensionAuto(){
+    private void loopExtensionAuto(){
         //setTargetPosition(targetPosition);
         outputL = calculateVel(extendoL.getCurrentPosition());
         outputR = calculateVel(extendoR.getCurrentPosition());
@@ -214,7 +212,7 @@ public class Extension {
 
         }
     }
-    public void stopLoopExtenstionAutoAsync(){
+    public void stopLoopExtensionAutoAsync(){
         threadRunning = false;
     }
 

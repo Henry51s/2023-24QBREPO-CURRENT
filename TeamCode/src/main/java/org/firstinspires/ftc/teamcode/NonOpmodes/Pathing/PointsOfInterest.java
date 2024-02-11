@@ -12,7 +12,7 @@ public class PointsOfInterest {
         Pose2d resultPose = new Pose2d(coordinates[0], coordinates[1], Math.toRadians(coordinates[2]));
         return resultPose;
     }
-    public static int extendingSpline = 225;
+
     public static double[] startPose = {0,0,-180};
     public static double[] redShortSpikeMarkL = {30,5,-90};
     public static double[] redShortSpikeMarkM = {42,-16,-90};

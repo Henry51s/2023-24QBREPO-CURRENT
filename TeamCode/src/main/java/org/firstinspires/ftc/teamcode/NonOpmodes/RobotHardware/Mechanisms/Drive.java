@@ -17,10 +17,6 @@ public class Drive {
         }
         return instance;
     }
-    private DcMotor frontLeft, frontRight, backLeft, backRight;
-
-    private Hardware hardware = new Hardware();
-
     private int flipMultiplier = 1;
     public static double frontStrafeMultiplier = 0.7;
     public static double backStrafeMultiplier = 1;
@@ -32,6 +28,10 @@ public class Drive {
         REVERSED
     }
     private DriveState driveState = DriveState.NORMAL;
+
+
+    private DcMotor frontLeft, frontRight, backLeft, backRight;
+    private Hardware hardware = new Hardware();
 
 
     public void initDrive(HardwareMap hw){

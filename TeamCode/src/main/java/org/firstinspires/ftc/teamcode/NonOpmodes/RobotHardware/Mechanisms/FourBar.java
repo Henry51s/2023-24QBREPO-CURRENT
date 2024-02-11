@@ -34,9 +34,9 @@ public class FourBar {
     }
     private State state = State.INIT;
     private Servo v4bL, v4bR;
+
+
     private Hardware hardware = new Hardware();
-
-
     private ElapsedTime servoTime = new ElapsedTime();
     public double[] intermediatePositions = {0};
     public static int delay = 3;

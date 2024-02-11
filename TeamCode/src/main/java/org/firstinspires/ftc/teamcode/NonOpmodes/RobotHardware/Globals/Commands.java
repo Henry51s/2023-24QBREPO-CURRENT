@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.FourBarDifferentialStates;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive;
@@ -17,17 +16,17 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideOb
 
 @Config
 public class Commands {
-    Differential differential;
-    Claw claw;
-    FourBar fourBar;
-    Lift lift;
-    Extension extension;
-    Drive drive;
-    Intake intake;
-    SideObjective sideObjective;
+    private Differential differential;
+    private Claw claw;
+    private FourBar fourBar;
+    private Lift lift;
+    private Extension extension;
+    private Drive drive;
+    private Intake intake;
+    private SideObjective sideObjective;
 
-    ElapsedTime timer = new ElapsedTime();
-    Telemetry telemetry;
+    private ElapsedTime timer = new ElapsedTime();
+    private Telemetry telemetry;
 
     public static int depositClawDelay = 100;
     public static int depositDifferentialDelay = 250;
@@ -60,21 +59,18 @@ public class Commands {
         drive.loopDrive(driveGamepad);
         intake.loopIntake(intakeGamepad);
     }
-    public synchronized void latchClimbAndDrone(){
-        sideObjective.latchClimb();
+    public synchronized void latchDrone(){
         sideObjective.latchDrone();
-
     }
-    public synchronized void releaseClimbAndDrone(int delay){
-        Thread sideThread = new Thread(() -> {
-            timer.reset();
-            sideObjective.releaseClimb();
-            while(timer.milliseconds() < delay){
-
-            }
+    public synchronized void releaseClimbAndDrone(){
+            sideObjective.releaseClimbWinch();
             sideObjective.releaseDrone();
+    }
+    public synchronized void winch(){
+        Thread climbThread = new Thread(() -> {
+            sideObjective.windClimbWinch();
         });
-        sideThread.start();
+        climbThread.start();
     }
     public synchronized void extendLift(Lift.LiftState liftState){
         lift.setLiftState(liftState);
@@ -82,7 +78,7 @@ public class Commands {
     public synchronized void toInit(boolean grab){
         Thread initThread = new Thread(() -> {
             timer.reset();
-            latchClimbAndDrone();
+            latchDrone();
             if(grab){
                 claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
             }

@@ -45,7 +45,7 @@ public class RedLong extends LinearOpMode {
 
         commands.initCommands(telemetry);
         commands.toInit(true);
-        commands.latchClimbAndDrone();
+        commands.latchDrone();
         intake.setIntakeArmState(Intake.IntakeArmState.INIT);
         extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
 

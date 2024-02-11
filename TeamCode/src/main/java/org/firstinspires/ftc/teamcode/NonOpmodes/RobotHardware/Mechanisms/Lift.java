@@ -25,10 +25,6 @@ public class Lift {
     }
     private DcMotorEx lift;
     private Hardware hardware = new Hardware();
-
-
-
-    private int targetPosition = 0;
     public enum LiftState{
         RETRACTED,
         LOW,
@@ -37,6 +33,7 @@ public class Lift {
         AUTO_LOW,
     }
     private LiftState liftState = LiftState.RETRACTED;
+    private int targetPosition = 0;
 
 
     public void initLift(HardwareMap hw){

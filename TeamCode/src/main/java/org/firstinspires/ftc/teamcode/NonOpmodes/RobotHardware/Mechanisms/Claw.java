@@ -17,15 +17,15 @@ public class Claw {
         }
         return instance;
     }
-    private Servo claw;
-    private Hardware hardware = new Hardware();
-
     public enum ClawState{
         OPEN,
         CLOSE,
         CLOSE_ONE_PIXEL
     }
     private ClawState clawState = ClawState.CLOSE;
+
+    private Servo claw;
+    private Hardware hardware = new Hardware();
     private Claw(){
     }
 

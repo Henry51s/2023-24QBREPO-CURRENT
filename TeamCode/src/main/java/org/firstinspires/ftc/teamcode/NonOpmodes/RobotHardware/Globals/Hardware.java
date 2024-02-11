@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals;
 import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -29,7 +30,8 @@ public class Hardware{
     //Robot Hardware-------------
     public DcMotor frontLeft, frontRight, backLeft, backRight;
     public DcMotorEx lift, extendoL, extendoR, intake;
-    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm, climb1, climb2, drone;
+    public Servo diffL, diffR, fourBarL, fourBarR, claw, intakeArm, drone;
+    public CRServo climbL, climbR;
     //---------------------------
     public Claw clawInstance;
     public Differential differentialInstance;
@@ -78,9 +80,9 @@ public class Hardware{
 
     //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms
     public void initClimbAndDrone(HardwareMap hw){
-        climb1 = hw.get(Servo.class, CHSERVO_4);
-        climb1.setDirection(REVERSE);
-        climb2 = hw.get(Servo.class, CHSERVO_5);
+        climbL = hw.get(CRServo.class, CHSERVO_4);
+        climbL.setDirection(DcMotorSimple.Direction.REVERSE);
+        climbR = hw.get(CRServo.class, CHSERVO_5);
 
         drone = hw.get(Servo.class, CHSERVO_3);
 

@@ -24,7 +24,7 @@ public class Differential {
         TILT_LEFT,
         TILT_RIGHT
     }
-    State state = State.INIT;
+    private State state = State.INIT;
     private Servo diffL, diffR;
     private Hardware hardware = new Hardware();
     private double offset = 0.166;
@@ -33,7 +33,7 @@ public class Differential {
     private int maxTurns = 1;
 
 
-    double[] diffPositions = new double[2];
+    private double[] diffPositions = new double[2];
 
     private Gamepad currentGamepad = new Gamepad(), previousGamepad = new Gamepad();
 

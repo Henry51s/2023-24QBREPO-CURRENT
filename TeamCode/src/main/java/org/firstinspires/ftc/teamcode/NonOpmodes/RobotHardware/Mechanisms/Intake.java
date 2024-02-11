@@ -28,10 +28,8 @@ public class Intake {
         }
         return instance;
     }
-    private DcMotorEx intake;
-    private Servo intakeArm;
-    private Hardware hardware = new Hardware();
-    private ElapsedTime timer = new ElapsedTime();
+
+
 
     public enum IntakeState{
         STOP,
@@ -51,14 +49,20 @@ public class Intake {
 
     private IntakeArmState intakeArmState = IntakeArmState.GROUND;
     private IntakeState intakeState = IntakeState.NORMAL;
+    private double armPosition = INTAKE_ARM_GROUND;
+
+    private DcMotorEx intake;
+    private Servo intakeArm;
+    private Hardware hardware = new Hardware();
+    private ElapsedTime timer = new ElapsedTime();
+
+
+    private Gamepad current = new Gamepad(), previous = new Gamepad();
 
     private int ticksPerRevolution = 145;
     private double rollCounter = 0;
     private double roundedRollCounter = 0;
     private double targetPosition = 0;
-
-    private double armPosition = INTAKE_ARM_GROUND;
-    private Gamepad current = new Gamepad(), previous = new Gamepad();
 
     public void initIntake(HardwareMap hw){
         hardware.initIntake(hw);

@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
-import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 
@@ -26,7 +25,7 @@ public class QBTeleOp extends OpMode {
         hw.initAll(hardwareMap);
         commands.initCommands(telemetry);
         commands.toInit(true);
-        commands.latchClimbAndDrone();
+        commands.latchDrone();
 
     }
 
@@ -106,7 +105,7 @@ public class QBTeleOp extends OpMode {
             commands.toPickup();
         }*/
         if(gamepad1.back){
-            commands.releaseClimbAndDrone(1000);
+            commands.releaseClimbAndDrone();
         }
     }
 }

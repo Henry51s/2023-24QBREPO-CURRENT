@@ -129,7 +129,7 @@ public class RedShortIterative extends OpMode {
                 break;
             case RETRACT:
                 extension.setExtensionState(Extension.ExtensionState.RETRACTED);
-                intake.runIntakeSetTimeAsync(5000, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTimeAsync(3000, Intake.IntakeState.NORMAL);
                 
                 if(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) < 5){
                     autoState = AutoStages.TRANSFER;
@@ -159,9 +159,10 @@ public class RedShortIterative extends OpMode {
         }
         telemetry.addData("Extension Target: ", extension.getTargetPosition());
         telemetry.addData("Extension Average Position: ", extension.getAveragePosition());
+        telemetry.addData("Stage: ", autoState);
     }
     @Override
     public void stop(){
-        extension.stopLoopExtenstionAutoAsync();
+        extension.stopLoopExtensionAutoAsync();
     }
 }
