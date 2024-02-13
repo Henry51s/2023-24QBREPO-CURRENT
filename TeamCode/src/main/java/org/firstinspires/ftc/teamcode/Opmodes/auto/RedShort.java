@@ -71,7 +71,6 @@ public class RedShort extends LinearOpMode {
                 autonomous.setPath(AutoLocation.RED_SHORT, SpikeMark.LEFT);
             }
 
-            extendo.loopExtensionAuto();
         }
 
 
@@ -112,7 +111,6 @@ public class RedShort extends LinearOpMode {
 
 
         while(opModeIsActive()){
-            extendo.loopExtensionAuto();
             telemetry.addData("Error :", Math.abs(extendo.getAveragePosition() - extendo.getTargetPosition()));
             telemetry.update();
             if(retract){

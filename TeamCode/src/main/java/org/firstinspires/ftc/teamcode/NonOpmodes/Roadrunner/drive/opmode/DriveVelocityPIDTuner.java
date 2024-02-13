@@ -69,6 +69,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
     public void runOpMode() {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         if (!RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("%s does not need to be run if the built-in motor velocity" +
                     "PID is not in use", getClass().getSimpleName());
@@ -103,7 +104,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
 
         while (!isStopRequested()) {
-            extendo.loopExtensionAuto();
+
             telemetry.addData("mode", mode);
 
             switch (mode) {

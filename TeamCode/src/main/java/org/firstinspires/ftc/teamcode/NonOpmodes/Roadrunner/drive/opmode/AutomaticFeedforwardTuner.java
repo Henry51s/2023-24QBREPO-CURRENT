@@ -45,6 +45,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
 
         if (RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
@@ -64,7 +65,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
         if (isStopRequested()) return;
         while(opModeIsActive()){
-            extendo.loopExtensionAuto();
+
         }
 
         telemetry.clearAll();

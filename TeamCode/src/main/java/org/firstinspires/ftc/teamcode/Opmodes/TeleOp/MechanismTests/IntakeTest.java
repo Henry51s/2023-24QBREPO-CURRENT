@@ -52,6 +52,7 @@ public class IntakeTest extends OpMode {
                     tuningMode = TuningModes.OPERATIONAL;
                 break;
             case OPERATIONAL:
+                intake.loopIntake(gamepad1);
                 if(gamepad1.start)
                     intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
                 if(gamepad1.a)

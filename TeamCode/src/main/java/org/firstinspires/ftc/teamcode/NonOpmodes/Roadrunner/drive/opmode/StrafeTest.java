@@ -24,6 +24,7 @@ public class StrafeTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -45,7 +46,7 @@ public class StrafeTest extends LinearOpMode {
         telemetry.update();
 
         while (!isStopRequested() && opModeIsActive()){
-            extendo.loopExtensionAuto();
+
         }
     }
 }

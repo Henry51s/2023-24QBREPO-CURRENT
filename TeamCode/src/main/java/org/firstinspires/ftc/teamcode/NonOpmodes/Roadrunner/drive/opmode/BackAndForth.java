@@ -35,6 +35,7 @@ public class BackAndForth extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
@@ -48,7 +49,6 @@ public class BackAndForth extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            extendo.loopExtensionAuto();
             drive.followTrajectory(trajectoryForward);
             drive.followTrajectory(trajectoryBackward);
         }

@@ -80,9 +80,10 @@ public class Hardware{
 
     //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms
     public void initClimbAndDrone(HardwareMap hw){
-        climbL = hw.get(CRServo.class, CHSERVO_4);
-        climbL.setDirection(DcMotorSimple.Direction.REVERSE);
-        climbR = hw.get(CRServo.class, CHSERVO_5);
+        climbL = hw.get(CRServo.class, CHSERVO_0);
+
+        climbR = hw.get(CRServo.class, CHSERVO_1);
+        climbR.setDirection(DcMotorSimple.Direction.REVERSE);
 
         drone = hw.get(Servo.class, CHSERVO_3);
 

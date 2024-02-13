@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
+import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.SideObjective;
 
 //Welcome to Hell
 @TeleOp(name="QBTeleOp")
@@ -14,6 +15,7 @@ public class QBTeleOp extends OpMode {
     Hardware hw = new Hardware();
     Gamepad currentGamepad2 = new Gamepad(), previousGamepad2 = new Gamepad();
     Commands commands = new Commands();
+    SideObjective sideObjective;
     int liftCounter = 0;
     int diffCounter = 0;
 
@@ -26,6 +28,7 @@ public class QBTeleOp extends OpMode {
         commands.initCommands(telemetry);
         commands.toInit(true);
         commands.latchDrone();
+        sideObjective = SideObjective.getInstance();
 
     }
 
@@ -105,7 +108,13 @@ public class QBTeleOp extends OpMode {
             commands.toPickup();
         }*/
         if(gamepad1.back){
-            commands.releaseClimbAndDrone();
+            sideObjective.setClimbServoPower(1);
+        }
+        else if(gamepad1.start){
+            sideObjective.setClimbServoPower(-1);
+        }
+        else{
+            sideObjective.setClimbServoPower(0);
         }
     }
 }

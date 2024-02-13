@@ -30,8 +30,8 @@ public class SideObjective {
     private CRServo climbL, climbR;
     private ElapsedTime timer = new ElapsedTime();
 
-    int winchReleaseTime = 3000;
-    int winchWindTime = 2000;
+    private int winchReleaseTime = 1000;
+    private int winchWindTime = 1000;
     private Hardware hardware = new Hardware();
     public void initSideQuest(HardwareMap hw){
         hardware.initClimbAndDrone(hw);
@@ -45,22 +45,17 @@ public class SideObjective {
         drone.setPosition(position);
     }
 
-    private void setClimbServoPower(double power){
+    public void setClimbServoPower(double power){
         climbL.setPower(power);
         climbR.setPower(power);
     }
 
     public void releaseClimbWinch(){
-        timer.reset();
-        while(timer.milliseconds() < winchReleaseTime){
-            setClimbServoPower(1);
-        }
+        setClimbServoPower(1);
+
     }
     public void windClimbWinch(){
-        timer.reset();
-        while(timer.milliseconds() < winchWindTime){
-            setClimbServoPower(-1);
-        }
+        setClimbServoPower(-1);
     }
     public void latchDrone(){
         drone.setPosition(DRONE_LATCH);

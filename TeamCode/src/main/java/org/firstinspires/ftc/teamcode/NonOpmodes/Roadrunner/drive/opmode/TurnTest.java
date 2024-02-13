@@ -19,6 +19,7 @@ public class TurnTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         waitForStart();
@@ -27,7 +28,7 @@ public class TurnTest extends LinearOpMode {
 
         drive.turn(Math.toRadians(ANGLE));
         while(opModeIsActive()){
-            extendo.loopExtensionAuto();
+
         }
     }
 }

@@ -18,6 +18,7 @@ public class SplineTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         waitForStart();
@@ -38,7 +39,7 @@ public class SplineTest extends LinearOpMode {
                         .build()
         );
         while(opModeIsActive()){
-            extendo.loopExtensionAuto();
+
         }
     }
 }

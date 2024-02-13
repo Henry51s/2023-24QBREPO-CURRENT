@@ -21,6 +21,7 @@ public class LocalizationTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -28,7 +29,7 @@ public class LocalizationTest extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested()) {
-            extendo.loopExtensionAuto();
+
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.CommandType;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Drive;
@@ -62,6 +63,7 @@ public class Commands {
     public synchronized void latchDrone(){
         sideObjective.latchDrone();
     }
+
     public synchronized void releaseClimbAndDrone(){
             sideObjective.releaseClimbWinch();
             sideObjective.releaseDrone();
@@ -135,7 +137,62 @@ public class Commands {
         depositThread.start();
     }
 
-    public synchronized void runFullSequence(){
+    public synchronized void runFullSequence(CommandType commandType){
+        switch(commandType){
+            case ASYNC:
+                Thread sequenceThread = new Thread(() -> {
+                    lift.setLiftState(Lift.LiftState.RETRACTED);
+                    while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
+                    }
+                    claw.setClawState(Claw.ClawState.OPEN);
+                    differential.setState(Differential.State.PICKUP);
+                    fourBar.setState(FourBar.State.PICKUP);
+
+                    timer.reset();
+                    while(timer.milliseconds() < pickupToDepositDelay){
+
+                    }
+                    claw.setClawState(Claw.ClawState.CLOSE);
+                    timer.reset();
+                    while(timer.milliseconds() < depositClawDelay){
+
+                    }
+                    fourBar.setState(FourBar.State.DEPOSIT);
+                    timer.reset();
+                    while(timer.milliseconds() < depositDifferentialDelay){
+
+                    }
+                    differential.setState(Differential.State.DEPOSIT);
+
+
+                });
+                sequenceThread.start();
+                break;
+            case NORMAL:
+
+                while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
+                }
+                claw.setClawState(Claw.ClawState.OPEN);
+                differential.setState(Differential.State.PICKUP);
+                fourBar.setState(FourBar.State.PICKUP);
+
+                timer.reset();
+                while(timer.milliseconds() < pickupToDepositDelay){
+
+                }
+                claw.setClawState(Claw.ClawState.CLOSE);
+                timer.reset();
+                while(timer.milliseconds() < depositClawDelay){
+
+                }
+                fourBar.setState(FourBar.State.DEPOSIT);
+                timer.reset();
+                while(timer.milliseconds() < depositDifferentialDelay){
+
+                }
+                differential.setState(Differential.State.DEPOSIT);
+                break;
+        }
         Thread sequenceThread = new Thread(() -> {
             lift.setLiftState(Lift.LiftState.RETRACTED);
             while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
@@ -182,5 +239,17 @@ public class Commands {
     }
     public int getLiftPosition(){
         return lift.getCurrentPosition();
+    }
+    public FourBar.State getFourBarState(){
+        return fourBar.getState();
+    }
+    public Differential.State getDifferentialState(){
+        return differential.getState();
+    }
+    public Claw.ClawState getClawState(){
+        return claw.getClawState();
+    }
+    public Intake.IntakeArmState getIntakeArmState() {
+        return intake.getIntakeArmState();
     }
 }

@@ -8,6 +8,9 @@ public enum AutoStages {
     INTAKE,
     RETRACT,
     TRANSFER,
+
+    TRANSFERMORE,
+
     DEPOSIT,
     PARK
 }

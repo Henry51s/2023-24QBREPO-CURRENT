@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.FourBarDifferentialStates;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.*;
 

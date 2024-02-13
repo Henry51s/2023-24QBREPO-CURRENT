@@ -68,6 +68,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
     public void runOpMode() {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         if (RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");
@@ -97,7 +98,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
 
         while (!isStopRequested()) {
-            extendo.loopExtensionAuto();
+
             telemetry.addData("mode", mode);
 
             switch (mode) {

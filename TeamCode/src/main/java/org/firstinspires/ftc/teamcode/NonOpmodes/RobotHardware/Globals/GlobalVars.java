@@ -24,7 +24,7 @@ public class GlobalVars {
     public static int EXTENDO_MAX_VELOCITY = 1100;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_CLIMB = 142;
-    public static int EXTENDO_SHORT = 0;
+    public static int EXTENDO_SHORT = 100;
     public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
 

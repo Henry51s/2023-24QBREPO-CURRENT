@@ -35,6 +35,7 @@ public class TrackWidthTuner extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -85,7 +86,7 @@ public class TrackWidthTuner extends LinearOpMode {
         telemetry.update();
 
         while (!isStopRequested()) {
-            extendo.loopExtensionAuto();
+
             idle();
         }
     }

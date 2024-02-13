@@ -58,7 +58,7 @@ public class PointsOfInterest {
     public static double[] redShortCycleScore = {38.5,-38,-90};
 
     public static double[] redShortExtending1 = {54,-30,-90};
-    public static double[] redShortExtending2 = {54,32,-87};
+    public static double[] redShortExtending2 = {54,30,-87};
 
     //-------------------------------------------------------------
 

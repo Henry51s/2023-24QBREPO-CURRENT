@@ -1,6 +1,9 @@
-package org.firstinspires.ftc.teamcode.Opmodes.auto;
+package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TRANSFER;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TRANSFERMORE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
@@ -8,7 +11,6 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.SECOND;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -27,28 +29,27 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
 
-
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="RedShortIterative")
-public class RedShortIterative extends OpMode {
+public abstract class ShortSideBaseOpMode extends OpMode {
 
 
-    AutoStages autoState = AutoStages.SPIKE_MARK;
+    protected AutoStages autoState = AutoStages.SPIKE_MARK;
+    protected Commands commands = new Commands();
+    protected Hardware hardware = new Hardware();
 
-    Autonomous auto;
-    Commands commands = new Commands();
-    Intake intake;
-    Extension extension;
-    Hardware hardware = new Hardware();
-    SampleMecanumDrive drive;
+    protected Autonomous auto;
+    protected Intake intake;
+    protected Extension extension;
+    protected SampleMecanumDrive drive;
+    protected Webcam webcam = new Webcam();
+    protected AutoLocation autoLocation;
 
-    TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop;
-    Webcam webcam = new Webcam();
-    ElapsedTime timer = new ElapsedTime();
+    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop;
+    protected ElapsedTime timer = new ElapsedTime();
+    protected int cycleCounter = 0;
 
-    int cycleCounter = 0;
-    int extensionThreshold = 10;
-    @Override
-    public void init() {
+
+    public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color) {
+        this.autoLocation = autoLocation;
         hardware.initAuto(hardwareMap);
         intake = hardware.intakeInstance;
         extension = hardware.extensionInstance;
@@ -58,23 +59,24 @@ public class RedShortIterative extends OpMode {
         commands.toInit(true);
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         extension.setExtensionState(RETRACTED);
-        webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.RED);
+        webcam.initCamera(hardwareMap, color);
 
         auto = new Autonomous(hardwareMap);
         drive = auto.getDrive();
+
     }
     @Override
     public void init_loop(){
         telemetry.addData("Location: ", webcam.getLocation());
         telemetry.update();
         if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
-            auto.setPath(AutoLocation.RED_SHORT, SpikeMark.MIDDLE);
+            auto.setPath(autoLocation, SpikeMark.MIDDLE);
         }
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
-            auto.setPath(AutoLocation.RED_SHORT, SpikeMark.RIGHT);
+            auto.setPath(autoLocation, SpikeMark.RIGHT);
         }
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-            auto.setPath(AutoLocation.RED_SHORT, SpikeMark.LEFT);
+            auto.setPath(autoLocation, SpikeMark.LEFT);
         }
 
         scoreSpikeMark = auto.scoreSpikeMark;
@@ -84,7 +86,6 @@ public class RedShortIterative extends OpMode {
         extending = auto.extending;
         cycleToExtending = auto.cycleToExtending;
         extendToBackDrop = auto.extendToBackDrop;
-
     }
 
     @Override
@@ -103,7 +104,7 @@ public class RedShortIterative extends OpMode {
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
                 commands.toDeposit();
                 drive.followTrajectorySequence(scoreBackDrop);
-                commands.releasePixelsToIntermediate();
+                commands.releasePixels();
                 commands.extendLift(Lift.LiftState.RETRACTED);
                 drive.followTrajectorySequence(toExtend);
                 //extension.setExtensionState(Extension.ExtensionState.FAR);
@@ -127,25 +128,36 @@ public class RedShortIterative extends OpMode {
                 break;
 
             case INTAKE:
-                intake.runIntakeSetTime(500, Intake.IntakeState.NORMAL);
-                intake.runIntakeSetTime(100, Intake.IntakeState.REVERSED);
+                intake.runIntakeSetTime(1000, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTime(1000, Intake.IntakeState.REVERSED);
                 autoState = AutoStages.RETRACT;
                 break;
             case RETRACT:
+                drive.followTrajectorySequenceAsync(extendToBackDrop);
                 extension.setExtensionState(Extension.ExtensionState.RETRACTED);
                 intake.runIntakeSetTimeAsync(3000, Intake.IntakeState.NORMAL);
-                
-                if(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) < extensionThreshold){
-                    autoState = AutoStages.TRANSFER;
+                while(drive.isBusy()){
+                    drive.update();
+                    if(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) < 5){
+                        autoState = AutoStages.TRANSFER;
+                    }
                 }
+                autoState = TRANSFER;
                 break;
             case TRANSFER:
                 commands.runFullSequence(CommandType.NORMAL);
-                commands.extendLift(Lift.LiftState.AUTO_LOW);
-                if(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) < 10){
-                    autoState = AutoStages.DEPOSIT;
-                }
+                autoState = TRANSFERMORE;
                 break;
+
+            case TRANSFERMORE:
+
+                commands.extendLift(Lift.LiftState.AUTO_LOW);
+                while(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) < 5){
+
+                }
+                autoState = DEPOSIT;
+                break;
+
             case DEPOSIT:
                 commands.releasePixelsToIntermediate();
                 commands.extendLift(Lift.LiftState.RETRACTED);
@@ -161,12 +173,21 @@ public class RedShortIterative extends OpMode {
             case PARK:
                 break;
         }
+        telemetry.addData("Pose: ", drive.getPoseEstimate());
         telemetry.addData("Extension Target: ", extension.getTargetPosition());
         telemetry.addData("Extension Average Position: ", extension.getAveragePosition());
+        telemetry.addData("Intake Arm State: ", intake.getIntakeArmState());
+        telemetry.addData("FourBar State: ", commands.getFourBarState());
+        telemetry.addData("Differential State: ", commands.getDifferentialState());
+        telemetry.addData("Claw State: ", commands.getClawState());
         telemetry.addData("Stage: ", autoState);
+
     }
+
     @Override
     public void stop(){
         extension.stopLoopExtensionAutoAsync();
+        commands.extendLift(Lift.LiftState.RETRACTED);
+        commands.toInit(false);
     }
 }

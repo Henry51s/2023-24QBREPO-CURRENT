@@ -40,7 +40,7 @@ public class ClimbAndDroneTest extends OpMode {
             case FINE_TUNE:
                 switch(activeObjective){
                     case CLIMB:
-                        sideObjective.setClimbPosition(climbPosition, climbPosition);
+                        //sideObjective.setClimbPosition(climbPosition, climbPosition);
                         if(gamepad1.dpad_up){
                             climbPosition += 0.001;
                         }
@@ -79,11 +79,11 @@ public class ClimbAndDroneTest extends OpMode {
                     dronePressedCounter += 1;
                 }
 
-                if ((climbPressedCounter % 2 == 1)) {
-                    sideObjective.latchClimb();
-                } else {
-                    sideObjective.releaseClimb();
-                }
+                //if ((climbPressedCounter % 2 == 1)) {
+                //    sideObjective.latchClimb();
+                //} else {
+                //    sideObjective.releaseClimb();
+                //}
 
                 if(dronePressedCounter % 2 == 1){
                     sideObjective.latchDrone();

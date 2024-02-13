@@ -39,6 +39,7 @@ public class MaxVelocityTuner extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Extension extendo = Extension.getInstance();
         extendo.initExtension(hardwareMap);
+        extendo.startLoopExtensionAutoAsync();
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -62,7 +63,7 @@ public class MaxVelocityTuner extends LinearOpMode {
         timer = new ElapsedTime();
 
         while (!isStopRequested() && timer.seconds() < RUNTIME) {
-            extendo.loopExtensionAuto();
+
             drive.updatePoseEstimate();
 
             Pose2d poseVelo = Objects.requireNonNull(drive.getPoseVelocity(), "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer.");
