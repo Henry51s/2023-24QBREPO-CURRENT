@@ -28,10 +28,6 @@ public class SideObjective {
     }
     private Servo drone;
     private CRServo climbL, climbR;
-    private ElapsedTime timer = new ElapsedTime();
-
-    private int winchReleaseTime = 1000;
-    private int winchWindTime = 1000;
     private Hardware hardware = new Hardware();
     public void initSideQuest(HardwareMap hw){
         hardware.initClimbAndDrone(hw);

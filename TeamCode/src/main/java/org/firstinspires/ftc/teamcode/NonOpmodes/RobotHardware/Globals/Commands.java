@@ -24,10 +24,8 @@ public class Commands {
     private Extension extension;
     private Drive drive;
     private Intake intake;
-    private SideObjective sideObjective;
 
     private ElapsedTime timer = new ElapsedTime();
-    private Telemetry telemetry;
 
     public static int depositClawDelay = 100;
     public static int depositDifferentialDelay = 250;
@@ -35,9 +33,8 @@ public class Commands {
     public static int initDelay = 500;
     public static int pickupToDepositDelay = 750;
 
-    public void initCommands(Telemetry telemetry){
-        this.telemetry = telemetry;
-        try{
+    public void initCommands(){
+
             differential = Differential.getInstance();
             claw = Claw.getInstance();
             fourBar = FourBar.getInstance();
@@ -45,13 +42,7 @@ public class Commands {
             extension = Extension.getInstance();
             drive = Drive.getInstance();
             intake = Intake.getInstance();
-            sideObjective = SideObjective.getInstance();
-        }
-        catch(Exception e){
-            //Put stuff incase error happens here
-            telemetry.addData("Command initalization error!!! ", e);
-            telemetry.update();
-        }
+
     }
 
     public void loopRobot(Gamepad differentialGamepad, Gamepad extensionGamepad, Gamepad driveGamepad, Gamepad intakeGamepad){
@@ -60,27 +51,13 @@ public class Commands {
         drive.loopDrive(driveGamepad);
         intake.loopIntake(intakeGamepad);
     }
-    public synchronized void latchDrone(){
-        sideObjective.latchDrone();
-    }
 
-    public synchronized void releaseClimbAndDrone(){
-            sideObjective.releaseClimbWinch();
-            sideObjective.releaseDrone();
-    }
-    public synchronized void winch(){
-        Thread climbThread = new Thread(() -> {
-            sideObjective.windClimbWinch();
-        });
-        climbThread.start();
-    }
     public synchronized void extendLift(Lift.LiftState liftState){
         lift.setLiftState(liftState);
     }
     public synchronized void toInit(boolean grab){
         Thread initThread = new Thread(() -> {
             timer.reset();
-            latchDrone();
             if(grab){
                 claw.setClawState(Claw.ClawState.CLOSE_ONE_PIXEL);
             }
@@ -141,9 +118,6 @@ public class Commands {
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {
-                    lift.setLiftState(Lift.LiftState.RETRACTED);
-                    while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
-                    }
                     claw.setClawState(Claw.ClawState.OPEN);
                     differential.setState(Differential.State.PICKUP);
                     fourBar.setState(FourBar.State.PICKUP);
@@ -168,10 +142,8 @@ public class Commands {
                 });
                 sequenceThread.start();
                 break;
-            case NORMAL:
+            case BLOCKING:
 
-                while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
-                }
                 claw.setClawState(Claw.ClawState.OPEN);
                 differential.setState(Differential.State.PICKUP);
                 fourBar.setState(FourBar.State.PICKUP);
@@ -193,33 +165,6 @@ public class Commands {
                 differential.setState(Differential.State.DEPOSIT);
                 break;
         }
-        Thread sequenceThread = new Thread(() -> {
-            lift.setLiftState(Lift.LiftState.RETRACTED);
-            while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
-            }
-            claw.setClawState(Claw.ClawState.OPEN);
-            differential.setState(Differential.State.PICKUP);
-            fourBar.setState(FourBar.State.PICKUP);
-
-            timer.reset();
-            while(timer.milliseconds() < pickupToDepositDelay){
-
-            }
-            claw.setClawState(Claw.ClawState.CLOSE);
-            timer.reset();
-            while(timer.milliseconds() < depositClawDelay){
-
-            }
-            fourBar.setState(FourBar.State.DEPOSIT);
-            timer.reset();
-            while(timer.milliseconds() < depositDifferentialDelay){
-
-            }
-            differential.setState(Differential.State.DEPOSIT);
-
-
-        });
-        sequenceThread.start();
     }
 
     public synchronized void releasePixels(){
@@ -248,8 +193,5 @@ public class Commands {
     }
     public Claw.ClawState getClawState(){
         return claw.getClawState();
-    }
-    public Intake.IntakeArmState getIntakeArmState() {
-        return intake.getIntakeArmState();
     }
 }

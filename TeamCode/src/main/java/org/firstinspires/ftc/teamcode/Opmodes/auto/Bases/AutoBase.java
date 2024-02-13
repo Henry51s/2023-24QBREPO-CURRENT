@@ -29,7 +29,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
 
-public abstract class ShortSideBaseOpMode extends OpMode {
+public abstract class AutoBase extends OpMode {
 
 
     protected AutoStages autoState = AutoStages.SPIKE_MARK;
@@ -55,7 +55,7 @@ public abstract class ShortSideBaseOpMode extends OpMode {
         extension = hardware.extensionInstance;
         extension.startLoopExtensionAutoAsync();
 
-        commands.initCommands(telemetry);
+        commands.initCommands();
         commands.toInit(true);
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         extension.setExtensionState(RETRACTED);
@@ -145,7 +145,7 @@ public abstract class ShortSideBaseOpMode extends OpMode {
                 autoState = TRANSFER;
                 break;
             case TRANSFER:
-                commands.runFullSequence(CommandType.NORMAL);
+                commands.runFullSequence(CommandType.BLOCKING);
                 autoState = TRANSFERMORE;
                 break;
 

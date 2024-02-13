@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
-import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.ShortSideBaseOpMode;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.AutoBase;
 
 
 @Autonomous(name="BaseOpModeTest")
-public class BaseOpModeTest extends ShortSideBaseOpMode
+public class BaseTest extends AutoBase
 {
     @Override
     public void init() {

@@ -78,7 +78,14 @@ public class Hardware{
         sideObjectiveInstance.initSideQuest(hw);
     }
 
-    //Methods below this line should NOT be used in opmodes. Use the classes in Mechanisms package to init mechanisms
+
+
+
+
+
+
+
+
     public void initClimbAndDrone(HardwareMap hw){
         climbL = hw.get(CRServo.class, CHSERVO_0);
 
@@ -134,14 +141,6 @@ public class Hardware{
     public void initClaw(HardwareMap hw){
         claw = hw.get(Servo.class, EXSERVO_4);
     }
-
-    public void initLynxModule(HardwareMap hardwareMap){
-        List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
-        for (LynxModule hub : allHubs){
-            hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
-        }
-
-        }
     }
 
 

@@ -25,9 +25,8 @@ public class QBTeleOp extends OpMode {
     @Override
     public void init() {
         hw.initAll(hardwareMap);
-        commands.initCommands(telemetry);
+        commands.initCommands();
         commands.toInit(true);
-        commands.latchDrone();
         sideObjective = SideObjective.getInstance();
 
     }
@@ -86,27 +85,6 @@ public class QBTeleOp extends OpMode {
 
 
 
-        /*if(currentGamepad2.left_bumper && !previousGamepad2.left_bumper){
-            commands.releasePixelsToIntermediate();
-        }
-        if(currentGamepad2.a && !previousGamepad2.a){
-            commands.extendLift(Lift.LiftState.RETRACTED);
-        }
-        if(currentGamepad2.b && !previousGamepad2.b){
-            commands.extendLift(Lift.LiftState.LOW);
-        }
-        if(currentGamepad2.x && !previousGamepad2.x){
-            commands.extendLift(Lift.LiftState.MED);
-        }
-        if(currentGamepad2.y && !previousGamepad2.y){
-            commands.extendLift(Lift.LiftState.HIGH);
-        }
-        if(currentGamepad2.dpad_up && !previousGamepad2.dpad_up){
-            commands.toDeposit();
-        }
-        if(currentGamepad2.dpad_down && !previousGamepad2.dpad_down){
-            commands.toPickup();
-        }*/
         if(gamepad1.back){
             sideObjective.setClimbServoPower(1);
         }

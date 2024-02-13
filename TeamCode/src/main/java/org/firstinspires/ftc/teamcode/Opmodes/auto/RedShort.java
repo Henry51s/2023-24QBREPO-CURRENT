@@ -49,7 +49,7 @@ public class RedShort extends LinearOpMode {
         intake = hw.intakeInstance;
         extendo = hw.extensionInstance;
 
-        commands.initCommands(telemetry);
+        commands.initCommands();
         commands.toInit(true);
         intake.setIntakeArmState(Intake.IntakeArmState.INIT);
         extendo.setExtensionState(RETRACTED);

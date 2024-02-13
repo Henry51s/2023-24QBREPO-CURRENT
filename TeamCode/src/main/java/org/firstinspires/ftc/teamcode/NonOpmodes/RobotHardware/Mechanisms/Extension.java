@@ -72,7 +72,6 @@ public class Extension {
         OPERATIONAL
     }
     private Mode mode = Mode.OPERATIONAL;
-    private ExtensionState extensionState = ExtensionState.RETRACTED;
 
     public void initExtension(HardwareMap hw){
 
@@ -114,7 +113,6 @@ public class Extension {
         this.targetPosition = targetPosition;
     }
     public void setExtensionState(ExtensionState extensionState){
-        this.extensionState = extensionState;
         switch(extensionState){
             case RETRACTED:
                 setTargetPosition(EXTENDO_RETRACTED);

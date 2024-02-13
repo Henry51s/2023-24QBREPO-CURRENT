@@ -58,12 +58,6 @@ public class Intake {
 
 
     private Gamepad current = new Gamepad(), previous = new Gamepad();
-
-    private int ticksPerRevolution = 145;
-    private double rollCounter = 0;
-    private double roundedRollCounter = 0;
-    private double targetPosition = 0;
-
     public void initIntake(HardwareMap hw){
         hardware.initIntake(hw);
         intake = hardware.intake;
@@ -121,27 +115,7 @@ public class Intake {
         }
     }
 
-    /*public void runIntakeSetTime(int numberOfSpins, boolean reversed, double power){
-        int motorDirection = 1;
-        if(reversed){
-            motorDirection = -1;
-        }
-        targetPosition += motorDirection * ticksPerRevolution * numberOfSpins;
-        roundedRollCounter += motorDirection * numberOfSpins;
-        rollCounter = roundedRollCounter;
-        intake.setPower(power);
-        intake.setTargetPosition((int) targetPosition);
-
-    }    */
     public void runIntakeSetTime(int milliseconds, IntakeState intakeState){
-        /*Thread intakeThread = new Thread(() -> {
-            timer.reset();
-            while(timer.milliseconds() < milliseconds){
-                setIntakeState(IntakeState.NORMAL);
-            }
-            setIntakeState(IntakeState.STOP);
-        });
-        intakeThread.start();*/
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         timer.reset();
         while(timer.milliseconds() < milliseconds){
@@ -208,11 +182,5 @@ public class Intake {
     }
     public int getIntakePosition(){
         return intake.getCurrentPosition();
-    }
-    public double getRoundedRollCounter(){
-        return roundedRollCounter;
-    }
-    public double getTargetPosition(){
-        return targetPosition;
     }
 }

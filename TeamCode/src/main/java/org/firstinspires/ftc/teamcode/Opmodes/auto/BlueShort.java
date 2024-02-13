@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.auto;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.ItemLocation.CENTER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline.ItemLocation.RIGHT;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.Roadrunner.trajectorysequence.TrajectorySequence;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Pathing.Autonomous;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.SpikeMark;
 
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueShort")
 public class BlueShort extends LinearOpMode {
 
@@ -41,7 +43,7 @@ public class BlueShort extends LinearOpMode {
 
 
         hardware.initAuto(hardwareMap);
-        commands.initCommands(telemetry);
+        commands.initCommands();
         commands.toInit(true);
 
         intake = hardware.intakeInstance;

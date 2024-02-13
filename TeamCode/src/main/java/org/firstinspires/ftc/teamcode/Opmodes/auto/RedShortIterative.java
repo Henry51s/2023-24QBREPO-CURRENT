@@ -8,7 +8,6 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.SECOND;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -54,7 +53,7 @@ public class RedShortIterative extends OpMode {
         extension = hardware.extensionInstance;
         extension.startLoopExtensionAutoAsync();
 
-        commands.initCommands(telemetry);
+        commands.initCommands();
         commands.toInit(true);
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         extension.setExtensionState(RETRACTED);
@@ -140,7 +139,7 @@ public class RedShortIterative extends OpMode {
                 }
                 break;
             case TRANSFER:
-                commands.runFullSequence(CommandType.NORMAL);
+                commands.runFullSequence(CommandType.BLOCKING);
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
                 if(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) < 10){
                     autoState = AutoStages.DEPOSIT;

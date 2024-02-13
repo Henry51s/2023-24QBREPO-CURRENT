@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Pathing.Autonomous;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.SpikeMark;
 
+@Disabled
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueLong")
 public class BlueLong extends LinearOpMode {
@@ -45,7 +47,7 @@ public class BlueLong extends LinearOpMode {
         intake = hw.intakeInstance;
         extendo = hw.extensionInstance;
 
-        commands.initCommands(telemetry);
+        commands.initCommands();
         commands.toInit(true);
         commands.latchDrone();
         intake.setIntakeArmState(Intake.IntakeArmState.INIT);

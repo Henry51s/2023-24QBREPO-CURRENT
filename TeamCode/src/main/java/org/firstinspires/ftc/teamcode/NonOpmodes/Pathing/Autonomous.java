@@ -25,8 +25,8 @@ public class Autonomous {
     public TrajectorySequence extending;
     public TrajectorySequence extendToBackDrop;
     public TrajectorySequence cycleToExtend;
-
     public TrajectorySequence cycleToExtending;
+
     private PointsOfInterest pointsOfInterest = new PointsOfInterest();
     private SampleMecanumDrive drive;
 
@@ -55,54 +55,15 @@ public class Autonomous {
 
                 if(spikeMark == SpikeMark.RIGHT){
 
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
-
-                            .build();
-                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-
-                            .build();
-
-                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
-
-                            .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-40, 54, Math.toRadians(0)))
-
-                            .build();
 
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
 
-                            .build();
-                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-
-                            .build();
-
-                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
-
-                            .build();
-
-                    scoreBackDrop = drive.trajectorySequenceBuilder(new Pose2d(-40, 54, Math.toRadians(0)))
-
-                            .build();
 
                 }
                 else if(spikeMark == SpikeMark.LEFT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
 
-                            .build();
-                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-
-                            .build();
-
-                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
-
-                            .build();
-
-                    scoreBackDrop = drive.trajectorySequenceBuilder(toNeutral.end())
-
-                            .build();
                 }
                 break;
             case RED_LONG:
@@ -110,54 +71,17 @@ public class Autonomous {
 
                 if(spikeMark == SpikeMark.LEFT){
 
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
 
-                            .build();
-                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-
-                            .build();
-
-                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
-
-                            .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(toNeutral.end())
-
-                            .build();
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
 
-                            .build();
-                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .build();
-
-                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
-
-                            .build();
-
-                    scoreBackDrop = drive.trajectorySequenceBuilder(toNeutral.end())
-
-                            .build();
 
 
                 }
                 else if(spikeMark == SpikeMark.RIGHT){
 
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
 
-                            .build();
-                    backupSpikeMark = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-
-                            .build();
-
-                    toNeutral = drive.trajectorySequenceBuilder(backupSpikeMark.end())
-
-                            .build();
-
-                    scoreBackDrop = drive.trajectorySequenceBuilder(toNeutral.end())
-
-                            .build();
 
 
                 }
@@ -171,28 +95,13 @@ public class Autonomous {
 
 
                 if(spikeMark == SpikeMark.LEFT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
-                            .lineToLinearHeading(pointsOfInterest.poseBlueShortSpikeMarkL)
-                            .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropL)
-                            .build();
+
                 }
                 else if (spikeMark == SpikeMark.MIDDLE){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
-                            .lineToConstantHeading(poseToVector(pointsOfInterest.poseBlueShortSpikeMarkM))
-                            .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropM)
-                            .build();
+
                 }
                 else if (spikeMark == SpikeMark.RIGHT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
-                            .lineToLinearHeading(pointsOfInterest.poseBlueShortSpikeMarkR)
-                            .build();
-                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
-                            .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropR)
-                            .build();
+
                 }
                 break;
 
