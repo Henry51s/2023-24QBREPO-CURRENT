@@ -45,11 +45,12 @@ public class Commands {
 
     }
 
-    public void loopRobot(Gamepad differentialGamepad, Gamepad extensionGamepad, Gamepad driveGamepad, Gamepad intakeGamepad){
-        differential.loopDifferential(differentialGamepad);
+    public void loopRobot(Gamepad differentialGamepad, Gamepad extensionGamepad, Gamepad driveGamepad, Gamepad intakeGamepad, Gamepad liftGamepad){
+        //differential.loopDifferential(differentialGamepad);
         extension.loopExtension(extensionGamepad);
         drive.loopDrive(driveGamepad);
         intake.loopIntake(intakeGamepad);
+        lift.loopLift(liftGamepad);
     }
 
     public synchronized void extendLift(Lift.LiftState liftState){
@@ -109,6 +110,7 @@ public class Commands {
 
             }
             differential.setState(Differential.State.DEPOSIT);
+            lift.setLiftState(Lift.LiftState.MEMORY);
 
         });
         depositThread.start();
@@ -136,7 +138,7 @@ public class Commands {
                     while(timer.milliseconds() < depositDifferentialDelay){
 
                     }
-                    differential.setState(Differential.State.DEPOSIT);
+                    differential.setState(Differential.State.DEPOSIT_VERTICAL);
 
 
                 });
@@ -162,19 +164,29 @@ public class Commands {
                 while(timer.milliseconds() < depositDifferentialDelay){
 
                 }
-                differential.setState(Differential.State.DEPOSIT);
+                differential.setState(Differential.State.DEPOSIT_VERTICAL);
                 break;
         }
     }
 
     public synchronized void releasePixels(){
-        claw.setClawState(Claw.ClawState.OPEN);
+
+        Thread sequenceThread = new Thread(() -> {
+            timer.reset();
+            claw.setClawState(Claw.ClawState.OPEN);
+            while(timer.milliseconds() < 100){
+
+            }
+            fourBar.setState(FourBar.State.POST_DEPOSIT);
+        });
+
+        sequenceThread.start();
     }
     public synchronized void releasePixelsToIntermediate(){
         Thread sequenceThread = new Thread(() -> {
             timer.reset();
             claw.setClawState(Claw.ClawState.OPEN);
-            while(timer.milliseconds() < 100){
+            while(timer.milliseconds() < 500){
 
             }
             toIntermediate();
@@ -184,6 +196,9 @@ public class Commands {
     }
     public int getLiftPosition(){
         return lift.getCurrentPosition();
+    }
+    public Lift.LiftState getLiftState(){
+        return lift.getLiftState();
     }
     public FourBar.State getFourBarState(){
         return fourBar.getState();

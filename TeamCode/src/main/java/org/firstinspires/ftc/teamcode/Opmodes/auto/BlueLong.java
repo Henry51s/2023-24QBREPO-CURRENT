@@ -17,108 +17,30 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Pathing.Autonomous;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.SpikeMark;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.AutoBase;
 
 @Disabled
 @Config
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueLong")
-public class BlueLong extends LinearOpMode {
-    Autonomous autonomous;
-    SampleMecanumDrive drive;
-    Commands commands = new Commands();
-
-    Hardware hw = new Hardware();
-
-    Intake intake;
-    Extension extendo;
-
-    Webcam webcam = new Webcam();
-
-    public TrajectorySequence scoreSpikeMark, scoreBackDrop, toNeutral1;
-
-    ElapsedTime timer = new ElapsedTime();
+public class BlueLong extends AutoBase {
 
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void init() {
+        super.init(AutoLocation.BLUE_LONG,PrimaryDetectionPipeline.Color.RED);
+    }
+    @Override
+    public void init_loop() {
+        super.init_loop();
+    }
 
+    @Override
+    public void loop() {
+        super.loop();
 
-
-        hw.initAuto(hardwareMap);
-        intake = hw.intakeInstance;
-        extendo = hw.extensionInstance;
-
-        commands.initCommands();
-        commands.toInit(true);
-        commands.latchDrone();
-        intake.setIntakeArmState(Intake.IntakeArmState.INIT);
-        extendo.setExtensionState(Extension.ExtensionState.RETRACTED);
-
-        webcam.initCamera(hardwareMap, PrimaryDetectionPipeline.Color.BLUE);
-        autonomous = new Autonomous(hardwareMap);
-        drive = autonomous.getDrive();
-
-
-        while(opModeInInit()){
-            telemetry.addData("Location: ", webcam.getLocation());
-            telemetry.update();
-            if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
-                autonomous.setPath(AutoLocation.BLUE_LONG, SpikeMark.MIDDLE);
-            }
-            else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.RIGHT){
-                autonomous.setPath(AutoLocation.BLUE_LONG, SpikeMark.RIGHT);
-            }
-            else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
-                autonomous.setPath(AutoLocation.BLUE_LONG, SpikeMark.LEFT);
-            }
-        }
-
-
-
-        waitForStart();
-        if(isStopRequested()){
-
-            return;
-        }
-        webcam.stopStreaming();
-
-        scoreSpikeMark = autonomous.scoreSpikeMark;
-        scoreBackDrop = autonomous.scoreBackDrop;
-        toNeutral1 = autonomous.toNeutral;
-
-        intake.setIntakeArmState(Intake.IntakeArmState.SPIKEMARK);
-
-        drive.followTrajectorySequence(scoreSpikeMark);
-        //commands.toPickup();
-
-        //intake.runIntakeSetTime(1, true,power);
-        intake.setIntakeArmState(Intake.IntakeArmState.FIFTH);
-        commands.toDeposit();
-        drive.followTrajectorySequence(autonomous.backupSpikeMark);
-
-        drive.followTrajectorySequence(toNeutral1);
-        drive.followTrajectorySequence(scoreBackDrop);
-        commands.extendLift(Lift.LiftState.AUTO_LOW);
-
-        timer.reset();
-        while(timer.milliseconds() < 3000){
-        }
-        commands.releasePixels();
-        commands.extendLift(Lift.LiftState.RETRACTED);
-
-
-        /*drive.followTrajectorySequence(scoreBackDrop);
-        commands.toDeposit();
-        commands.extendLift(Lift.LiftState.LOW);
-        commands.releasePixels();*/
-
-
-
-        //drive.followTrajectorySequence(park);
-
-
-
-        while(opModeIsActive()){
-
-        }
+    }
+    @Override
+    public void stop(){
+        super.stop();
     }
 }

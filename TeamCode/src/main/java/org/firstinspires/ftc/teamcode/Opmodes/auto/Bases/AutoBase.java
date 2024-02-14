@@ -1,16 +1,20 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TRANSFER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TRANSFERMORE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FIFTH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.SECOND;
 
+import com.fasterxml.jackson.module.kotlin.ReflectionCache;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -43,9 +47,10 @@ public abstract class AutoBase extends OpMode {
     protected Webcam webcam = new Webcam();
     protected AutoLocation autoLocation;
 
-    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop;
+    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, parkLeft;
     protected ElapsedTime timer = new ElapsedTime();
     protected int cycleCounter = 0;
+    protected int liftTargetPosition = 0;
 
 
     public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color) {
@@ -86,6 +91,7 @@ public abstract class AutoBase extends OpMode {
         extending = auto.extending;
         cycleToExtending = auto.cycleToExtending;
         extendToBackDrop = auto.extendToBackDrop;
+        parkLeft = auto.parkLeft;
     }
 
     @Override
@@ -107,59 +113,64 @@ public abstract class AutoBase extends OpMode {
                 commands.releasePixels();
                 commands.extendLift(Lift.LiftState.RETRACTED);
                 drive.followTrajectorySequence(toExtend);
-                //extension.setExtensionState(Extension.ExtensionState.FAR);
-                drive.followTrajectorySequence(extending);
+
                 autoState = AutoStages.INITIAL_EXTEND;
                 break;
             case INITIAL_EXTEND:
+                drive.followTrajectorySequenceAsync(extending);
                 extension.setExtensionState(Extension.ExtensionState.FAR);
-                if(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) < 10){
-                    autoState = AutoStages.INTAKE;
+                while(drive.isBusy()){
+                    drive.update();
                 }
+                autoState = INTAKE;
+
                 break;
             case CYCLE_EXTEND:
+                drive.followTrajectorySequenceAsync(cycleToExtending);
                 extension.setExtensionState(Extension.ExtensionState.FAR);
-                if(cycleCounter == 1){
-                    intake.setIntakeArmState(SECOND);
+                intake.setIntakeArmState(GROUND);
+                while(drive.isBusy()){
+                    drive.update();
                 }
-                if(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) < 10){
-                    autoState = AutoStages.INTAKE;
-                }
+                autoState = INTAKE;
                 break;
 
             case INTAKE:
-                intake.runIntakeSetTime(1000, Intake.IntakeState.NORMAL);
-                intake.runIntakeSetTime(1000, Intake.IntakeState.REVERSED);
+                intake.runIntakeSetTime(500, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTime(500, Intake.IntakeState.REVERSED_HALF);
                 autoState = AutoStages.RETRACT;
                 break;
             case RETRACT:
                 drive.followTrajectorySequenceAsync(extendToBackDrop);
-                extension.setExtensionState(Extension.ExtensionState.RETRACTED);
+                extension.setExtensionState(RETRACTED);
                 intake.runIntakeSetTimeAsync(3000, Intake.IntakeState.NORMAL);
+                while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 600){
+
+                }
+                commands.runFullSequence(CommandType.ASYNC);
+                timer.reset();
+                while(timer.milliseconds() < 2000){
+                    drive.update();
+                }
+                commands.extendLift(Lift.LiftState.LOW);
+
                 while(drive.isBusy()){
                     drive.update();
-                    if(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) < 5){
-                        autoState = AutoStages.TRANSFER;
-                    }
                 }
-                autoState = TRANSFER;
-                break;
-            case TRANSFER:
-                commands.runFullSequence(CommandType.BLOCKING);
-                autoState = TRANSFERMORE;
+                autoState = DEPOSIT;
                 break;
 
             case TRANSFERMORE:
 
-                commands.extendLift(Lift.LiftState.AUTO_LOW);
-                while(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) < 5){
+
+                while(Math.abs(commands.getLiftPosition() - liftTargetPosition) > 5){
 
                 }
                 autoState = DEPOSIT;
                 break;
 
             case DEPOSIT:
-                commands.releasePixelsToIntermediate();
+                commands.releasePixels();
                 commands.extendLift(Lift.LiftState.RETRACTED);
                 cycleCounter ++;
                 if(cycleCounter <= MAX_CYCLES){
@@ -171,6 +182,8 @@ public abstract class AutoBase extends OpMode {
                 }
                 break;
             case PARK:
+                commands.toInit(false);
+                drive.followTrajectorySequence(parkLeft);
                 break;
         }
         telemetry.addData("Pose: ", drive.getPoseEstimate());
@@ -180,6 +193,7 @@ public abstract class AutoBase extends OpMode {
         telemetry.addData("FourBar State: ", commands.getFourBarState());
         telemetry.addData("Differential State: ", commands.getDifferentialState());
         telemetry.addData("Claw State: ", commands.getClawState());
+        telemetry.addData("Lift State: ", commands.getLiftState());
         telemetry.addData("Stage: ", autoState);
 
     }

@@ -18,13 +18,12 @@ public class LiftTest extends OpMode {
     FtcDashboard dashboard;
     TelemetryPacket packet;
 
-    public static int targetPosition = 0;
 
 
     @Override
     public void init() {
         lift = Lift.getInstance();
-        lift.initLift(hardwareMap, false);
+        lift.initLift(hardwareMap, true);
 
 
         dashboard = FtcDashboard.getInstance();

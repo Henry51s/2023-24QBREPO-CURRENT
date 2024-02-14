@@ -31,10 +31,9 @@ public class GlobalVars {
     public static double INTAKE_MAX_POWER = 0.75;
 
 
-    public static double INTAKE_ARM_GROUND = 0.215;
+    public static double INTAKE_ARM_GROUND = 0.15;
     public static double INTAKE_ARM_SPIKEMARK = 0.145;
 
-    //public static double INTAKE_ARM_SPIKEMARK = 0.145; //0.145
     public static double INTAKE_ARM_SECOND = 0.282;
     public static double INTAKE_ARM_THIRD = 0.357;
     public static double INTAKE_ARM_FOURTH = 0.366;
@@ -49,24 +48,29 @@ public class GlobalVars {
 
     public static int LIFT_AUTO_LOW = 400;
 
+    public static int LIFT_FIRST_PIXEL = 108;
+    public static int LIFT_INCREMENT = 238;
 
     public static double FOURBAR_INIT = 0.8;
-    public static double FOURBAR_PICKUP = 0.938;
-    public static double FOURBAR_DEPOSIT = 0.469;
-    public static double FOURBAR_INTERMEDIATE_PTD = 0.86;
-    public static double FOURBAR_INTERMEDIATE_DTP = 0.88;
+    public static double FOURBAR_PICKUP = 0.938-0.074;
+    public static double FOURBAR_DEPOSIT = 0.469-0.074;
+    public static double FOURBAR_POST_DEPOSIT = 0.55-0.074;
+    public static double FOURBAR_INTERMEDIATE_PTD = 0.86-0.074;
+    public static double FOURBAR_INTERMEDIATE_DTP = 0.88-0.74;
 
-    public static double DIFFL_PICKUP = 0.035;
+    public static double DIFFL_PICKUP = 0.009;
     public static double DIFFL_DEPOSIT = 0.812;
     public static double DIFFL_DEPOSIT_45_L = 1;
     public static double DIFFL_DEPOSIT_45_R = 0.646;
     public static double DIFFL_INTERMEDIATE_PTD = 0.59;
     public static double DIFFL_INIT = 0.304;
+    public static double DIFFL_DEPOSIT_90 = 0.5559;
 
     public static double DIFFR_INTERMEDIATE_PTD = 0.03;
-    public static double DIFFR_PICKUP = 0.0489;
+    public static double DIFFR_PICKUP = 0.0228999999;
     public static double DIFFR_DEPOSIT = 0.27;
     public static double DIFFR_DEPOSIT_45_L = 0.086;
+    public static double DIFFR_DEPOSIT_90 = 0.544;
     public static double DIFFR_DEPOSIT_45_R = 0.438;
     public static double DIFFR_INIT = 0.312;
 

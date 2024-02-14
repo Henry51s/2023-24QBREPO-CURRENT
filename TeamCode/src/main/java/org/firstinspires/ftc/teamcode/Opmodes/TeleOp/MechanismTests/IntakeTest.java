@@ -76,8 +76,6 @@ public class IntakeTest extends OpMode {
 
         telemetry.addData("Intake Arm Position: ", intake.getIntakeArmPosition());
         telemetry.addData("Intake Motor Position: ", intake.getIntakePosition());
-        telemetry.addData("Target Position: ", intake.getTargetPosition());
-        telemetry.addData("Roll Counter: ", intake.getRoundedRollCounter());
 
     }
 }

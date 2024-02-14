@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE_DTP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_INTERMEDIATE_PTD;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_PICKUP;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.FOURBAR_POST_DEPOSIT;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -27,6 +28,7 @@ public class FourBar {
     public enum State{
         INIT,
         DEPOSIT,
+        POST_DEPOSIT,
         PICKUP,
         INTERMEDIATE_PTD,
         INTERMEDIATE_DTP
@@ -69,6 +71,9 @@ public class FourBar {
                 break;
             case DEPOSIT:
                 setFourBarPosition(FOURBAR_DEPOSIT);
+                break;
+            case POST_DEPOSIT:
+                setFourBarPosition(FOURBAR_POST_DEPOSIT);
                 break;
         }
     }

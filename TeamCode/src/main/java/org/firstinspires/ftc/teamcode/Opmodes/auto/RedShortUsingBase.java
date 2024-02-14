@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam
 import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.AutoBase;
 
 
-@Autonomous(name="BaseOpModeTest")
-public class BaseTest extends AutoBase
+@Autonomous(name="RedShortUsingBase")
+public class RedShortUsingBase extends AutoBase
 {
     @Override
     public void init() {

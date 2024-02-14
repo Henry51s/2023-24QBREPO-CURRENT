@@ -35,6 +35,8 @@ public class Intake {
         STOP,
         NORMAL,
         REVERSED,
+        HALF,
+        REVERSED_HALF
     }
 
     public enum IntakeArmState{
@@ -84,6 +86,12 @@ public class Intake {
             case NORMAL:
                 intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 intake.setPower(INTAKE_MAX_POWER);
+                break;
+            case HALF:
+                intake.setPower(INTAKE_MAX_POWER/2);
+                break;
+            case REVERSED_HALF:
+                intake.setPower(-INTAKE_MAX_POWER/2);
                 break;
 
         }

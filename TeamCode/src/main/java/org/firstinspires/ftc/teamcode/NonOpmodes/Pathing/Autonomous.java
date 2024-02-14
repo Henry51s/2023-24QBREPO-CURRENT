@@ -26,6 +26,7 @@ public class Autonomous {
     public TrajectorySequence extendToBackDrop;
     public TrajectorySequence cycleToExtend;
     public TrajectorySequence cycleToExtending;
+    public TrajectorySequence parkLeft;
 
     private PointsOfInterest pointsOfInterest = new PointsOfInterest();
     private SampleMecanumDrive drive;
@@ -49,6 +50,11 @@ public class Autonomous {
 
 
     public void setPath(AutoLocation autoLocation, SpikeMark spikeMark){
+
+        parkLeft = drive.trajectorySequenceBuilder(new Pose2d(0,0,0))
+                .strafeLeft(10)
+                .build();
+
         startPose = pointsOfInterest.poseStartPose;
         switch(autoLocation){
             case BLUE_LONG:
@@ -150,6 +156,8 @@ public class Autonomous {
                     cycleToExtend = drive.trajectorySequenceBuilder(pointsOfInterest.poseRedShortCycleScore)
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedShortExtending1)
+                            .build();
+                    cycleToExtending = drive.trajectorySequenceBuilder(pointsOfInterest.poseRedShortExtending1)
                             .lineToLinearHeading(pointsOfInterest.poseRedShortExtending2)
                             .build();
 

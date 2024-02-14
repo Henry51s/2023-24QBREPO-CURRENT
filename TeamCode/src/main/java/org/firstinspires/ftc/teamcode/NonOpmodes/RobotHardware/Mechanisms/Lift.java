@@ -1,15 +1,20 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
+
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_FIRST_PIXEL;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_HIGH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_INCREMENT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MAX_POWER;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MED;
+
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_RETRACTED;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
@@ -31,9 +36,12 @@ public class Lift {
         MED,
         HIGH,
         AUTO_LOW,
+        MEMORY
     }
     private LiftState liftState = LiftState.RETRACTED;
     private int targetPosition = 0;
+    private int callCounter = 0;
+    private int maxIncrement = 5;
 
 
     public void initLift(HardwareMap hw){
@@ -56,8 +64,6 @@ public class Lift {
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             lift.setPower(LIFT_MAX_POWER);
         }
-
-
     }
 
     public void setTargetPosition(int targetPosition){
@@ -86,6 +92,29 @@ public class Lift {
                 targetPosition = LIFT_AUTO_LOW;
                 setTargetPosition(LIFT_AUTO_LOW);
                 break;
+            case MEMORY:
+                setTargetPosition(LIFT_FIRST_PIXEL + (callCounter * LIFT_INCREMENT));
+                break;
+        }
+    }
+
+    private Gamepad current = new Gamepad(), previous = new Gamepad();
+
+    public void loopLift(Gamepad gamepad){
+        previous.copy(current);
+        current.copy(gamepad);
+
+        callCounter = Math.max(0, Math.min(callCounter, maxIncrement));
+
+        if(current.dpad_up && !previous.dpad_up){
+            callCounter++;
+            targetPosition = LIFT_FIRST_PIXEL + (callCounter * LIFT_INCREMENT);
+            lift.setTargetPosition(targetPosition);
+        }
+        if(current.dpad_down && !previous.dpad_down){
+            callCounter--;
+            targetPosition = LIFT_FIRST_PIXEL + (callCounter * LIFT_INCREMENT);
+            lift.setTargetPosition(targetPosition);
         }
     }
 

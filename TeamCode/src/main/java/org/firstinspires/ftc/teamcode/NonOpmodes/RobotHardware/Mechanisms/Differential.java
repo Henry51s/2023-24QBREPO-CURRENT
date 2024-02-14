@@ -18,6 +18,7 @@ public class Differential {
     public enum State{
         INIT,
         DEPOSIT,
+        DEPOSIT_VERTICAL,
         PICKUP,
         INTERMEDIATE_PTD,
         TILT_LEFT,
@@ -74,6 +75,10 @@ public class Differential {
             case TILT_RIGHT:
                 diffL.setPosition(DIFFL_DEPOSIT_45_R);
                 diffR.setPosition(DIFFR_DEPOSIT_45_R);
+                break;
+            case DEPOSIT_VERTICAL:
+                diffL.setPosition(DIFFL_DEPOSIT_90);
+                diffR.setPosition(DIFFR_DEPOSIT_90);
                 break;
         }
     }
