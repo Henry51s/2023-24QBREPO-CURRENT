@@ -105,6 +105,7 @@ public class Lift {
         current.copy(gamepad);
 
         callCounter = Math.max(0, Math.min(callCounter, maxIncrement));
+        targetPosition = Math.max(0, Math.min(targetPosition, 9999));
 
         if(current.dpad_up && !previous.dpad_up){
             callCounter++;

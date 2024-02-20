@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.CommandType;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Commands;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Differential;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
@@ -47,10 +48,10 @@ public class QBTeleOp extends OpMode {
         commands.loopRobot(gamepad2, gamepad2, gamepad1, gamepad1, gamepad2);
 
         if(currentGamepad2.dpad_left && !previousGamepad2.dpad_left){
-            diffCounter++;
+            diffCounter--;
         }
         if(currentGamepad2.dpad_right && !previousGamepad2.dpad_right){
-            diffCounter--;
+            diffCounter++;
         }
 
         if(differential.getState() == Differential.State.DEPOSIT || differential.getState() == Differential.State.TILT_LEFT || differential.getState() == Differential.State.TILT_RIGHT || differential.getState() == Differential.State.DEPOSIT_VERTICAL){
@@ -69,13 +70,13 @@ public class QBTeleOp extends OpMode {
         }
 
         if(currentGamepad2.a && !previousGamepad2.a){
-            commands.toDeposit();
+            commands.toDeposit(CommandType.ASYNC);
         }
         if(currentGamepad2.b && !previousGamepad2.b){
-            commands.toPickup();
+            commands.toPickup(CommandType.ASYNC);
         }
         if(currentGamepad2.y && !previousGamepad2.y){
-            commands.releasePixelsToIntermediate();
+            commands.releasePixelsToIntermediate(CommandType.ASYNC);
         }
 
         if(gamepad1.back){

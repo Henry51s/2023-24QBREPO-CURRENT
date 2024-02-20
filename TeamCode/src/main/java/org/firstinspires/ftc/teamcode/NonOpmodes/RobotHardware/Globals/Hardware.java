@@ -92,7 +92,7 @@ public class Hardware{
         climbR = hw.get(CRServo.class, CHSERVO_1);
         climbR.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        drone = hw.get(Servo.class, CHSERVO_3);
+        drone = hw.get(Servo.class, CHSERVO_5);
 
 
     }

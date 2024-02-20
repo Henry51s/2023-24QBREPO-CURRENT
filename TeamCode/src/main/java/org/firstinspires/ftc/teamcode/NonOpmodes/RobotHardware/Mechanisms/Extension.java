@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms;
 
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_AUTO_LONG;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_CLIMB;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_FAR;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.EXTENDO_MAX_VELOCITY;
@@ -64,7 +65,8 @@ public class Extension {
         SHORT,
         MED,
         FAR,
-        CLIMB
+        CLIMB,
+        LONG_SIDE_AUTO_INTAKE
     }
 
     public enum Mode{
@@ -128,6 +130,9 @@ public class Extension {
                 break;
             case CLIMB:
                 setTargetPosition(EXTENDO_CLIMB);
+                break;
+            case LONG_SIDE_AUTO_INTAKE:
+                setTargetPosition(EXTENDO_AUTO_LONG);
                 break;
         }
     }

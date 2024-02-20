@@ -20,7 +20,7 @@ public class PointsOfInterest {
 
 
     public static double[] redLongSpikeMarkL = {0,0,0};
-    public static double[] redLongSpikeMarkM = {0,0,0};
+    public static double[] redLongSpikeMarkM = {57,0,0};
     public static double[] redLongSpikeMarkR = {0,0,0};
     public static double[] preBackDropRedLong = {0,0,0};
 
@@ -43,8 +43,10 @@ public class PointsOfInterest {
     public static double[] redShortBackDropM = {29,-39,-90};
     public static double[] redShortBackDropR = {0,0,0};
 
+    public static double[] redLongFirstIntake = {57,0,-93};
+
     public static double[] redLongBackDropL = {0,0,0};
-    public static double[] redLongBackDropM = {0,0,0};
+    public static double[] redLongBackDropM = {29,-91,-90};
     public static double[] redLongBackDropR = {0,0,0};
 
     public static double[] blueShortBackDropL = {0,0,0};
@@ -60,6 +62,9 @@ public class PointsOfInterest {
     public static double[] redShortExtending1 = {54,-30,-90};
     public static double[] redShortExtending2 = {54,31,-87};
 
+    public static double[] redLongExtending1 = {54,-91,-90};
+    public static double[] redLongExtending2 = {54,5,-95};
+
     //-------------------------------------------------------------
 
     public Pose2d poseStartPose = arrayToPose(startPose);
@@ -73,6 +78,8 @@ public class PointsOfInterest {
     public Pose2d poseRedLongSpikeMarkL = arrayToPose(redLongSpikeMarkL);
     public Pose2d poseRedLongSpikeMarkM = arrayToPose(redLongSpikeMarkM);
     public Pose2d poseRedLongSpikeMarkR = arrayToPose(redLongSpikeMarkR);
+
+    public Pose2d poseRedLongFirstIntake = arrayToPose(redLongFirstIntake);
 
     public Pose2d poseBlueShortSpikeMarkL = arrayToPose(blueShortSpikeMarkL);
     public Pose2d poseBlueShortSpikeMarkM = arrayToPose(blueShortSpikeMarkM);
@@ -103,6 +110,9 @@ public class PointsOfInterest {
 
     public Pose2d poseRedShortExtending1 = arrayToPose(redShortExtending1);
     public Pose2d poseRedShortExtending2 = arrayToPose(redShortExtending2);
+
+    public Pose2d poseRedLongExtending1 = arrayToPose(redLongExtending1);
+    public Pose2d poseRedLongExtending2 = arrayToPose(redLongExtending2);
 
 
 

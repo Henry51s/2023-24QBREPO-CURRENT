@@ -27,6 +27,7 @@ public class Autonomous {
     public TrajectorySequence cycleToExtend;
     public TrajectorySequence cycleToExtending;
     public TrajectorySequence parkLeft;
+    public TrajectorySequence firstIntake;
 
     private PointsOfInterest pointsOfInterest = new PointsOfInterest();
     private SampleMecanumDrive drive;
@@ -81,7 +82,19 @@ public class Autonomous {
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
-
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseRedLongSpikeMarkM)
+                            .build();
+                    firstIntake = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .turn(pointsOfInterest.poseRedLongFirstIntake.getHeading())
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseRedLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseRedLongBackDropM)
+                            .build();
 
 
                 }

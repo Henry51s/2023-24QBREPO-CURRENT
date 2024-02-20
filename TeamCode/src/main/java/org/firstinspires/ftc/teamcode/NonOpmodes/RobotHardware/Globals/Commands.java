@@ -75,45 +75,95 @@ public class Commands {
         initThread.start();
 
     }
-    public synchronized void toIntermediate(){
-        Thread intermediateThread = new Thread(() -> {
-            lift.setLiftState(Lift.LiftState.RETRACTED);
-            fourBar.setState(FourBar.State.INTERMEDIATE_PTD);
-            differential.setState(Differential.State.PICKUP);
-        });
-        intermediateThread.start();
+    public synchronized void toIntermediate(CommandType commandType){
+        switch(commandType){
+            case ASYNC:
+                Thread intermediateThread = new Thread(() -> {
+                    lift.setLiftState(Lift.LiftState.RETRACTED);
+                    timer.reset();
+                    differential.setState(Differential.State.PICKUP);
+                    while(timer.milliseconds() < 500){
+
+                    }
+                    fourBar.setState(FourBar.State.INTERMEDIATE_PTD);
+
+                });
+                intermediateThread.start();
+                break;
+            case BLOCKING:
+                lift.setLiftState(Lift.LiftState.RETRACTED);
+                timer.reset();
+                differential.setState(Differential.State.PICKUP);
+                while(timer.milliseconds() < 500){
+
+                }
+                fourBar.setState(FourBar.State.INTERMEDIATE_PTD);
+                break;
+        }
+
     }
-    public synchronized void toPickup(){
+    public synchronized void toPickup(CommandType commandType){
+        switch(commandType){
+            case BLOCKING:
+                lift.setLiftState(Lift.LiftState.RETRACTED);
+                while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
+                }
+                claw.setClawState(Claw.ClawState.OPEN);
+                differential.setState(Differential.State.PICKUP);
+                fourBar.setState(FourBar.State.PICKUP);
+                break;
+            case ASYNC:
+                Thread pickupThread = new Thread(() -> {
+                    lift.setLiftState(Lift.LiftState.RETRACTED);
+                    while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
+                    }
+                    claw.setClawState(Claw.ClawState.OPEN);
+                    differential.setState(Differential.State.PICKUP);
+                    fourBar.setState(FourBar.State.PICKUP);
+
+                });
+                pickupThread.start();
+                break;
+        }
         //Pickup code here
-        Thread pickupThread = new Thread(() -> {
-            lift.setLiftState(Lift.LiftState.RETRACTED);
-            while(Math.abs(lift.getCurrentPosition() - lift.getTargetPosition()) >= liftThreshold){
-            }
-            claw.setClawState(Claw.ClawState.OPEN);
-            differential.setState(Differential.State.PICKUP);
-            fourBar.setState(FourBar.State.PICKUP);
 
-        });
-        pickupThread.start();
     }
 
-    public synchronized void toDeposit(){
+    public synchronized void toDeposit(CommandType commandType){
+        switch(commandType){
+            case ASYNC:
+                Thread depositThread = new Thread(() -> {
+                    timer.reset();
+                    claw.setClawState(Claw.ClawState.CLOSE);
+                    while(timer.milliseconds() < depositClawDelay){
+
+                    }
+                    fourBar.setState(FourBar.State.DEPOSIT);
+                    while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
+
+                    }
+                    differential.setState(Differential.State.DEPOSIT);
+                    lift.setLiftState(Lift.LiftState.MEMORY);
+
+                });
+                depositThread.start();
+                break;
+            case BLOCKING:
+                timer.reset();
+                claw.setClawState(Claw.ClawState.CLOSE);
+                while(timer.milliseconds() < depositClawDelay){
+
+                }
+                fourBar.setState(FourBar.State.DEPOSIT);
+                while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
+
+                }
+                differential.setState(Differential.State.DEPOSIT);
+                lift.setLiftState(Lift.LiftState.MEMORY);
+                break;
+        }
         //Deposit code here
-        Thread depositThread = new Thread(() -> {
-            timer.reset();
-            claw.setClawState(Claw.ClawState.CLOSE);
-            while(timer.milliseconds() < depositClawDelay){
 
-            }
-            fourBar.setState(FourBar.State.DEPOSIT);
-            while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
-
-            }
-            differential.setState(Differential.State.DEPOSIT);
-            lift.setLiftState(Lift.LiftState.MEMORY);
-
-        });
-        depositThread.start();
     }
 
     public synchronized void runFullSequence(CommandType commandType){
@@ -169,30 +219,55 @@ public class Commands {
         }
     }
 
-    public synchronized void releasePixels(){
+    public synchronized void releasePixels(CommandType commandType){
+        switch(commandType){
+            case ASYNC:
+                Thread sequenceThread = new Thread(() -> {
+                    timer.reset();
+                    claw.setClawState(Claw.ClawState.OPEN);
+                    while(timer.milliseconds() < 100){
 
-        Thread sequenceThread = new Thread(() -> {
-            timer.reset();
-            claw.setClawState(Claw.ClawState.OPEN);
-            while(timer.milliseconds() < 100){
+                    }
+                    fourBar.setState(FourBar.State.POST_DEPOSIT);
+                });
 
-            }
-            fourBar.setState(FourBar.State.POST_DEPOSIT);
-        });
+                sequenceThread.start();
+                break;
+            case BLOCKING:
+                timer.reset();
+                claw.setClawState(Claw.ClawState.OPEN);
+                while(timer.milliseconds() < 100){
 
-        sequenceThread.start();
+                }
+                fourBar.setState(FourBar.State.POST_DEPOSIT);
+                break;
+        }
+
     }
-    public synchronized void releasePixelsToIntermediate(){
-        Thread sequenceThread = new Thread(() -> {
-            timer.reset();
-            claw.setClawState(Claw.ClawState.OPEN);
-            while(timer.milliseconds() < 500){
+    public synchronized void releasePixelsToIntermediate(CommandType commandType){
+        switch(commandType){
+            case ASYNC:
+                Thread sequenceThread = new Thread(() -> {
+                    timer.reset();
+                    claw.setClawState(Claw.ClawState.OPEN);
+                    while(timer.milliseconds() < 500){
 
-            }
-            toIntermediate();
-        });
+                    }
+                    toIntermediate(CommandType.ASYNC);
+                });
 
-        sequenceThread.start();
+                sequenceThread.start();
+                break;
+            case BLOCKING:
+                timer.reset();
+                claw.setClawState(Claw.ClawState.OPEN);
+                while(timer.milliseconds() < 500){
+
+                }
+                toIntermediate(CommandType.BLOCKING);
+                break;
+        }
+
     }
     public int getLiftPosition(){
         return lift.getCurrentPosition();

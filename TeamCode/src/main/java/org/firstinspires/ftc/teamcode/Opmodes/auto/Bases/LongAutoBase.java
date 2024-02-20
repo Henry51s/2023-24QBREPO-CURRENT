@@ -3,18 +3,19 @@ package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TRANSFER;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TRANSFERMORE;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PIXEL_DEPOSIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.RETRACT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.FAR;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.LONG_SIDE_AUTO_INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.SHORT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FIFTH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.SECOND;
 
-import com.fasterxml.jackson.module.kotlin.ReflectionCache;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -32,8 +33,9 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.RedLongUsingBase;
 
-public abstract class AutoBase extends OpMode {
+public abstract class LongAutoBase extends OpMode {
 
 
     protected AutoStages autoState = AutoStages.SPIKE_MARK;
@@ -47,7 +49,7 @@ public abstract class AutoBase extends OpMode {
     protected Webcam webcam = new Webcam();
     protected AutoLocation autoLocation;
 
-    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, parkLeft;
+    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, firstIntake, parkLeft;
     protected ElapsedTime timer = new ElapsedTime();
     protected int cycleCounter = 0;
     protected int liftTargetPosition = 0;
@@ -83,15 +85,17 @@ public abstract class AutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
+        auto.setPath(AutoLocation.RED_LONG, SpikeMark.MIDDLE);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
-        toExtend = auto.toExtend;
-        cycleToExtend = auto.cycleToExtend;
-        extending = auto.extending;
-        cycleToExtending = auto.cycleToExtending;
-        extendToBackDrop = auto.extendToBackDrop;
-        parkLeft = auto.parkLeft;
+        //toExtend = auto.toExtend;
+        //cycleToExtend = auto.cycleToExtend;
+        //extending = auto.extending;
+        //cycleToExtending = auto.cycleToExtending;
+        //extendToBackDrop = auto.extendToBackDrop;
+        //parkLeft = auto.parkLeft;
+        firstIntake = auto.firstIntake;
     }
 
     @Override
@@ -104,86 +108,74 @@ public abstract class AutoBase extends OpMode {
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.PIXEL_DEPOSIT;
+                autoState = AutoStages.LONG_FIRST_INTAKE;
                 break;
-            case PIXEL_DEPOSIT:
-                commands.extendLift(Lift.LiftState.AUTO_LOW);
-                commands.toDeposit();
-                drive.followTrajectorySequence(scoreBackDrop);
-                commands.releasePixels();
-                commands.extendLift(Lift.LiftState.RETRACTED);
-                drive.followTrajectorySequence(toExtend);
+            case LONG_FIRST_INTAKE:
+                drive.followTrajectorySequence(firstIntake);
+                extension.setExtensionState(LONG_SIDE_AUTO_INTAKE);
 
-                autoState = AutoStages.INITIAL_EXTEND;
+                while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
+                }
+                intake.runIntakeSetTime(2000, Intake.IntakeState.NORMAL);
+                commands.toIntermediate(CommandType.ASYNC);
+                autoState = RETRACT;
+
+                break;
+
+            case RETRACT:
+                extension.setExtensionState(RETRACTED);
+                while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
+                }
+                commands.toPickup(CommandType.ASYNC);
+                timer.reset();
+                while(timer.milliseconds() < 500){
+
+                }
+                commands.toDeposit(CommandType.BLOCKING);
+
+                autoState = PIXEL_DEPOSIT;
+                break;
+
+
+            case PIXEL_DEPOSIT:
+                drive.followTrajectorySequence(scoreBackDrop);
+                commands.extendLift(Lift.LiftState.AUTO_LOW);
+                while(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) > 5){
+
+                }
+                commands.releasePixelsToIntermediate(CommandType.ASYNC);
+
+
+                autoState = PARK;
                 break;
             case INITIAL_EXTEND:
-                drive.followTrajectorySequenceAsync(extending);
-                extension.setExtensionState(Extension.ExtensionState.FAR);
-                while(drive.isBusy()){
-                    drive.update();
-                }
-                autoState = INTAKE;
 
                 break;
             case CYCLE_EXTEND:
-                drive.followTrajectorySequenceAsync(cycleToExtending);
-                extension.setExtensionState(Extension.ExtensionState.FAR);
-                intake.setIntakeArmState(GROUND);
-                while(drive.isBusy()){
-                    drive.update();
+                //drive to extending position
+                extension.setExtensionState(FAR);
+                while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 5){
+
                 }
                 autoState = INTAKE;
                 break;
 
             case INTAKE:
-                intake.runIntakeSetTime(500, Intake.IntakeState.NORMAL);
-                intake.runIntakeSetTime(500, Intake.IntakeState.REVERSED_HALF);
-                autoState = AutoStages.RETRACT;
+                intake.runIntakeSetTime(1000, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTime(250, Intake.IntakeState.REVERSED_HALF);
                 break;
-            case RETRACT:
-                drive.followTrajectorySequenceAsync(extendToBackDrop);
-                extension.setExtensionState(RETRACTED);
-                intake.runIntakeSetTimeAsync(3000, Intake.IntakeState.NORMAL);
-                while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 600){
 
-                }
-                commands.runFullSequence(CommandType.ASYNC);
-                timer.reset();
-                while(timer.milliseconds() < 2000){
-                    drive.update();
-                }
-                commands.extendLift(Lift.LiftState.LOW);
-
-                while(drive.isBusy()){
-                    drive.update();
-                }
-                autoState = DEPOSIT;
-                break;
 
             case TRANSFERMORE:
 
-
-                while(Math.abs(commands.getLiftPosition() - liftTargetPosition) > 5){
-
-                }
-                autoState = DEPOSIT;
                 break;
 
             case DEPOSIT:
-                commands.releasePixels();
-                commands.extendLift(Lift.LiftState.RETRACTED);
-                cycleCounter ++;
-                if(cycleCounter <= MAX_CYCLES){
-                    drive.followTrajectorySequence(cycleToExtend);
-                    autoState = AutoStages.CYCLE_EXTEND;
-                }
-                else {
-                    autoState = PARK;
-                }
+
                 break;
             case PARK:
-                commands.toInit(false);
-                drive.followTrajectorySequence(parkLeft);
+
+
                 break;
         }
         telemetry.addData("Pose: ", drive.getPoseEstimate());

@@ -25,13 +25,14 @@ public class GlobalVars {
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_CLIMB = 142;
     public static int EXTENDO_SHORT = 100;
+    public static int EXTENDO_AUTO_LONG = 400;
     public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
 
-    public static double INTAKE_MAX_POWER = 0.75;
+    public static double INTAKE_MAX_POWER = 1;
 
 
-    public static double INTAKE_ARM_GROUND = 0.15;
+    public static double INTAKE_ARM_GROUND = 0.217;
     public static double INTAKE_ARM_SPIKEMARK = 0.145;
 
     public static double INTAKE_ARM_SECOND = 0.282;
@@ -51,26 +52,26 @@ public class GlobalVars {
     public static int LIFT_FIRST_PIXEL = 108;
     public static int LIFT_INCREMENT = 238;
 
-    public static double FOURBAR_INIT = 0.8;
-    public static double FOURBAR_PICKUP = 0.938-0.074;
+    public static double FOURBAR_INIT = 0.7;
+    public static double FOURBAR_PICKUP = 0.829;
     public static double FOURBAR_DEPOSIT = 0.469-0.074;
     public static double FOURBAR_POST_DEPOSIT = 0.55-0.074;
-    public static double FOURBAR_INTERMEDIATE_PTD = 0.86-0.074;
+    public static double FOURBAR_INTERMEDIATE_PTD = 0.75;
     public static double FOURBAR_INTERMEDIATE_DTP = 0.88-0.74;
 
-    public static double DIFFL_PICKUP = 0.009;
+    public static double DIFFL_PICKUP = 0.0339;
     public static double DIFFL_DEPOSIT = 0.812;
     public static double DIFFL_DEPOSIT_45_L = 1;
     public static double DIFFL_DEPOSIT_45_R = 0.646;
     public static double DIFFL_INTERMEDIATE_PTD = 0.59;
     public static double DIFFL_INIT = 0.304;
-    public static double DIFFL_DEPOSIT_90 = 0.5559;
+    public static double DIFFL_DEPOSIT_90 = 0.52399;
 
     public static double DIFFR_INTERMEDIATE_PTD = 0.03;
-    public static double DIFFR_PICKUP = 0.0228999999;
+    public static double DIFFR_PICKUP = 0.01799;
     public static double DIFFR_DEPOSIT = 0.27;
     public static double DIFFR_DEPOSIT_45_L = 0.086;
-    public static double DIFFR_DEPOSIT_90 = 0.544;
+    public static double DIFFR_DEPOSIT_90 = 0.558;
     public static double DIFFR_DEPOSIT_45_R = 0.438;
     public static double DIFFR_INIT = 0.312;
 

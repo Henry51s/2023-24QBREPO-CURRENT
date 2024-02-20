@@ -16,12 +16,12 @@ public class ExtendoTest extends OpMode {
 
     Extension extendo;
 
-    TuningModes tuningMode = TuningModes.OPERATIONAL;
+    TuningModes tuningMode = TuningModes.FINE_TUNE;
     @Override
     public void init() {
         dashboard = FtcDashboard.getInstance();
         extendo = Extension.getInstance();
-        extendo.initExtension(hardwareMap);
+        extendo.initExtension(hardwareMap, true);
     }
     @Override
     public void loop() {

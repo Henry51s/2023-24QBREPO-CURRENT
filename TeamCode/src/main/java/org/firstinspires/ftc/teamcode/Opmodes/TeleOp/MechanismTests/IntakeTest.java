@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp.MechanismTests;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeState.REVERSED;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeState.STOP;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -32,7 +35,15 @@ public class IntakeTest extends OpMode {
         switch(tuningMode){
 
             case FINE_TUNE:
-                intake.loopIntake(gamepad1);
+                if(gamepad1.left_bumper){
+                    intake.setIntakeState(Intake.IntakeState.NORMAL);
+                }
+                else if(gamepad1.right_bumper){
+                    intake.setIntakeState(REVERSED);
+                }
+                else{
+                    intake.setIntakeState(STOP);
+                }
 
                 if(gamepad1.dpad_up){
                     pos += 0.001;
