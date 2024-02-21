@@ -41,7 +41,7 @@ public class Lift {
     private LiftState liftState = LiftState.RETRACTED;
     private int targetPosition = 0;
     private int callCounter = 0;
-    private int maxIncrement = 5;
+    private int maxIncrement = 7;
 
 
     public void initLift(HardwareMap hw){
