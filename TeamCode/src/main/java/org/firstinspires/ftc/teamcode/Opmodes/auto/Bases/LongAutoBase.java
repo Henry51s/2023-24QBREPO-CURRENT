@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.CYCLE_EXTEND;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
@@ -52,18 +53,22 @@ public abstract class LongAutoBase extends OpMode {
     protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, firstIntake, parkLeft;
     protected ElapsedTime timer = new ElapsedTime();
     protected int cycleCounter = 0;
-    protected int liftTargetPosition = 0;
 
 
     public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color) {
         this.autoLocation = autoLocation;
         hardware.initAuto(hardwareMap);
         intake = hardware.intakeInstance;
-        extension = hardware.extensionInstance;
-        extension.startLoopExtensionAutoAsync();
 
         commands.initCommands();
         commands.toInit(true);
+
+        extension = hardware.extensionInstance;
+        extension.startLoopExtensionAutoAsync();
+        //extension.homeInAuto();
+
+
+
         intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
         extension.setExtensionState(RETRACTED);
         webcam.initCamera(hardwareMap, color);
@@ -89,11 +94,11 @@ public abstract class LongAutoBase extends OpMode {
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
-        //toExtend = auto.toExtend;
+        toExtend = auto.toExtend;
         //cycleToExtend = auto.cycleToExtend;
         //extending = auto.extending;
         //cycleToExtending = auto.cycleToExtending;
-        //extendToBackDrop = auto.extendToBackDrop;
+        extendToBackDrop = auto.extendToBackDrop;
         //parkLeft = auto.parkLeft;
         firstIntake = auto.firstIntake;
     }
@@ -105,6 +110,7 @@ public abstract class LongAutoBase extends OpMode {
 
 
             case SPIKE_MARK:
+                commands.toIntermediate(CommandType.ASYNC);
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
@@ -117,13 +123,16 @@ public abstract class LongAutoBase extends OpMode {
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
                 }
                 intake.runIntakeSetTime(2000, Intake.IntakeState.NORMAL);
-                commands.toIntermediate(CommandType.ASYNC);
+                intake.runIntakeSetTime(500, Intake.IntakeState.REVERSED);
+
                 autoState = RETRACT;
 
                 break;
 
             case RETRACT:
+                intake.runIntakeSetTimeAsync(3000, Intake.IntakeState.NORMAL);
                 extension.setExtensionState(RETRACTED);
+                drive.followTrajectorySequence(scoreBackDrop);
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
                 }
                 commands.toPickup(CommandType.ASYNC);
@@ -131,28 +140,26 @@ public abstract class LongAutoBase extends OpMode {
                 while(timer.milliseconds() < 500){
 
                 }
-                commands.toDeposit(CommandType.BLOCKING);
-
+                commands.toDeposit(CommandType.ASYNC);
                 autoState = PIXEL_DEPOSIT;
                 break;
 
 
             case PIXEL_DEPOSIT:
-                drive.followTrajectorySequence(scoreBackDrop);
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
                 while(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) > 5){
 
                 }
                 commands.releasePixelsToIntermediate(CommandType.ASYNC);
+                commands.extendLift(Lift.LiftState.RETRACTED);
 
 
-                autoState = PARK;
+                autoState = CYCLE_EXTEND;
                 break;
-            case INITIAL_EXTEND:
 
-                break;
             case CYCLE_EXTEND:
                 //drive to extending position
+                drive.followTrajectorySequence(cycleToExtend);
                 extension.setExtensionState(FAR);
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 5){
 
@@ -163,6 +170,7 @@ public abstract class LongAutoBase extends OpMode {
             case INTAKE:
                 intake.runIntakeSetTime(1000, Intake.IntakeState.NORMAL);
                 intake.runIntakeSetTime(250, Intake.IntakeState.REVERSED_HALF);
+                autoState = PARK;
                 break;
 
 

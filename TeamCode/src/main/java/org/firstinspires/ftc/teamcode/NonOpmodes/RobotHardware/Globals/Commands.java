@@ -53,10 +53,10 @@ public class Commands {
         lift.loopLift(liftGamepad);
     }
 
-    public synchronized void extendLift(Lift.LiftState liftState){
+    public void extendLift(Lift.LiftState liftState){
         lift.setLiftState(liftState);
     }
-    public synchronized void toInit(boolean grab){
+    public void toInit(boolean grab){
         Thread initThread = new Thread(() -> {
             timer.reset();
             if(grab){
@@ -75,7 +75,7 @@ public class Commands {
         initThread.start();
 
     }
-    public synchronized void toIntermediate(CommandType commandType){
+    public void toIntermediate(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread intermediateThread = new Thread(() -> {
@@ -102,7 +102,7 @@ public class Commands {
         }
 
     }
-    public synchronized void toPickup(CommandType commandType){
+    public void toPickup(CommandType commandType){
         switch(commandType){
             case BLOCKING:
                 lift.setLiftState(Lift.LiftState.RETRACTED);
@@ -129,7 +129,7 @@ public class Commands {
 
     }
 
-    public synchronized void toDeposit(CommandType commandType){
+    public void toDeposit(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread depositThread = new Thread(() -> {
@@ -166,7 +166,7 @@ public class Commands {
 
     }
 
-    public synchronized void runFullSequence(CommandType commandType){
+    public void runFullSequence(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {
@@ -219,7 +219,7 @@ public class Commands {
         }
     }
 
-    public synchronized void releasePixels(CommandType commandType){
+    public void releasePixels(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {
@@ -244,7 +244,7 @@ public class Commands {
         }
 
     }
-    public synchronized void releasePixelsToIntermediate(CommandType commandType){
+    public void releasePixelsToIntermediate(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {

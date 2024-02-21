@@ -14,9 +14,9 @@ public class PointsOfInterest {
     }
 
     public static double[] startPose = {0,0,-180};
-    public static double[] redShortSpikeMarkL = {30,5,-90};
+    public static double[] redShortSpikeMarkL = {33,-7,-90};
     public static double[] redShortSpikeMarkM = {42,-16,-90};
-    public static double[] redShortSpikeMarkR = {26,0,90};
+    public static double[] redShortSpikeMarkR = {32,-22,-90};
 
 
     public static double[] redLongSpikeMarkL = {0,0,0};
@@ -39,14 +39,14 @@ public class PointsOfInterest {
 
 
 
-    public static double[] redShortBackDropL = {0,0,0};
+    public static double[] redShortBackDropL = {40,-39,-90};
     public static double[] redShortBackDropM = {29,-39,-90};
-    public static double[] redShortBackDropR = {0,0,0};
+    public static double[] redShortBackDropR = {22,-39,-90};
 
     public static double[] redLongFirstIntake = {57,0,-93};
 
     public static double[] redLongBackDropL = {0,0,0};
-    public static double[] redLongBackDropM = {29,-91,-90};
+    public static double[] redLongBackDropM = {32,-91,-90};
     public static double[] redLongBackDropR = {0,0,0};
 
     public static double[] blueShortBackDropL = {0,0,0};
@@ -63,7 +63,7 @@ public class PointsOfInterest {
     public static double[] redShortExtending2 = {54,31,-87};
 
     public static double[] redLongExtending1 = {54,-91,-90};
-    public static double[] redLongExtending2 = {54,5,-95};
+    public static double[] redLongExtending2 = {54,5,-90};
 
     //-------------------------------------------------------------
 

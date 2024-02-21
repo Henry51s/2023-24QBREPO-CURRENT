@@ -66,7 +66,8 @@ public abstract class ShortAutoBase extends OpMode {
     }
     @Override
     public void init_loop(){
-        telemetry.addData("Location: ", webcam.getLocation());
+        telemetry.addData("Spike Mark Location: ", webcam.getLocation());
+        telemetry.addData("Robot Pose: ", drive.getPoseEstimate());
         telemetry.update();
         if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.CENTER){
             auto.setPath(autoLocation, SpikeMark.MIDDLE);
@@ -104,11 +105,12 @@ public abstract class ShortAutoBase extends OpMode {
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
                 commands.toDeposit(CommandType.ASYNC);
                 drive.followTrajectorySequence(scoreBackDrop);
-                commands.releasePixels(CommandType.ASYNC);
-                commands.extendLift(Lift.LiftState.RETRACTED);
-                drive.followTrajectorySequence(toExtend);
+                autoState = PARK;
+                //commands.releasePixels(CommandType.ASYNC);
+                //commands.extendLift(Lift.LiftState.RETRACTED);
+                //drive.followTrajectorySequence(toExtend);
 
-                autoState = AutoStages.INITIAL_EXTEND;
+                //autoState = AutoStages.INITIAL_EXTEND;
                 break;
             case INITIAL_EXTEND:
                 drive.followTrajectorySequenceAsync(extending);
@@ -176,8 +178,8 @@ public abstract class ShortAutoBase extends OpMode {
                 }
                 break;
             case PARK:
-                commands.toInit(false);
-                drive.followTrajectorySequence(parkLeft);
+                //commands.toInit(false);
+                //drive.followTrajectorySequence(parkLeft);
                 break;
         }
         telemetry.addData("Pose: ", drive.getPoseEstimate());

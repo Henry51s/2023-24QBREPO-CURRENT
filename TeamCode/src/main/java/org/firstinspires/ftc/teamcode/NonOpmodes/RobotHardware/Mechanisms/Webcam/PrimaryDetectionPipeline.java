@@ -31,7 +31,7 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
         BLUE,
         RED
     }
-    Color color;
+    private Color color;
 
     public void initPipeline(Color color){
         this.color = color;
@@ -60,15 +60,14 @@ public class PrimaryDetectionPipeline extends OpenCvPipeline {
     // Coordinate Locations for bounding boxes of each of the three individual "subviews" of the camera (left, center, right)
     public static int threshold = 900000;
 
-    double leftTotal;
-    double centerTotal;
+    private double leftTotal;
+    private double centerTotal;
 
-    // Define the enum for ItemLocation
     public enum ItemLocation {
         RIGHT, LEFT, CENTER
     }
 
-    private ItemLocation location = ItemLocation.CENTER;
+    private ItemLocation location = ItemLocation.LEFT;
     private Mat workingMatrix = new Mat();
     private Mat matLeft = new Mat(), matCenter = new Mat();
 

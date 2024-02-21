@@ -19,7 +19,7 @@ public class Drive {
     }
     private int flipMultiplier = 1;
     public static double driveMultiplier = 1;
-    public static double turnMultiplier = 0.5;
+    public static double turnMultiplier = 0.75;
 
 
     public enum DriveState{

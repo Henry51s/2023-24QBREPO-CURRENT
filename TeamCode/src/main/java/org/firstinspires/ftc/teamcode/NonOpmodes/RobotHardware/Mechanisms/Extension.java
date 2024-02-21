@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Hardware;
@@ -34,7 +35,7 @@ public class Extension {
     public static double positionTolerance = 1;
     public static double joystickMultiplier = 15;
     public static double ampThreshold = 3;
-    public static int homePositionBuffer = 3;
+    public static int homePositionBuffer = 10;
 
 
 
@@ -59,6 +60,7 @@ public class Extension {
     private Hardware hardware = new Hardware();
     private DcMotorEx extendoL, extendoR;
     private Gamepad current = new Gamepad(), previous = new Gamepad();
+    private ElapsedTime timer = new ElapsedTime();
 
     public enum ExtensionState{
         RETRACTED,
@@ -117,22 +119,22 @@ public class Extension {
     public void setExtensionState(ExtensionState extensionState){
         switch(extensionState){
             case RETRACTED:
-                setTargetPosition(EXTENDO_RETRACTED);
+                setTargetPosition(EXTENDO_RETRACTED + homePosition);
                 break;
             case SHORT:
-                setTargetPosition(EXTENDO_SHORT);
+                setTargetPosition(EXTENDO_SHORT + homePosition);
                 break;
             case MED:
-                setTargetPosition(EXTENDO_MED);
+                setTargetPosition(EXTENDO_MED + homePosition);
                 break;
             case FAR:
-                setTargetPosition(EXTENDO_FAR);
+                setTargetPosition(EXTENDO_FAR + homePosition);
                 break;
             case CLIMB:
-                setTargetPosition(EXTENDO_CLIMB);
+                setTargetPosition(EXTENDO_CLIMB + homePosition) ;
                 break;
             case LONG_SIDE_AUTO_INTAKE:
-                setTargetPosition(EXTENDO_AUTO_LONG);
+                setTargetPosition(EXTENDO_AUTO_LONG + homePosition);
                 break;
         }
     }
@@ -146,7 +148,16 @@ public class Extension {
         mode = Mode.HOMING;
         homePosition = -999999;
         setTargetPosition(homePosition);
+    }
+    public void homeInAuto(){
+        homePosition = -99999;
+        setTargetPosition(homePosition);
+        while(timer.milliseconds() < 3000 && getAverageCurrent(CurrentUnit.AMPS) < ampThreshold){
 
+
+        }
+        homePosition = getAveragePosition() + homePositionBuffer;
+        setTargetPosition(EXTENDO_RETRACTED + homePosition);
     }
 
 
