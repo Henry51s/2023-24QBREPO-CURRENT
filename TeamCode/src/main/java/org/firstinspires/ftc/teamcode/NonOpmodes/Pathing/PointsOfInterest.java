@@ -19,9 +19,9 @@ public class PointsOfInterest {
     public static double[] redShortSpikeMarkR = {32,-22,-90};
 
 
-    public static double[] redLongSpikeMarkL = {0,0,0};
+    public static double[] redLongSpikeMarkL = {32,-6,-90};
     public static double[] redLongSpikeMarkM = {57,0,0};
-    public static double[] redLongSpikeMarkR = {0,0,0};
+    public static double[] redLongSpikeMarkR = {29,-2,90};
     public static double[] preBackDropRedLong = {0,0,0};
 
 

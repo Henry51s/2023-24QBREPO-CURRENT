@@ -90,7 +90,7 @@ public abstract class LongAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.RED_LONG, SpikeMark.MIDDLE);
+        auto.setPath(AutoLocation.RED_LONG, SpikeMark.RIGHT);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -110,11 +110,13 @@ public abstract class LongAutoBase extends OpMode {
 
 
             case SPIKE_MARK:
-                commands.toIntermediate(CommandType.ASYNC);
+                /*commands.toIntermediate(CommandType.ASYNC);
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.LONG_FIRST_INTAKE;
+                autoState = AutoStages.LONG_FIRST_INTAKE;*/
+                drive.followTrajectorySequence(scoreSpikeMark);
+                autoState = PARK;
                 break;
             case LONG_FIRST_INTAKE:
                 drive.followTrajectorySequence(firstIntake);
