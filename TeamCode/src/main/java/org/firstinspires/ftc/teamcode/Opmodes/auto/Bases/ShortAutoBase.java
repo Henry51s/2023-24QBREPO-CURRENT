@@ -78,6 +78,7 @@ public abstract class ShortAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
+        auto.setPath(AutoLocation.BLUE_SHORT, SpikeMark.MIDDLE);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -96,10 +97,13 @@ public abstract class ShortAutoBase extends OpMode {
 
 
             case SPIKE_MARK:
-                intake.setIntakeArmState(GROUND);
+                /*intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.PIXEL_DEPOSIT;
+                autoState = AutoStages.PIXEL_DEPOSIT;*/
+                drive.followTrajectorySequence(scoreSpikeMark);
+                drive.followTrajectorySequence(scoreBackDrop);
+                autoState = PARK;
                 break;
             case PIXEL_DEPOSIT:
                 commands.extendLift(Lift.LiftState.AUTO_LOW);

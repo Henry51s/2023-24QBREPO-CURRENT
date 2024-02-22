@@ -5,17 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.LongAutoBase;
 import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.ShortAutoBase;
 
-@Disabled
-@Config
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueLong")
-public class BlueLong extends ShortAutoBase {
+public class BlueLong extends LongAutoBase {
 
 
     @Override
     public void init() {
-        super.init(AutoLocation.BLUE_LONG,PrimaryDetectionPipeline.Color.RED);
+        super.init(AutoLocation.BLUE_LONG,PrimaryDetectionPipeline.Color.BLUE);
     }
     @Override
     public void init_loop() {

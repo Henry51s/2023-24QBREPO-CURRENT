@@ -90,15 +90,15 @@ public abstract class LongAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.RED_LONG, SpikeMark.RIGHT);
+        auto.setPath(AutoLocation.BLUE_LONG, SpikeMark.RIGHT);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
-        toExtend = auto.toExtend;
+        //toExtend = auto.toExtend;
         //cycleToExtend = auto.cycleToExtend;
         //extending = auto.extending;
         //cycleToExtending = auto.cycleToExtending;
-        extendToBackDrop = auto.extendToBackDrop;
+        //extendToBackDrop = auto.extendToBackDrop;
         //parkLeft = auto.parkLeft;
         firstIntake = auto.firstIntake;
     }
@@ -110,13 +110,11 @@ public abstract class LongAutoBase extends OpMode {
 
 
             case SPIKE_MARK:
-                /*commands.toIntermediate(CommandType.ASYNC);
+                commands.toIntermediate(CommandType.ASYNC);
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.LONG_FIRST_INTAKE;*/
-                drive.followTrajectorySequence(scoreSpikeMark);
-                autoState = PARK;
+                autoState = AutoStages.LONG_FIRST_INTAKE;
                 break;
             case LONG_FIRST_INTAKE:
                 drive.followTrajectorySequence(firstIntake);
@@ -128,7 +126,6 @@ public abstract class LongAutoBase extends OpMode {
                 intake.runIntakeSetTime(500, Intake.IntakeState.REVERSED);
 
                 autoState = RETRACT;
-
                 break;
 
             case RETRACT:

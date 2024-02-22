@@ -13,7 +13,9 @@ public class PointsOfInterest {
         return resultPose;
     }
 
-    public static double[] startPose = {0,0,-180};
+    public static double[] redStartPose = {0,0,-180};
+    public static double[] blueStartPose = {0,0,180};
+
     public static double[] redShortSpikeMarkL = {33,-7,-90};
     public static double[] redShortSpikeMarkM = {42,-16,-90};
     public static double[] redShortSpikeMarkR = {32,-22,-90};
@@ -24,18 +26,20 @@ public class PointsOfInterest {
     public static double[] redLongSpikeMarkR = {29,-2,90};
     public static double[] preBackDropRedLong = {0,0,0};
 
+    public static double[] blueLongSpikeMarkL = {32,-6,-90};
+    public static double[] blueLongSpikeMarkM = {57,0,0};
+    public static double[] blueLongSpikeMarkR = {34,4,90};
+    public static double[] preBackDropBlueLong = {0,0,0};
+
 
 
     public static double[] blueShortSpikeMarkL = {0,0,0};
-    public static double[] blueShortSpikeMarkM = {0,0,0};
+    public static double[] blueShortSpikeMarkM = {27,0,180};
     public static double[] blueShortSpikeMarkR = {0,0,0};
 
 
 
-    public static double[] blueLongSpikeMarkL = {0,0,0};
-    public static double[] blueLongSpikeMarkM = {0,0,0};
-    public static double[] blueLongSpikeMarkR = {0,0,0};
-    public static double[] preBackDropBlueLong = {0,0,0};
+
 
 
 
@@ -43,19 +47,22 @@ public class PointsOfInterest {
     public static double[] redShortBackDropM = {29,-39,-90};
     public static double[] redShortBackDropR = {22,-39,-90};
 
+    public static double[] blueShortBackDropL = {0,0,0};
+    public static double[] blueShortBackDropM = {35,39,90};
+    public static double[] blueShortBackDropR = {0,0,0};
+
     public static double[] redLongFirstIntake = {57,0,-93};
+    public static double[] blueLongFirstIntake = {57, 0, 93};
 
     public static double[] redLongBackDropL = {0,0,0};
     public static double[] redLongBackDropM = {32,-91,-90};
     public static double[] redLongBackDropR = {0,0,0};
 
-    public static double[] blueShortBackDropL = {0,0,0};
-    public static double[] blueShortBackDropM = {0,0,0};
-    public static double[] blueShortBackDropR = {0,0,0};
 
-    public static double[] blueLongBackDropL = {0,0,0};
-    public static double[] blueLongBackDropM = {0,0,0};
-    public static double[] blueLongBackDropR = {0,0,0};
+
+    public static double[] blueLongBackDropL = {26,91,90};
+    public static double[] blueLongBackDropM = {33,91,90};
+    public static double[] blueLongBackDropR = {40,91,90};
 
     public static double[] redShortCycleScore = {37.5,-38.5,-90};
 
@@ -65,9 +72,13 @@ public class PointsOfInterest {
     public static double[] redLongExtending1 = {54,-91,-90};
     public static double[] redLongExtending2 = {54,5,-90};
 
+    public static double[] blueLongExtending1 = {57,5,90};
+    public static double[] blueLongExtending2 = {57,91,87};
+
     //-------------------------------------------------------------
 
-    public Pose2d poseStartPose = arrayToPose(startPose);
+    public Pose2d poseRedStartPose = arrayToPose(redStartPose);
+    public Pose2d poseBlueStartPose = arrayToPose(blueStartPose);
 
     public Pose2d poseRedShortCycleScore = arrayToPose(redShortCycleScore);
 
@@ -80,6 +91,7 @@ public class PointsOfInterest {
     public Pose2d poseRedLongSpikeMarkR = arrayToPose(redLongSpikeMarkR);
 
     public Pose2d poseRedLongFirstIntake = arrayToPose(redLongFirstIntake);
+    public Pose2d poseBlueLongFirstIntake = arrayToPose(blueLongFirstIntake);
 
     public Pose2d poseBlueShortSpikeMarkL = arrayToPose(blueShortSpikeMarkL);
     public Pose2d poseBlueShortSpikeMarkM = arrayToPose(blueShortSpikeMarkM);
@@ -113,6 +125,9 @@ public class PointsOfInterest {
 
     public Pose2d poseRedLongExtending1 = arrayToPose(redLongExtending1);
     public Pose2d poseRedLongExtending2 = arrayToPose(redLongExtending2);
+
+    public Pose2d poseBlueLongExtending1 = arrayToPose(blueLongExtending1);
+    public Pose2d poseBlueLongExtending2 = arrayToPose(blueLongExtending2);
 
 
 

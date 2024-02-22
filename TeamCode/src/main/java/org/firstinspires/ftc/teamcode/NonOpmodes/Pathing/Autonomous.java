@@ -15,7 +15,8 @@ public class Autonomous {
 
 
 
-    public Pose2d startPose;
+    public Pose2d redStartPose;
+    public Pose2d blueStartPose;
     public TrajectorySequence scoreSpikeMark;
     public TrajectorySequence scoreBackDrop;
     public TrajectorySequence park;
@@ -56,20 +57,75 @@ public class Autonomous {
                 .strafeLeft(10)
                 .build();
 
-        startPose = pointsOfInterest.poseStartPose;
+        redStartPose = pointsOfInterest.poseRedStartPose;
+        blueStartPose = pointsOfInterest.poseBlueStartPose;
+
+
         switch(autoLocation){
             case BLUE_LONG:
 
                 if(spikeMark == SpikeMark.RIGHT){
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(blueStartPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongSpikeMarkR)
+                            .build();
+                    firstIntake = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongFirstIntake)
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending2)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongBackDropR)
+                            .build();
+                    toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending2)
+                            .build();
+                    extendToBackDrop = drive.trajectorySequenceBuilder(toExtend.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongBackDropR)
+                            .build();
 
 
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(blueStartPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongSpikeMarkM)
+                            .build();
+                    firstIntake = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .turn(pointsOfInterest.poseBlueLongFirstIntake.getHeading())
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending2)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongBackDropR)
+                            .build();
+                    toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending2)
+                            .build();
+                    extendToBackDrop = drive.trajectorySequenceBuilder(toExtend.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongBackDropR)
+                            .build();
 
 
                 }
                 else if(spikeMark == SpikeMark.LEFT){
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(blueStartPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongSpikeMarkL)
+                            .build();
 
                 }
                 break;
@@ -77,7 +133,7 @@ public class Autonomous {
 
 
                 if(spikeMark == SpikeMark.LEFT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(redStartPose)
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongSpikeMarkL)
                             .build();
@@ -104,7 +160,7 @@ public class Autonomous {
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(redStartPose)
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongSpikeMarkM)
                             .build();
@@ -131,7 +187,7 @@ public class Autonomous {
 
                 }
                 else if(spikeMark == SpikeMark.RIGHT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(redStartPose)
                             .setReversed(true)
                             .lineToConstantHeading(poseToVector(pointsOfInterest.poseRedLongSpikeMarkR))
                             .turn(-pointsOfInterest.poseRedLongSpikeMarkR.getHeading())
@@ -172,6 +228,15 @@ public class Autonomous {
 
                 }
                 else if (spikeMark == SpikeMark.MIDDLE){
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(blueStartPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortSpikeMarkM)
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropM)
+                            .build();
 
                 }
                 else if (spikeMark == SpikeMark.RIGHT){
@@ -184,7 +249,7 @@ public class Autonomous {
 
             case RED_SHORT:
                 if(spikeMark == SpikeMark.LEFT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(redStartPose)
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedShortSpikeMarkL)
                             .forward(5)
@@ -222,7 +287,7 @@ public class Autonomous {
 
                 }
                 else if(spikeMark == SpikeMark.MIDDLE){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(redStartPose)
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedShortSpikeMarkM)
                             .build();
@@ -261,7 +326,7 @@ public class Autonomous {
 
                 }
                 else if(spikeMark == SpikeMark.RIGHT){
-                    scoreSpikeMark = drive.trajectorySequenceBuilder(startPose)
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(redStartPose)
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedShortSpikeMarkR)
                             .build();
@@ -299,6 +364,6 @@ public class Autonomous {
                 }
                 break;
         }
-        drive.setPoseEstimate(startPose);
+        drive.setPoseEstimate(redStartPose);
     }
 }
