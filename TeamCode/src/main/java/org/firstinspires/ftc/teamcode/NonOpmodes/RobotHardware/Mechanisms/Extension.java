@@ -164,7 +164,6 @@ public class Extension {
     public void loopExtension(Gamepad gamepad){
 
         switch(mode){
-
             case OPERATIONAL:
                 currentMaxVelocity = EXTENDO_MAX_VELOCITY;
                 break;
