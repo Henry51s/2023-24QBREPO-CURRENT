@@ -35,7 +35,7 @@ public class Commands {
     public static int initDelay = 500;
     public static int pickupToDepositDelay = 750;
 
-
+    private int rumbleDuration = 100;
 
     private boolean threadRunning = false;
 
@@ -147,8 +147,7 @@ public class Commands {
 
     }
 
-    public void toDeposit(OpModeType opModeType, CommandType commandType){
-        if(opModeType == OpModeType.AUTONOMOUS){
+    public void toDeposit(CommandType commandType){
             switch(commandType){
                 case ASYNC:
                     Thread depositThread = new Thread(() -> {
@@ -183,44 +182,9 @@ public class Commands {
             }
 
         }
-        else if(opModeType == OpModeType.TELEOP){
-            switch(commandType){
-                case ASYNC:
-                    Thread depositThread = new Thread(() -> {
-                        timer.reset();
-                        claw.setClawState(Claw.ClawState.CLOSE);
-                        while(timer.milliseconds() < depositClawDelay){
 
-                        }
-                        fourBar.setState(FourBar.State.DEPOSIT);
-                        while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
 
-                        }
-                        differential.setState(Differential.State.DEPOSIT);
-                        lift.setLiftState(Lift.LiftState.MEMORY);
-                        threadRunning = false;
-                    });
-                    depositThread.start();
-                    break;
-                case BLOCKING:
-                    timer.reset();
-                    claw.setClawState(Claw.ClawState.CLOSE);
-                    while(timer.milliseconds() < depositClawDelay){
 
-                    }
-                    fourBar.setState(FourBar.State.DEPOSIT);
-                    while(timer.milliseconds() < depositDifferentialDelay + depositClawDelay){
-
-                    }
-                    differential.setState(Differential.State.DEPOSIT);
-                    lift.setLiftState(Lift.LiftState.MEMORY);
-                    threadRunning = false;
-                    break;
-            }
-        }
-        //Deposit code here
-
-    }
 
     public void runFullSequence(CommandType commandType){
         switch(commandType){
@@ -331,18 +295,94 @@ public class Commands {
 
     }
 
-    public void moveToIntermediate(OpModeType opModeType, CommandType commandType){
+    public void releasePixelsToIntermediate(OpModeType opModeType, CommandType commandType){
         if(opModeType == OpModeType.TELEOP){
             if(threadRunning == false){
+                threadRunning = true;
+                releasePixelsToIntermediate(commandType);
+
+            }
+            else{
+                gamepad.rumble(rumbleDuration);
+            }
+        }
+        else if(opModeType == OpModeType.AUTONOMOUS){
+            releasePixelsToIntermediate(commandType);
+        }
+
+    }
+    public void releasePixels(OpModeType opModeType, CommandType commandType){
+        if(opModeType == OpModeType.TELEOP){
+            if(threadRunning == false){
+                threadRunning = true;
+                releasePixels(commandType);
+            }
+            else{
+                gamepad.rumble(rumbleDuration);
+            }
+        }
+        else if(opModeType == OpModeType.AUTONOMOUS){
+            releasePixels(commandType);
+        }
+    }
+    public void runFullSequence(OpModeType opModeType, CommandType commandType){
+        if(opModeType == OpModeType.TELEOP){
+            if(threadRunning == false){
+                threadRunning = true;
+                runFullSequence(commandType);
+            }
+            else{
+                gamepad.rumble(rumbleDuration);
+            }
+        }
+        else if(opModeType == OpModeType.AUTONOMOUS){
+            runFullSequence(commandType);
+        }
+
+    }
+    public void toPickup(OpModeType opModeType, CommandType commandType){
+        if(opModeType == OpModeType.TELEOP){
+            if(threadRunning == false){
+                threadRunning = true;
+                toPickup(commandType);
+            }
+            else{
+                gamepad.rumble(rumbleDuration);
+            }
+        }
+        else if(opModeType == OpModeType.AUTONOMOUS){
+            toPickup(commandType);
+        }
+    }
+    public void toIntermediate(OpModeType opModeType, CommandType commandType){
+        if(opModeType == OpModeType.TELEOP){
+            if(threadRunning == false){
+                threadRunning = true;
                 toIntermediate(commandType);
             }
-        else{
-            gamepad.rumble(100);
+            else{
+                gamepad.rumble(rumbleDuration);
             }
         }
         else if(opModeType == OpModeType.AUTONOMOUS){
             toIntermediate(commandType);
         }
+
+    }
+    public void toDeposit(OpModeType opModeType, CommandType commandType){
+        if(opModeType == OpModeType.TELEOP){
+            if(threadRunning == false){
+                threadRunning = true;
+                toDeposit(commandType);
+            }
+            else{
+                gamepad.rumble(rumbleDuration);
+            }
+        }
+        else if(opModeType == OpModeType.AUTONOMOUS){
+            toDeposit(commandType);
+        }
+
     }
 
     public int getLiftPosition(){

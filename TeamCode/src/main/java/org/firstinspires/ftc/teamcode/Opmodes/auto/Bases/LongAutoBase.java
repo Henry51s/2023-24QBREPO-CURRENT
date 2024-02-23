@@ -140,7 +140,7 @@ public abstract class LongAutoBase extends OpMode {
                 while(timer.milliseconds() < 500){
 
                 }
-                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
+                commands.toDeposit(CommandType.ASYNC);
                 autoState = PIXEL_DEPOSIT;
                 break;
 

@@ -105,7 +105,7 @@ public abstract class ShortAutoBase extends OpMode {
             case PIXEL_DEPOSIT:
 
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
-                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
+                commands.toDeposit(CommandType.ASYNC);
                 drive.followTrajectorySequence(scoreBackDrop);
                 commands.releasePixels(CommandType.ASYNC);
                 commands.extendLift(Lift.LiftState.RETRACTED);
