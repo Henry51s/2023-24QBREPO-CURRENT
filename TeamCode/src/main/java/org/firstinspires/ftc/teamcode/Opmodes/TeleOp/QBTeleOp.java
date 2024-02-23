@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.OpModeType.TELEOP;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -28,7 +30,7 @@ public class QBTeleOp extends OpMode {
     @Override
     public void init() {
         hw.initAll(hardwareMap);
-        commands.initCommands();
+        commands.initCommands(gamepad2);
         differential = Differential.getInstance();
         commands.toInit(true);
         sideObjective = SideObjective.getInstance();
@@ -45,7 +47,7 @@ public class QBTeleOp extends OpMode {
 
         diffCounter = Math.max(0, Math.min(diffCounter, 3));
 
-        commands.loopRobot(gamepad2, gamepad2, gamepad1, gamepad1, gamepad2);
+        commands.loopRobot(gamepad2, gamepad1, gamepad1, gamepad2);
 
         if(currentGamepad2.dpad_left && !previousGamepad2.dpad_left){
             diffCounter--;
@@ -70,7 +72,7 @@ public class QBTeleOp extends OpMode {
         }
 
         if(currentGamepad2.a && !previousGamepad2.a){
-            commands.toDeposit(CommandType.ASYNC);
+            commands.toDeposit(TELEOP, CommandType.ASYNC);
         }
         if(currentGamepad2.b && !previousGamepad2.b){
             commands.toPickup(CommandType.ASYNC);
@@ -91,6 +93,6 @@ public class QBTeleOp extends OpMode {
         if(gamepad1.dpad_left && gamepad1.b){
             sideObjective.releaseDrone();
         }
-        telemetry.addData("Differential state: ", differential.getState());
+        telemetry.addData("Differential state: ", commands.differential.getState());
     }
 }

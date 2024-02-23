@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.OpModeType.AUTONOMOUS;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FIFTH;
@@ -78,7 +79,7 @@ public abstract class ShortAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.BLUE_SHORT, SpikeMark.MIDDLE);
+        auto.setPath(AutoLocation.RED_SHORT, SpikeMark.RIGHT);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -87,7 +88,6 @@ public abstract class ShortAutoBase extends OpMode {
         extending = auto.extending;
         cycleToExtending = auto.cycleToExtending;
         extendToBackDrop = auto.extendToBackDrop;
-        parkLeft = auto.parkLeft;
     }
 
     @Override
@@ -97,24 +97,21 @@ public abstract class ShortAutoBase extends OpMode {
 
 
             case SPIKE_MARK:
-                /*intake.setIntakeArmState(GROUND);
+                intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.PIXEL_DEPOSIT;*/
-                drive.followTrajectorySequence(scoreSpikeMark);
-                drive.followTrajectorySequence(scoreBackDrop);
-                autoState = PARK;
+                autoState = AutoStages.PIXEL_DEPOSIT;
                 break;
             case PIXEL_DEPOSIT:
-                commands.extendLift(Lift.LiftState.AUTO_LOW);
-                commands.toDeposit(CommandType.ASYNC);
-                drive.followTrajectorySequence(scoreBackDrop);
-                autoState = PARK;
-                //commands.releasePixels(CommandType.ASYNC);
-                //commands.extendLift(Lift.LiftState.RETRACTED);
-                //drive.followTrajectorySequence(toExtend);
 
-                //autoState = AutoStages.INITIAL_EXTEND;
+                commands.extendLift(Lift.LiftState.AUTO_LOW);
+                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
+                drive.followTrajectorySequence(scoreBackDrop);
+                commands.releasePixels(CommandType.ASYNC);
+                commands.extendLift(Lift.LiftState.RETRACTED);
+                drive.followTrajectorySequence(toExtend);
+
+                autoState = AutoStages.INITIAL_EXTEND;
                 break;
             case INITIAL_EXTEND:
                 drive.followTrajectorySequenceAsync(extending);
@@ -152,7 +149,7 @@ public abstract class ShortAutoBase extends OpMode {
                 while(timer.milliseconds() < 2000){
                     drive.update();
                 }
-                commands.extendLift(Lift.LiftState.LOW);
+                commands.extendLift(Lift.LiftState.MED);
 
                 while(drive.isBusy()){
                     drive.update();

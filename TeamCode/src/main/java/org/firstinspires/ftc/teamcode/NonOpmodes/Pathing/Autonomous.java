@@ -20,14 +20,11 @@ public class Autonomous {
     public TrajectorySequence scoreSpikeMark;
     public TrajectorySequence scoreBackDrop;
     public TrajectorySequence park;
-    public TrajectorySequence backupSpikeMark;
-    public TrajectorySequence toNeutral;
     public TrajectorySequence toExtend;
     public TrajectorySequence extending;
     public TrajectorySequence extendToBackDrop;
     public TrajectorySequence cycleToExtend;
     public TrajectorySequence cycleToExtending;
-    public TrajectorySequence parkLeft;
     public TrajectorySequence firstIntake;
 
     private PointsOfInterest pointsOfInterest = new PointsOfInterest();
@@ -42,9 +39,6 @@ public class Autonomous {
         Vector2d result = new Vector2d(pose.getX(), pose.getY());
         return result;
     }
-    public double getPoseHeading(Pose2d pose){
-        return pose.getHeading();
-    }
     public SampleMecanumDrive getDrive(){
         return drive;
     }
@@ -52,11 +46,6 @@ public class Autonomous {
 
 
     public void setPath(AutoLocation autoLocation, SpikeMark spikeMark){
-
-        parkLeft = drive.trajectorySequenceBuilder(new Pose2d(0,0,0))
-                .strafeLeft(10)
-                .build();
-
         redStartPose = pointsOfInterest.poseRedStartPose;
         blueStartPose = pointsOfInterest.poseBlueStartPose;
 
@@ -126,7 +115,26 @@ public class Autonomous {
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseBlueLongSpikeMarkL)
                             .build();
-
+                    firstIntake = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .turn(pointsOfInterest.poseBlueLongFirstIntake.getHeading())
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending2)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongBackDropL)
+                            .build();
+                    toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending2)
+                            .build();
+                    extendToBackDrop = drive.trajectorySequenceBuilder(toExtend.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueLongBackDropL)
+                            .build();
                 }
                 break;
             case RED_LONG:
@@ -144,6 +152,7 @@ public class Autonomous {
                     scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseRedLongExtending2)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongBackDropL)
                             .build();
                     toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
@@ -171,6 +180,7 @@ public class Autonomous {
                     scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseRedLongExtending2)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongBackDropM)
                             .build();
                     toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
@@ -199,6 +209,7 @@ public class Autonomous {
                     scoreBackDrop = drive.trajectorySequenceBuilder(firstIntake.end())
                             .setReversed(true)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseRedLongExtending2)
                             .lineToLinearHeading(pointsOfInterest.poseRedLongBackDropR)
                             .build();
                     toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
@@ -225,6 +236,19 @@ public class Autonomous {
 
 
                 if(spikeMark == SpikeMark.LEFT){
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(blueStartPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortSpikeMarkL)
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropL)
+                            .build();
+                    toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortExtending2)
+                            .build();
 
                 }
                 else if (spikeMark == SpikeMark.MIDDLE){
@@ -234,12 +258,29 @@ public class Autonomous {
                             .build();
                     scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
                             .setReversed(true)
-
                             .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropM)
+                            .build();
+                    toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortExtending2)
                             .build();
 
                 }
                 else if (spikeMark == SpikeMark.RIGHT){
+                    scoreSpikeMark = drive.trajectorySequenceBuilder(blueStartPose)
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortSpikeMarkR)
+                            .build();
+                    scoreBackDrop = drive.trajectorySequenceBuilder(scoreSpikeMark.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortBackDropR)
+                            .build();
+                    toExtend = drive.trajectorySequenceBuilder(scoreBackDrop.end())
+                            .setReversed(true)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortExtending1)
+                            .lineToLinearHeading(pointsOfInterest.poseBlueShortExtending2)
+                            .build();
 
                 }
                 break;

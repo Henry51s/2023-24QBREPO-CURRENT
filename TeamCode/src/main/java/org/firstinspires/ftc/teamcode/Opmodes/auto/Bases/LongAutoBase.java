@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.CYCLE_EXTEND;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PIXEL_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.RETRACT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.OpModeType.AUTONOMOUS;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.FAR;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.LONG_SIDE_AUTO_INTAKE;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.MED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.SHORT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FIFTH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
 
@@ -34,7 +32,6 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
-import org.firstinspires.ftc.teamcode.Opmodes.auto.RedLongUsingBase;
 
 public abstract class LongAutoBase extends OpMode {
 
@@ -90,7 +87,7 @@ public abstract class LongAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.BLUE_LONG, SpikeMark.RIGHT);
+        auto.setPath(AutoLocation.BLUE_LONG, SpikeMark.LEFT);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -110,11 +107,15 @@ public abstract class LongAutoBase extends OpMode {
 
 
             case SPIKE_MARK:
-                commands.toIntermediate(CommandType.ASYNC);
+                /*commands.toIntermediate(CommandType.ASYNC);
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.LONG_FIRST_INTAKE;
+                autoState = AutoStages.LONG_FIRST_INTAKE;*/
+                drive.followTrajectorySequence(scoreSpikeMark);
+                drive.followTrajectorySequence(firstIntake);
+                drive.followTrajectorySequence(scoreBackDrop);
+                autoState = PARK;
                 break;
             case LONG_FIRST_INTAKE:
                 drive.followTrajectorySequence(firstIntake);
@@ -139,7 +140,7 @@ public abstract class LongAutoBase extends OpMode {
                 while(timer.milliseconds() < 500){
 
                 }
-                commands.toDeposit(CommandType.ASYNC);
+                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
                 autoState = PIXEL_DEPOSIT;
                 break;
 

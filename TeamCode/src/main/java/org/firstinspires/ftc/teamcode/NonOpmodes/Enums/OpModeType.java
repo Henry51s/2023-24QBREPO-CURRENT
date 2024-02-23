@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.NonOpmodes.Enums;
 
-public enum CommandType {
+public enum OpModeType {
     TELEOP,
-    AUTONOMOUS,
-    ASYNC,
-    BLOCKING
+    AUTONOMOUS
 }

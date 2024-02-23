@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam
 import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.ShortAutoBase;
 
 
-@Autonomous(name="RedShortUsingBase")
-public class RedShortUsingBase extends ShortAutoBase
+@Autonomous(name="RedShort")
+public class RedShort extends ShortAutoBase
 {
     @Override
     public void init() {
