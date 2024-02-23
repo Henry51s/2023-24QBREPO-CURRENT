@@ -60,8 +60,8 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.Gl
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 1);//p = 5
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients( 8, 50, 1);//p = 8
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(19, 0, 1.5);//p = 5
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients( 17, 25, 1.5);//p = 8
 
     public static double LATERAL_MULTIPLIER = 1;
 

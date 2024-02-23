@@ -91,7 +91,7 @@ public class Commands {
         initThread.start();
 
     }
-    public void toIntermediate(CommandType commandType){
+    private void toIntermediate(CommandType commandType){
             switch(commandType){
                 case ASYNC:
                     Thread intermediateThread = new Thread(() -> {
@@ -119,7 +119,7 @@ public class Commands {
                     break;
             }
     }
-    public void toPickup(CommandType commandType){
+    private void toPickup(CommandType commandType){
         switch(commandType){
             case BLOCKING:
                 lift.setLiftState(Lift.LiftState.RETRACTED);
@@ -147,7 +147,7 @@ public class Commands {
 
     }
 
-    public void toDeposit(CommandType commandType){
+    private void toDeposit(CommandType commandType){
             switch(commandType){
                 case ASYNC:
                     Thread depositThread = new Thread(() -> {
@@ -186,7 +186,7 @@ public class Commands {
 
 
 
-    public void runFullSequence(CommandType commandType){
+    private void runFullSequence(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {
@@ -240,7 +240,7 @@ public class Commands {
         }
     }
 
-    public void releasePixels(CommandType commandType){
+    private void releasePixels(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {
@@ -267,7 +267,7 @@ public class Commands {
         }
 
     }
-    public void releasePixelsToIntermediate(CommandType commandType){
+    private void releasePixelsToIntermediate(CommandType commandType){
         switch(commandType){
             case ASYNC:
                 Thread sequenceThread = new Thread(() -> {
@@ -387,17 +387,5 @@ public class Commands {
 
     public int getLiftPosition(){
         return lift.getCurrentPosition();
-    }
-    public Lift.LiftState getLiftState(){
-        return lift.getLiftState();
-    }
-    public FourBar.State getFourBarState(){
-        return fourBar.getState();
-    }
-    public Differential.State getDifferentialState(){
-        return differential.getState();
-    }
-    public Claw.ClawState getClawState(){
-        return claw.getClawState();
     }
 }

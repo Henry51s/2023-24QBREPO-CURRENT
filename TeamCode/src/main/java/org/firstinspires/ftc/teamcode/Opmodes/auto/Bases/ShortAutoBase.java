@@ -105,17 +105,17 @@ public abstract class ShortAutoBase extends OpMode {
             case PIXEL_DEPOSIT:
 
                 commands.extendLift(Lift.LiftState.AUTO_LOW);
-                commands.toDeposit(CommandType.ASYNC);
+                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
                 drive.followTrajectorySequence(scoreBackDrop);
-                commands.releasePixels(CommandType.ASYNC);
+                commands.releasePixels(AUTONOMOUS, CommandType.ASYNC);
                 commands.extendLift(Lift.LiftState.RETRACTED);
                 drive.followTrajectorySequence(toExtend);
 
                 autoState = AutoStages.INITIAL_EXTEND;
                 break;
             case INITIAL_EXTEND:
-                drive.followTrajectorySequenceAsync(extending);
                 extension.setExtensionState(Extension.ExtensionState.FAR);
+                drive.followTrajectorySequenceAsync(extending);
                 while(drive.isBusy()){
                     drive.update();
                 }
@@ -144,7 +144,7 @@ public abstract class ShortAutoBase extends OpMode {
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 600){
 
                 }
-                commands.runFullSequence(CommandType.ASYNC);
+                commands.runFullSequence(AUTONOMOUS, CommandType.ASYNC);
                 timer.reset();
                 while(timer.milliseconds() < 2000){
                     drive.update();
@@ -167,7 +167,7 @@ public abstract class ShortAutoBase extends OpMode {
                 break;
 
             case DEPOSIT:
-                commands.releasePixels(CommandType.ASYNC);
+                commands.releasePixels(AUTONOMOUS, CommandType.ASYNC);
                 commands.extendLift(Lift.LiftState.RETRACTED);
                 cycleCounter ++;
                 if(cycleCounter <= MAX_CYCLES){
@@ -187,10 +187,10 @@ public abstract class ShortAutoBase extends OpMode {
         telemetry.addData("Extension Target: ", extension.getTargetPosition());
         telemetry.addData("Extension Average Position: ", extension.getAveragePosition());
         telemetry.addData("Intake Arm State: ", intake.getIntakeArmState());
-        telemetry.addData("FourBar State: ", commands.getFourBarState());
-        telemetry.addData("Differential State: ", commands.getDifferentialState());
-        telemetry.addData("Claw State: ", commands.getClawState());
-        telemetry.addData("Lift State: ", commands.getLiftState());
+        telemetry.addData("FourBar State: ", commands.fourBar.getState());
+        telemetry.addData("Differential State: ", commands.differential.getState());
+        telemetry.addData("Claw State: ", commands.claw.getClawState());
+        telemetry.addData("Lift State: ", commands.lift.getLiftState());
         telemetry.addData("Stage: ", autoState);
 
     }

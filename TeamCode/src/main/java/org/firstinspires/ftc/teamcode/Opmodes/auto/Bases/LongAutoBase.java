@@ -87,13 +87,13 @@ public abstract class LongAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.BLUE_LONG, SpikeMark.LEFT);
+        auto.setPath(AutoLocation.RED_LONG, SpikeMark.MIDDLE);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
-        //toExtend = auto.toExtend;
+        toExtend = auto.toExtend;
         //cycleToExtend = auto.cycleToExtend;
-        //extending = auto.extending;
+        extending = auto.extending;
         //cycleToExtending = auto.cycleToExtending;
         //extendToBackDrop = auto.extendToBackDrop;
         //parkLeft = auto.parkLeft;
@@ -115,6 +115,9 @@ public abstract class LongAutoBase extends OpMode {
                 drive.followTrajectorySequence(scoreSpikeMark);
                 drive.followTrajectorySequence(firstIntake);
                 drive.followTrajectorySequence(scoreBackDrop);
+                drive.followTrajectorySequence(toExtend);
+                drive.followTrajectorySequence(extending);
+
                 autoState = PARK;
                 break;
             case LONG_FIRST_INTAKE:
@@ -135,12 +138,12 @@ public abstract class LongAutoBase extends OpMode {
                 drive.followTrajectorySequence(scoreBackDrop);
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
                 }
-                commands.toPickup(CommandType.ASYNC);
+                commands.toPickup(AUTONOMOUS, CommandType.ASYNC);
                 timer.reset();
                 while(timer.milliseconds() < 500){
 
                 }
-                commands.toDeposit(CommandType.ASYNC);
+                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
                 autoState = PIXEL_DEPOSIT;
                 break;
 
@@ -150,7 +153,7 @@ public abstract class LongAutoBase extends OpMode {
                 while(Math.abs(commands.getLiftPosition() - LIFT_AUTO_LOW) > 5){
 
                 }
-                commands.releasePixelsToIntermediate(CommandType.ASYNC);
+                commands.releasePixelsToIntermediate(AUTONOMOUS, CommandType.ASYNC);
                 commands.extendLift(Lift.LiftState.RETRACTED);
 
 
@@ -190,10 +193,10 @@ public abstract class LongAutoBase extends OpMode {
         telemetry.addData("Extension Target: ", extension.getTargetPosition());
         telemetry.addData("Extension Average Position: ", extension.getAveragePosition());
         telemetry.addData("Intake Arm State: ", intake.getIntakeArmState());
-        telemetry.addData("FourBar State: ", commands.getFourBarState());
-        telemetry.addData("Differential State: ", commands.getDifferentialState());
-        telemetry.addData("Claw State: ", commands.getClawState());
-        telemetry.addData("Lift State: ", commands.getLiftState());
+        telemetry.addData("FourBar State: ", commands.fourBar.getState());
+        telemetry.addData("Differential State: ", commands.differential.getState());
+        telemetry.addData("Claw State: ", commands.claw.getClawState());
+        telemetry.addData("Lift State: ", commands.lift.getLiftState());
         telemetry.addData("Stage: ", autoState);
 
     }

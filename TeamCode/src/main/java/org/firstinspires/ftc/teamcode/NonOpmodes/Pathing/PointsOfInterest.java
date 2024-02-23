@@ -16,12 +16,12 @@ public class PointsOfInterest {
     public static double[] redStartPose = {0,0,-180};
     public static double[] blueStartPose = {0,0,180};
 
-    public static double[] redShortSpikeMarkL = {33,-7,-90};
-    public static double[] redShortSpikeMarkM = {42,-16,-90};
-    public static double[] redShortSpikeMarkR = {32,-22,-90};
+    public static double[] redShortSpikeMarkL = {33,0,-90};
+    public static double[] redShortSpikeMarkM = {39,-12,-90};
+    public static double[] redShortSpikeMarkR = {32,-20,-90};
 
 
-    public static double[] redLongSpikeMarkL = {32,-6,-90};
+    public static double[] redLongSpikeMarkL = {40,7,0};
     public static double[] redLongSpikeMarkM = {57,0,0};
     public static double[] redLongSpikeMarkR = {29,-2,90};
     public static double[] preBackDropRedLong = {0,0,0};
@@ -38,19 +38,19 @@ public class PointsOfInterest {
     public static double[] blueShortSpikeMarkR = {35,0,90};
 
 
-    public static double[] redShortBackDropL = {40,-39,-90};
-    public static double[] redShortBackDropM = {29,-39,-90};
-    public static double[] redShortBackDropR = {22,-39,-90};
+    public static double[] redShortBackDropL = {35,-36,-90};
+    public static double[] redShortBackDropM = {29,-36,-90};
+    public static double[] redShortBackDropR = {22,-36,-90};
 
     public static double[] blueShortBackDropL = {28,38,90};
     public static double[] blueShortBackDropM = {35,38,90};
     public static double[] blueShortBackDropR = {39,38,90};
 
-    public static double[] redLongFirstIntake = {57,0,-93};
+    public static double[] redLongFirstIntake = {52,0,-90};
     public static double[] blueLongFirstIntake = {54, 0, 93};
 
-    public static double[] redLongBackDropL = {0,0,0};
-    public static double[] redLongBackDropM = {32,-91,-90};
+    public static double[] redLongBackDropL = {30,-87,-90};
+    public static double[] redLongBackDropM = {32,-87,-90};
     public static double[] redLongBackDropR = {0,0,0};
 
 
@@ -59,16 +59,16 @@ public class PointsOfInterest {
     public static double[] blueLongBackDropM = {33,91,90};
     public static double[] blueLongBackDropR = {40,91,90};
 
-    public static double[] redShortCycleScore = {37.5,-38.5,-90};
+    public static double[] redShortCycleScore = {34,-35.5,-90};
 
-    public static double[] redShortExtending1 = {54,-30,-90};
-    public static double[] redShortExtending2 = {54,31,-87};
+    public static double[] redShortExtending1 = {51,-30,-90};
+    public static double[] redShortExtending2 = {51,33,-89};
 
     public static double[] blueShortExtending1 = {54,30,90};
     public static double[] blueShortExtending2 = {51,-31,87};
 
-    public static double[] redLongExtending1 = {54,-91,-90};
-    public static double[] redLongExtending2 = {54,5,-90};
+    public static double[] redLongExtending1 = {52,-85,-90};
+    public static double[] redLongExtending2 = {52,5,-90};
 
     public static double[] blueLongExtending1 = {57,5,90};
     public static double[] blueLongExtending2 = {57,91,87};

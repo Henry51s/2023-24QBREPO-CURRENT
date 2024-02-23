@@ -72,13 +72,13 @@ public class QBTeleOp extends OpMode {
         }
 
         if(currentGamepad2.a && !previousGamepad2.a){
-            commands.toDeposit(CommandType.ASYNC);
+            commands.toDeposit(TELEOP, CommandType.ASYNC);
         }
         if(currentGamepad2.b && !previousGamepad2.b){
-            commands.toPickup(CommandType.ASYNC);
+            commands.toPickup(TELEOP, CommandType.ASYNC);
         }
         if(currentGamepad2.y && !previousGamepad2.y){
-            commands.releasePixelsToIntermediate(CommandType.ASYNC);
+            commands.releasePixelsToIntermediate(TELEOP, CommandType.ASYNC);
         }
 
         if(gamepad1.back){
