@@ -9,6 +9,7 @@ public class GlobalVars {
 
 
     public static int MAX_CYCLES = 1;
+    public static int MAX_TURN_SPEED = 45; //Degrees per second
 
 
     public static double CLIMBL_RELEASE = 0.68;
@@ -53,26 +54,26 @@ public class GlobalVars {
     public static int LIFT_INCREMENT = 238;
 
     public static double FOURBAR_INIT = 0.7;
-    public static double FOURBAR_PICKUP = 0.883;
-    public static double FOURBAR_DEPOSIT = 0.469-0.074;
+    public static double FOURBAR_PICKUP = 0.846;
+    public static double FOURBAR_DEPOSIT = 0.395;
     public static double FOURBAR_POST_DEPOSIT = 0.55-0.074;
     public static double FOURBAR_INTERMEDIATE_PTD = 0.75;
     public static double FOURBAR_INTERMEDIATE_DTP = 0.88-0.74;
 
-    public static double DIFFL_PICKUP = 0.016;
+    public static double DIFFL_PICKUP = 0;
     public static double DIFFL_DEPOSIT = 0.812;
-    public static double DIFFL_DEPOSIT_45_L = 1;
-    public static double DIFFL_DEPOSIT_45_R = 0.646;
+    public static double DIFFL_DEPOSIT_45_L = 0.939;
+    public static double DIFFL_DEPOSIT_45_R = 0.64899;
     public static double DIFFL_INTERMEDIATE_PTD = 0.59;
     public static double DIFFL_INIT = 0.304;
-    public static double DIFFL_DEPOSIT_90 = 0.52399;
+    public static double DIFFL_DEPOSIT_90 = 0.4999;
 
     public static double DIFFR_INTERMEDIATE_PTD = 0.03;
-    public static double DIFFR_PICKUP = 0.025;
+    public static double DIFFR_PICKUP = 0;
     public static double DIFFR_DEPOSIT = 0.27;
-    public static double DIFFR_DEPOSIT_45_L = 0.086;
-    public static double DIFFR_DEPOSIT_90 = 0.558;
-    public static double DIFFR_DEPOSIT_45_R = 0.438;
+    public static double DIFFR_DEPOSIT_45_L = 0.061;
+    public static double DIFFR_DEPOSIT_90 = 0.542;
+    public static double DIFFR_DEPOSIT_45_R = 0.347;
     public static double DIFFR_INIT = 0.312;
 
 

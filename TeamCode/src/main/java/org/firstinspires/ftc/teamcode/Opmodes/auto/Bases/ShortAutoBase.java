@@ -30,7 +30,6 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam
 
 public abstract class ShortAutoBase extends OpMode {
 
-
     protected AutoStages autoState = AutoStages.SPIKE_MARK;
     protected Commands commands = new Commands();
     protected Hardware hardware = new Hardware();
@@ -79,7 +78,7 @@ public abstract class ShortAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.RED_SHORT, SpikeMark.RIGHT);
+        auto.setPath(AutoLocation.BLUE_SHORT, SpikeMark.LEFT);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -101,6 +100,7 @@ public abstract class ShortAutoBase extends OpMode {
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
                 autoState = AutoStages.PIXEL_DEPOSIT;
+
                 break;
             case PIXEL_DEPOSIT:
 

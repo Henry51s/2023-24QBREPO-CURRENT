@@ -15,6 +15,7 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -32,9 +33,15 @@ import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.Webcam;
+import org.firstinspires.ftc.teamcode.Opmodes.auto.BlueLong;
 
+@Config
 public abstract class LongAutoBase extends OpMode {
 
+
+
+    public static AutoLocation autoLocationDebug = AutoLocation.BLUE_LONG;
+    public static SpikeMark spikeMarkDebug = SpikeMark.MIDDLE;
 
     protected AutoStages autoState = AutoStages.SPIKE_MARK;
     protected Commands commands = new Commands();
@@ -87,15 +94,15 @@ public abstract class LongAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.RED_LONG, SpikeMark.MIDDLE);
+        auto.setPath(autoLocationDebug, spikeMarkDebug);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
         toExtend = auto.toExtend;
-        //cycleToExtend = auto.cycleToExtend;
+        cycleToExtend = auto.cycleToExtend;
         extending = auto.extending;
-        //cycleToExtending = auto.cycleToExtending;
-        //extendToBackDrop = auto.extendToBackDrop;
+        cycleToExtending = auto.cycleToExtending;
+        extendToBackDrop = auto.extendToBackDrop;
         //parkLeft = auto.parkLeft;
         firstIntake = auto.firstIntake;
     }
@@ -104,10 +111,8 @@ public abstract class LongAutoBase extends OpMode {
     public void loop() {
         cycleCounter = Math.max(0, Math.min(cycleCounter, MAX_CYCLES));
         switch (autoState){
-
-
             case SPIKE_MARK:
-                /*commands.toIntermediate(CommandType.ASYNC);
+                /*commands.toIntermediate(AUTONOMOUS,CommandType.ASYNC);
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
@@ -117,8 +122,11 @@ public abstract class LongAutoBase extends OpMode {
                 drive.followTrajectorySequence(scoreBackDrop);
                 drive.followTrajectorySequence(toExtend);
                 drive.followTrajectorySequence(extending);
-
+                drive.followTrajectorySequence(extendToBackDrop);
+                drive.followTrajectorySequence(cycleToExtend);
+                drive.followTrajectorySequence(cycleToExtending);
                 autoState = PARK;
+
                 break;
             case LONG_FIRST_INTAKE:
                 drive.followTrajectorySequence(firstIntake);

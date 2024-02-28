@@ -214,7 +214,7 @@ public class Extension {
     }
 
     public void startLoopExtensionAutoAsync(){
-        if(!threadRunning){
+        if(threadRunning == false){
             threadRunning = true;
             Thread loopingThread = new Thread(() -> {
                 while(threadRunning){
