@@ -1,18 +1,17 @@
 package org.firstinspires.ftc.teamcode.Opmodes.auto;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
 import org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Webcam.PrimaryDetectionPipeline;
+import org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoLocation;
 import org.firstinspires.ftc.teamcode.Opmodes.auto.Bases.ShortAutoBase;
 
 
-@Autonomous(name="RedShort")
-public class RedShort extends ShortAutoBase
-{
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="BlueShortTwoPlusFour")
+public class BlueShortTwoPlusFour extends ShortAutoBase {
+
+
     @Override
     public void init() {
-        super.init(AutoLocation.RED_SHORT,PrimaryDetectionPipeline.Color.RED);
+        super.init(AutoLocation.BLUE_SHORT,PrimaryDetectionPipeline.Color.BLUE, 1);
     }
     @Override
     public void init_loop() {

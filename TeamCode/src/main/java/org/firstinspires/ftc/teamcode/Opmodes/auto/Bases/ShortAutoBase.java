@@ -3,11 +3,16 @@ package org.firstinspires.ftc.teamcode.Opmodes.auto.Bases;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.STOP;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.OpModeType.AUTONOMOUS;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.AUTO_INTAKE_TIME;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FIFTH;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.FOURTH;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.GROUND;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.INIT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Intake.IntakeArmState.THIRD;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -41,13 +46,15 @@ public abstract class ShortAutoBase extends OpMode {
     protected Webcam webcam = new Webcam();
     protected AutoLocation autoLocation;
 
-    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, parkLeft;
+    protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, park;
     protected ElapsedTime timer = new ElapsedTime();
     protected int cycleCounter = 0;
+    protected int maxCycles = 0;
     protected int liftTargetPosition = 0;
 
 
-    public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color) {
+    public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color, int maxCycles) {
+        this.maxCycles = maxCycles;
         this.autoLocation = autoLocation;
         hardware.initAuto(hardwareMap);
         intake = hardware.intakeInstance;
@@ -56,7 +63,7 @@ public abstract class ShortAutoBase extends OpMode {
 
         commands.initCommands();
         commands.toInit(true);
-        intake.setIntakeArmState(Intake.IntakeArmState.GROUND);
+        intake.setIntakeArmState(Intake.IntakeArmState.INIT);
         extension.setExtensionState(RETRACTED);
         webcam.initCamera(hardwareMap, color);
 
@@ -78,7 +85,6 @@ public abstract class ShortAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(AutoLocation.BLUE_SHORT, SpikeMark.LEFT);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -87,11 +93,12 @@ public abstract class ShortAutoBase extends OpMode {
         extending = auto.extending;
         cycleToExtending = auto.cycleToExtending;
         extendToBackDrop = auto.extendToBackDrop;
+        park = auto.park;
     }
 
     @Override
     public void loop() {
-        cycleCounter = Math.max(0, Math.min(cycleCounter, MAX_CYCLES));
+        cycleCounter = Math.max(0, Math.min(cycleCounter, maxCycles));
         switch (autoState){
 
 
@@ -109,11 +116,17 @@ public abstract class ShortAutoBase extends OpMode {
                 drive.followTrajectorySequence(scoreBackDrop);
                 commands.releasePixels(AUTONOMOUS, CommandType.ASYNC);
                 commands.extendLift(Lift.LiftState.RETRACTED);
-                drive.followTrajectorySequence(toExtend);
 
-                autoState = AutoStages.INITIAL_EXTEND;
+                if(maxCycles == 0){
+                    autoState = PARK;
+                }
+                else{
+                    autoState = AutoStages.INITIAL_EXTEND;
+                }
+
                 break;
             case INITIAL_EXTEND:
+                drive.followTrajectorySequence(toExtend);
                 extension.setExtensionState(Extension.ExtensionState.FAR);
                 drive.followTrajectorySequenceAsync(extending);
                 while(drive.isBusy()){
@@ -133,8 +146,14 @@ public abstract class ShortAutoBase extends OpMode {
                 break;
 
             case INTAKE:
-                intake.runIntakeSetTime(500, Intake.IntakeState.NORMAL);
-                intake.runIntakeSetTime(500, Intake.IntakeState.REVERSED_HALF);
+                if(cycleCounter == 0){
+                intake.setIntakeArmState(THIRD);}
+                else {
+                    intake.setIntakeArmState(GROUND);
+                }
+                intake.runIntakeSetTime(AUTO_INTAKE_TIME, Intake.IntakeState.NORMAL);
+
+                intake.runIntakeSetTime(AUTO_INTAKE_TIME/2, Intake.IntakeState.REVERSED_HALF);
                 autoState = AutoStages.RETRACT;
                 break;
             case RETRACT:
@@ -169,28 +188,29 @@ public abstract class ShortAutoBase extends OpMode {
             case DEPOSIT:
                 commands.releasePixels(AUTONOMOUS, CommandType.ASYNC);
                 commands.extendLift(Lift.LiftState.RETRACTED);
-                cycleCounter ++;
-                if(cycleCounter <= MAX_CYCLES){
-                    drive.followTrajectorySequence(cycleToExtend);
-                    autoState = AutoStages.CYCLE_EXTEND;
+
+                if(cycleCounter == maxCycles){
+                    autoState = PARK;
                 }
                 else {
-                    autoState = PARK;
+                    cycleCounter ++;
+                    drive.followTrajectorySequence(cycleToExtend);
+                    autoState = AutoStages.CYCLE_EXTEND;
+
                 }
                 break;
             case PARK:
-                //commands.toInit(false);
-                //drive.followTrajectorySequence(parkLeft);
+                intake.setIntakeArmState(INIT);
+                commands.toIntermediate(AUTONOMOUS, CommandType.ASYNC);
+                drive.followTrajectorySequence(park);
+                autoState = STOP;
+                break;
+            case STOP:
                 break;
         }
         telemetry.addData("Pose: ", drive.getPoseEstimate());
-        telemetry.addData("Extension Target: ", extension.getTargetPosition());
-        telemetry.addData("Extension Average Position: ", extension.getAveragePosition());
-        telemetry.addData("Intake Arm State: ", intake.getIntakeArmState());
-        telemetry.addData("FourBar State: ", commands.fourBar.getState());
-        telemetry.addData("Differential State: ", commands.differential.getState());
-        telemetry.addData("Claw State: ", commands.claw.getClawState());
-        telemetry.addData("Lift State: ", commands.lift.getLiftState());
+        telemetry.addData("Max Cycles: ", maxCycles);
+        telemetry.addData("Current Cycle: ", cycleCounter);
         telemetry.addData("Stage: ", autoState);
 
     }
@@ -199,6 +219,6 @@ public abstract class ShortAutoBase extends OpMode {
     public void stop(){
         extension.stopLoopExtensionAutoAsync();
         commands.extendLift(Lift.LiftState.RETRACTED);
-        commands.toInit(false);
+        //commands.toInit(false);
     }
 }

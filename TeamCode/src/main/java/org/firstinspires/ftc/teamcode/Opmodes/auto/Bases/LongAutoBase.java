@@ -5,9 +5,11 @@ import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PARK;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.PIXEL_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.RETRACT;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.AutoStages.TO_DEPOSIT;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.Enums.OpModeType.AUTONOMOUS;
+import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.AUTO_INTAKE_TIME;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.LIFT_AUTO_LOW;
-import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Globals.GlobalVars.MAX_CYCLES;
+
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.FAR;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.LONG_SIDE_AUTO_INTAKE;
 import static org.firstinspires.ftc.teamcode.NonOpmodes.RobotHardware.Mechanisms.Extension.ExtensionState.RETRACTED;
@@ -40,8 +42,8 @@ public abstract class LongAutoBase extends OpMode {
 
 
 
-    public static AutoLocation autoLocationDebug = AutoLocation.BLUE_LONG;
-    public static SpikeMark spikeMarkDebug = SpikeMark.MIDDLE;
+    public static AutoLocation autoLocationDebug = AutoLocation.RED_LONG;
+    public static SpikeMark spikeMarkDebug = SpikeMark.LEFT;
 
     protected AutoStages autoState = AutoStages.SPIKE_MARK;
     protected Commands commands = new Commands();
@@ -57,10 +59,12 @@ public abstract class LongAutoBase extends OpMode {
     protected TrajectorySequence scoreSpikeMark, scoreBackDrop, toExtend, extending, cycleToExtend, cycleToExtending, extendToBackDrop, firstIntake, parkLeft;
     protected ElapsedTime timer = new ElapsedTime();
     protected int cycleCounter = 0;
+    protected int maxCycles = 0;
 
 
-    public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color) {
+    public void init(AutoLocation autoLocation, PrimaryDetectionPipeline.Color color, int maxCycles) {
         this.autoLocation = autoLocation;
+        this.maxCycles = maxCycles;
         hardware.initAuto(hardwareMap);
         intake = hardware.intakeInstance;
 
@@ -94,7 +98,6 @@ public abstract class LongAutoBase extends OpMode {
         else if(webcam.getLocation() == PrimaryDetectionPipeline.ItemLocation.LEFT){
             auto.setPath(autoLocation, SpikeMark.LEFT);
         }
-        auto.setPath(autoLocationDebug, spikeMarkDebug);
 
         scoreSpikeMark = auto.scoreSpikeMark;
         scoreBackDrop = auto.scoreBackDrop;
@@ -109,24 +112,26 @@ public abstract class LongAutoBase extends OpMode {
 
     @Override
     public void loop() {
-        cycleCounter = Math.max(0, Math.min(cycleCounter, MAX_CYCLES));
+        cycleCounter = Math.max(0, Math.min(cycleCounter, maxCycles));
         switch (autoState){
             case SPIKE_MARK:
-                /*commands.toIntermediate(AUTONOMOUS,CommandType.ASYNC);
+                commands.toIntermediate(AUTONOMOUS,CommandType.ASYNC);
                 intake.setIntakeArmState(GROUND);
                 drive.followTrajectorySequence(scoreSpikeMark);
                 intake.setIntakeArmState(FIFTH);
-                autoState = AutoStages.LONG_FIRST_INTAKE;*/
-                drive.followTrajectorySequence(scoreSpikeMark);
-                drive.followTrajectorySequence(firstIntake);
-                drive.followTrajectorySequence(scoreBackDrop);
-                drive.followTrajectorySequence(toExtend);
-                drive.followTrajectorySequence(extending);
-                drive.followTrajectorySequence(extendToBackDrop);
-                drive.followTrajectorySequence(cycleToExtend);
-                drive.followTrajectorySequence(cycleToExtending);
+                //autoState = AutoStages.LONG_FIRST_INTAKE;
+                //autoState = TO_DEPOSIT;
                 autoState = PARK;
 
+                break;
+            case TO_DEPOSIT:
+                commands.toDeposit(AUTONOMOUS,CommandType.ASYNC);
+                drive.followTrajectorySequence(scoreBackDrop);
+                commands.extendLift(Lift.LiftState.MED);
+                while(Math.abs(commands.lift.getCurrentPosition() - commands.lift.getTargetPosition()) > 10){}
+                commands.releasePixelsToIntermediate(AUTONOMOUS, CommandType.ASYNC);
+                commands.extendLift(Lift.LiftState.RETRACTED);
+                autoState = PARK;
                 break;
             case LONG_FIRST_INTAKE:
                 drive.followTrajectorySequence(firstIntake);
@@ -134,24 +139,25 @@ public abstract class LongAutoBase extends OpMode {
 
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
                 }
-                intake.runIntakeSetTime(2000, Intake.IntakeState.NORMAL);
-                intake.runIntakeSetTime(500, Intake.IntakeState.REVERSED);
+                intake.runIntakeSetTime(AUTO_INTAKE_TIME, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTime(AUTO_INTAKE_TIME/2, Intake.IntakeState.REVERSED);
 
                 autoState = RETRACT;
                 break;
 
             case RETRACT:
-                intake.runIntakeSetTimeAsync(3000, Intake.IntakeState.NORMAL);
+                intake.runIntakeSetTimeAsync(2000, Intake.IntakeState.NORMAL);
                 extension.setExtensionState(RETRACTED);
-                drive.followTrajectorySequence(scoreBackDrop);
                 while(Math.abs(extension.getAveragePosition() - extension.getTargetPosition()) > 10){
                 }
-                commands.toPickup(AUTONOMOUS, CommandType.ASYNC);
-                timer.reset();
+                commands.toPickup(AUTONOMOUS, CommandType.BLOCKING);
+                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
+                drive.followTrajectorySequence(scoreBackDrop);
+                /*timer.reset();
                 while(timer.milliseconds() < 500){
 
-                }
-                commands.toDeposit(AUTONOMOUS, CommandType.ASYNC);
+                }*/
+
                 autoState = PIXEL_DEPOSIT;
                 break;
 
@@ -213,6 +219,6 @@ public abstract class LongAutoBase extends OpMode {
     public void stop(){
         extension.stopLoopExtensionAutoAsync();
         commands.extendLift(Lift.LiftState.RETRACTED);
-        commands.toInit(false);
+        //commands.toInit(false);
     }
 }

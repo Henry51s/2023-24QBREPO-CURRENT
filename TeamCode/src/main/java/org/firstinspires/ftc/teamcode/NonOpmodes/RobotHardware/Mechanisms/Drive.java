@@ -21,6 +21,11 @@ public class Drive {
     public static double driveMultiplier = 1;
     public static double turnMultiplier = 0.75;
 
+    private double x= 0;
+    private double y= 0;
+    private double rx = 0;
+    private double frontLeftPower = 0, frontRightPower = 0, backLeftPower = 0, backRightPower = 0;
+
 
     public enum DriveState{
         NORMAL,
@@ -54,16 +59,29 @@ public class Drive {
     }
     public void loopDrive(Gamepad gamepad){
 
-        double y = -gamepad.left_stick_y * flipMultiplier * driveMultiplier; // Remember, Y stick is reversed!
-        double x = gamepad.left_stick_x * flipMultiplier * driveMultiplier;
-        double rx = gamepad.right_stick_x*turnMultiplier * driveMultiplier;
+        y = -gamepad.left_stick_y * flipMultiplier * driveMultiplier; // Remember, Y stick is reversed!
+        x = gamepad.left_stick_x * flipMultiplier * driveMultiplier;
+        rx = gamepad.right_stick_x*turnMultiplier * driveMultiplier;
+
+        frontLeftPower = y + x+ rx;
+        frontRightPower = y -x + rx;
+        backLeftPower = y - x - rx;
+        backRightPower = y + x -rx;
 
 
 
-        frontLeft.setPower(y + x+ rx);
-        backLeft.setPower(y - x + rx);
-        frontRight.setPower(y - x - rx);
-        backRight.setPower(y + x - rx);
+        frontLeft.setPower(frontLeftPower);
+        backLeft.setPower(frontRightPower);
+        frontRight.setPower(backLeftPower);
+        backRight.setPower(backRightPower);
 
+    }
+    public double[] getJoystickInputs() {
+        double[] inputs = {x,y,rx};
+        return inputs;
+    }
+    public double[] getMotorPowers(){
+        double[] motorPowers = {frontLeftPower, frontRightPower, backLeftPower, backRightPower};
+        return motorPowers;
     }
 }

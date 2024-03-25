@@ -94,5 +94,10 @@ public class QBTeleOp extends OpMode {
             sideObjective.releaseDrone();
         }
         telemetry.addData("Differential state: ", commands.differential.getState());
+
+        telemetry.addData("Front Left Power: ", commands.drive.getMotorPowers()[0]);
+        telemetry.addData("Front Right Power: ", commands.drive.getMotorPowers()[1]);
+        telemetry.addData("Back Left Power: ", commands.drive.getMotorPowers()[2]);
+        telemetry.addData("Back Right Power: ", commands.drive.getMotorPowers()[3]);
     }
 }

@@ -9,7 +9,9 @@ public class GlobalVars {
 
 
     public static int MAX_CYCLES = 1;
-    public static int MAX_TURN_SPEED = 45; //Degrees per second
+    public static int MAX_TURN_SPEED = 22; //Degrees per second
+    public static int AUTO_INTAKE_TIME = 400; //Milliseconds
+    public static int GOLDEN_FISH_PARK_DELAY = 1;//Seconds
 
 
     public static double CLIMBL_RELEASE = 0.68;
@@ -18,28 +20,28 @@ public class GlobalVars {
     public static double CLIMBL_LATCH = 0.787;
     public static double CLIMBR_LATCH = 0.381;
 
-    public static double DRONE_LATCH = 0.571;
-    public static double DRONE_RELEASE = 0.038;
+    public static double DRONE_LATCH = 0;
+    public static double DRONE_RELEASE = 1;
 
 
     public static int EXTENDO_MAX_VELOCITY = 1100;
     public static int EXTENDO_RETRACTED = 0;
     public static int EXTENDO_CLIMB = 142;
     public static int EXTENDO_SHORT = 100;
-    public static int EXTENDO_AUTO_LONG = 350;
+    public static int EXTENDO_AUTO_LONG = 460;
     public static int EXTENDO_MED = 500;
     public static int EXTENDO_FAR = 900;
 
     public static double INTAKE_MAX_POWER = 1;
 
 
-    public static double INTAKE_ARM_GROUND = 0.217;
+    public static double INTAKE_ARM_GROUND = 0.04;
     public static double INTAKE_ARM_SPIKEMARK = 0.145;
 
-    public static double INTAKE_ARM_SECOND = 0.282;
-    public static double INTAKE_ARM_THIRD = 0.357;
-    public static double INTAKE_ARM_FOURTH = 0.366;
-    public static double INTAKE_ARM_FIFTH = 0.462;
+    public static double INTAKE_ARM_SECOND = 0.123;
+    public static double INTAKE_ARM_THIRD = 0.17;
+    public static double INTAKE_ARM_FOURTH = 0.266;
+    public static double INTAKE_ARM_FIFTH = 0.33;
     public static double INTAKE_ARM_INIT = 0.993;
 
     public static double LIFT_MAX_POWER = 0.75;
@@ -48,7 +50,7 @@ public class GlobalVars {
     public static int LIFT_MED = 1166;
     public static int LIFT_HIGH = 1750;
 
-    public static int LIFT_AUTO_LOW = 400;
+    public static int LIFT_AUTO_LOW = 300;
 
     public static int LIFT_FIRST_PIXEL = 108;
     public static int LIFT_INCREMENT = 238;

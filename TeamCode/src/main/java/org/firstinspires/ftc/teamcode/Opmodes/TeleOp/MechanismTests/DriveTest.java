@@ -17,5 +17,10 @@ public class DriveTest extends OpMode {
     @Override
     public void loop() {
         drive.loopDrive(gamepad1);
+
+        telemetry.addData("Front Left Power: ", drive.getMotorPowers()[0]);
+        telemetry.addData("Front Right Power: ", drive.getMotorPowers()[1]);
+        telemetry.addData("Back Left Power: ", drive.getMotorPowers()[2]);
+        telemetry.addData("Back Right Power: ", drive.getMotorPowers()[3]);
     }
 }
